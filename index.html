@@ -441,6 +441,28 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .dl-reveal + .dl-reset{margin-left:0;}
 .dl-reset:hover{border-color:var(--accent); color:var(--accent);}
 .dl-reset[hidden]{display:none;}
+
+
+/* randomized two-question ("split") type-a-dollar valuation slide (reuses .dl-*) */
+.slide.splitdollar{background:linear-gradient(160deg,#f4f8f6,#e9f1ee);}
+.sd-student[hidden]{display:none;}
+.sd-hostwait{flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+  text-align:center; font-family:'Merriweather',serif; font-weight:700; color:var(--muted);
+  font-size:clamp(1.1rem,2.5vw,1.9rem); line-height:1.4; padding:0 8%;}
+.sd-hostwait[hidden]{display:none;}
+.sd-result{max-width:none;}
+.sd-cols{flex:1; min-height:0; display:flex; gap:clamp(1rem,3.5vw,2.6rem); align-items:stretch;
+  width:100%; max-width:1180px; margin:0 auto;}
+.sd-col{flex:1 1 50%; min-width:0; display:flex; flex-direction:column; gap:clamp(.4rem,1.2vh,.75rem);
+  padding:clamp(.7rem,1.8vh,1.1rem) clamp(.7rem,1.6vw,1.1rem); background:rgba(255,255,255,.6);
+  border:1px solid var(--line); border-radius:14px;}
+.sd-qlabel{font-family:'Merriweather',serif; font-weight:800; color:var(--ink); text-align:center;
+  font-size:clamp(.88rem,1.5vw,1.12rem); line-height:1.22; min-height:2.7em;
+  display:flex; align-items:center; justify-content:center;}
+.sd-col .dl-avgwrap{margin-top:.2rem;}
+.sd-col .dl-avg{font-size:clamp(1.5rem,3.2vw,2.5rem);}
+.sd-col .dl-histwrap{min-height:clamp(78px,15vh,140px);}
+.sd-col .dl-hist{padding:0 clamp(.2rem,1vw,.6rem);}
 </style>
 </head>
 <body>
@@ -654,40 +676,51 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide dollar" data-type="dollar" data-dl-id="ch5-pay-reduce"
-  data-dl-prefix="$" style="--accent:#BC8A2E">
+<section class="slide splitdollar" data-type="splitdollar" data-sd-id="ch5-air-split"
+  data-sd-prefix="$" data-sd-qa="How much would you pay to reduce air pollution in your city?" data-sd-qb="How much would someone have to pay you to be okay with an increase in air pollution in your city?" data-sd-hh="Valuing Clean Air"
+  style="--accent:#BC8A2E">
   <div class="dl-root">
     <div class="dl-head">
       <div class="eyebrow">5.2 · Valuing Ecosystem Services</div>
-      <h2 class="heading">How much would you pay to reduce air pollution in your city?</h2>
-      <div class="dl-sub">A revealed-preference question. Type the most you'd personally pay, then lock it in.</div>
+      <h2 class="heading" data-sd-heading>&nbsp;</h2>
+      <div class="dl-sub">A stated-preference question. Type your dollar answer, then lock it in.</div>
     </div>
-    <div class="dl-student" data-dl-student>
-      <form class="dl-form" data-dl-form>
-        <div class="dl-inputwrap">
-          <span class="dl-prefix">$</span>
-          <input class="dl-input" data-dl-input type="number" min="0" step="1" inputmode="decimal"
-                 placeholder="0" aria-label="How much would you pay to reduce air pollution in your city?">
-        </div>
-        <button class="dl-submit" type="submit" data-dl-submit>Lock in my answer</button>
+    <div class="dl-student sd-student" data-sd-student>
+      <form class="dl-form" data-sd-form>
+        <div class="dl-inputwrap"><span class="dl-prefix">$</span>
+          <input class="dl-input" data-sd-input type="number" min="0" step="1" inputmode="decimal"
+                 placeholder="0" aria-label="Your dollar answer"></div>
+        <button class="dl-submit" type="submit" data-sd-submit>Lock in my answer</button>
       </form>
       <div class="dl-note">Enter a dollar amount per year.</div>
     </div>
-    <div class="dl-result" data-dl-result hidden>
-      <div class="dl-avgwrap">
-        <div class="dl-avg-lbl">Class average</div>
-        <div class="dl-avg" data-dl-avg>$0</div>
+    <div class="sd-hostwait" data-sd-hostwait hidden>Please respond to the question — the results will be displayed here shortly.</div>
+    <div class="dl-result sd-result" data-sd-result hidden>
+      <div class="sd-cols">
+        <div class="sd-col">
+          <div class="sd-qlabel">How much would you pay to reduce air pollution in your city?</div>
+          <div class="dl-avgwrap"><div class="dl-avg-lbl">Class average (Mean)</div>
+            <div class="dl-avg" data-sd-avg="a">$0</div></div>
+          <div class="dl-histwrap"><div class="dl-hist" data-sd-hist="a"></div></div>
+          <div class="dl-stats" data-sd-stats="a"></div>
+        </div>
+        <div class="sd-col">
+          <div class="sd-qlabel">How much would someone have to pay you to be okay with an increase in air pollution in your city?</div>
+          <div class="dl-avgwrap"><div class="dl-avg-lbl">Class average (Mean)</div>
+            <div class="dl-avg" data-sd-avg="b">$0</div></div>
+          <div class="dl-histwrap"><div class="dl-hist" data-sd-hist="b"></div></div>
+          <div class="dl-stats" data-sd-stats="b"></div>
+        </div>
       </div>
-      <div class="dl-histwrap"><div class="dl-hist" data-dl-hist></div></div>
-      <div class="dl-stats" data-dl-stats></div>
     </div>
     <div class="dl-foot">
-      <span class="dl-total"><strong data-dl-total>0</strong> answers</span>
-      <span class="dl-hint" data-dl-hint>Type a dollar amount, then lock it in.</span>
-      <button class="dl-reveal" type="button" data-dl-reveal hidden>Reveal results</button>
-      <button class="dl-reset" type="button" data-dl-reset hidden>Reset answers</button>
+      <span class="dl-total"><strong data-sd-total>0</strong> answers</span>
+      <span class="dl-hint" data-sd-hint>Type a dollar amount, then lock it in.</span>
+      <button class="dl-reveal" type="button" data-sd-reveal hidden>Reveal results</button>
+      <button class="dl-reset" type="button" data-sd-reset hidden>Reset answers</button>
     </div>
   </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
 <section class="slide" data-type="content" style="--accent:#BC8A2E">
   <div class="bleed-grid">
@@ -895,7 +928,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 5 · Conservation &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Pay to Reduce</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.5 International Laws</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.7 Reintroduction</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.5 International Laws</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.7 Reintroduction</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>Key Concepts</button></div>
 </div>
 
 <script>
@@ -956,6 +989,7 @@ show(start);
   const rankings = Array.from(document.querySelectorAll('.slide.ranking'));
   const spectrums = Array.from(document.querySelectorAll('.slide.spectrum'));
   const dollars = Array.from(document.querySelectorAll('.slide.dollar'));
+  const splitdollars = Array.from(document.querySelectorAll('.slide.splitdollar'));
   const endows = Array.from(document.querySelectorAll('.slide.endow'));
   const captrades = Array.from(document.querySelectorAll('.slide.captrade'));
   const qafeeds = Array.from(document.querySelectorAll('.slide.qa'));
@@ -965,7 +999,7 @@ show(start);
   if(!polls.length && !clouds.length && !probpolls.length && !dpolls.length && !commons.length
      && !guesses.length && !heatmaps.length && !rankings.length && !spectrums.length && !dollars.length
      && !captrades.length && !qafeeds.length && !gridmixes.length && !paybacks.length && !shifts.length
-     && !endows.length) return;
+     && !endows.length && !splitdollars.length) return;
 
   // ---- pick a backend -----------------------------------------------------
   // Simple counts API (poll, wordcloud, dpoll votes): subscribe / bump / reset
@@ -2497,6 +2531,137 @@ show(start);
         v=Math.min(MAXV, Math.round(v));
         mine=v; localStorage.setItem(doneKey, String(v));
         lockIfDone(); backend.bump('polls', id, 'd_'+v);
+      });
+    }
+    backend.subscribeDoc('polls', id, function(d){ state=d||{counts:{},released:false}; render(); });
+  });
+
+  // ---- wire each randomized two-question dollar poll (splitdollar) ----------
+  // Each browser is randomly assigned question A or B; answers pool separately as
+  // sharded counts "a_<amount>" / "b_<amount>" with a broadcast `released` flag.
+  // The ?host copy shows a holding message (neither question); on release both
+  // distributions render side by side (class mean + histogram + n/median/range).
+  splitdollars.forEach(function(sec){
+    const id = sec.dataset.sdId;
+    const prefix = sec.dataset.sdPrefix||'$';
+    const qA = sec.dataset.sdQa||'', qB = sec.dataset.sdQb||'', HH = sec.dataset.sdHh||'';
+    const heading = sec.querySelector('[data-sd-heading]');
+    const studentBox = sec.querySelector('[data-sd-student]');
+    const hostWait = sec.querySelector('[data-sd-hostwait]');
+    const resultBox = sec.querySelector('[data-sd-result]');
+    const form = sec.querySelector('[data-sd-form]');
+    const input = sec.querySelector('[data-sd-input]');
+    const submitBtn = sec.querySelector('[data-sd-submit]');
+    const totalEl = sec.querySelector('[data-sd-total]');
+    const hintEl = sec.querySelector('[data-sd-hint]');
+    const revealBtn = sec.querySelector('[data-sd-reveal]');
+    const resetBtn = sec.querySelector('[data-sd-reset]');
+    const avg = {a:sec.querySelector('[data-sd-avg="a"]'), b:sec.querySelector('[data-sd-avg="b"]')};
+    const hist = {a:sec.querySelector('[data-sd-hist="a"]'), b:sec.querySelector('[data-sd-hist="b"]')};
+    const stats = {a:sec.querySelector('[data-sd-stats="a"]'), b:sec.querySelector('[data-sd-stats="b"]')};
+    const MAXV = 100000;
+    sec.addEventListener('keydown', e=>{ if(navKeys.indexOf(e.key)>-1) e.stopPropagation(); });
+
+    const fmt = n => prefix + Math.round(n).toLocaleString('en-US');
+    function niceStep(range){
+      const raw = range/9 || 1;
+      const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+      const norm = raw/mag;
+      const step = norm<=1?1 : norm<=2?2 : norm<=5?5 : 10;
+      return Math.max(1, step*mag);
+    }
+
+    // stable random assignment (question A or B) per browser
+    const roleKey='sd-role:'+id;
+    let role=null; try{ role=localStorage.getItem(roleKey); }catch(e){}
+    if(role!=='a' && role!=='b'){ role = Math.random()<0.5?'a':'b'; try{ localStorage.setItem(roleKey, role); }catch(e){} }
+
+    const doneKey='sd-done:'+id;
+    let mine=null; try{ const v=localStorage.getItem(doneKey); mine=(v===null||v==='')?null:parseFloat(v); }catch(e){ mine=null; }
+    let state={counts:{},released:false};
+
+    function aggregate(counts, pfx){
+      let n=0,sum=0,min=Infinity,max=0; const vals=[];
+      const re=new RegExp('^'+pfx+'_(\\d+)$');
+      Object.keys(counts).forEach(function(k){
+        const m=k.match(re); if(!m) return;
+        const v=parseInt(m[1],10), c=counts[k]||0; if(v<0||v>MAXV||c<=0) return;
+        n+=c; sum+=v*c; vals.push([v,c]); if(v<min)min=v; if(v>max)max=v;
+      });
+      if(!n) min=0;
+      return {n:n,sum:sum,min:min,max:max,vals:vals};
+    }
+    function renderOne(agg, avgEl, histEl, statsEl){
+      avgEl.textContent = fmt(agg.n?agg.sum/agg.n:0);
+      if(!agg.n){ histEl.innerHTML=''; statsEl.textContent='No answers yet.'; return; }
+      const step=niceStep(agg.max);
+      const NB=Math.max(1,Math.min(12,Math.floor(agg.max/step)+1));
+      const bins=new Array(NB).fill(0);
+      agg.vals.forEach(function(e){ const b=Math.min(NB-1,Math.floor(e[0]/step)); bins[b]+=e[1]; });
+      const maxBin=Math.max.apply(null,bins.concat([1]));
+      let hh='';
+      for(let b=0;b<NB;b++){
+        const lo=b*step, hi=lo+step-1;
+        const h=bins[b]>0?Math.max(6,bins[b]/maxBin*100):0;
+        const lbl= step>=1000 ? (prefix+(lo/1000)+'–'+((hi+1)/1000)+'k') : (prefix+lo+'–'+hi);
+        hh+='<div class="dl-bin"><div class="dl-bin-col"><div class="dl-bin-fill" style="height:'+h+'%">'
+          +(bins[b]>0?'<span class="dl-bin-cnt">'+bins[b]+'</span>':'')+'</div></div>'
+          +'<div class="dl-bin-lbl">'+lbl+'</div></div>';
+      }
+      histEl.innerHTML=hh;
+      agg.vals.sort(function(a,b){return a[0]-b[0];});
+      let med=0,seen=0,half=(agg.n+1)/2;
+      for(const p of agg.vals){ seen+=p[1]; if(seen>=half){ med=p[0]; break; } }
+      statsEl.textContent='n='+agg.n+' · median '+fmt(med)+' · range '+fmt(agg.min)+'–'+fmt(agg.max);
+    }
+    function render(){
+      const counts=state.counts||{};
+      const aggA=aggregate(counts,'a'), aggB=aggregate(counts,'b');
+      const released=!!state.released;
+      totalEl.textContent = aggA.n+aggB.n;
+      resultBox.hidden=!released;
+      if(released){ renderOne(aggA,avg.a,hist.a,stats.a); renderOne(aggB,avg.b,hist.b,stats.b); }
+      if(HOST){
+        studentBox.hidden=true;
+        hostWait.hidden=released;
+        heading.textContent = HH;
+        revealBtn.hidden=false; resetBtn.hidden=false;
+        revealBtn.textContent = released?'Hide results':'Reveal results';
+        hintEl.textContent = released ? 'Results are on every screen.'
+          : ((aggA.n+aggB.n)+' answer'+((aggA.n+aggB.n)===1?'':'s')+' in — reveal when the class is ready.');
+      } else {
+        hostWait.hidden=true;
+        heading.textContent = (role==='a'?qA:qB);
+        studentBox.hidden=released;
+        if(released) hintEl.textContent='The results are in!';
+        else if(mine!==null) hintEl.textContent='Your answer is locked in. Results appear when your instructor reveals them…';
+        else hintEl.textContent='Type a dollar amount, then lock it in.';
+      }
+    }
+    function lockIfDone(){
+      if(mine===null) return;
+      input.value=mine; input.disabled=true;
+      submitBtn.disabled=true; submitBtn.textContent='Locked in ✓';
+    }
+    // initial paint so the student sees their question (and the host its holding
+    // message) before the first Firestore snapshot arrives
+    if(HOST){ heading.textContent=HH; hostWait.hidden=false; studentBox.hidden=true; }
+    else { heading.textContent = (role==='a'?qA:qB); }
+
+    if(HOST){
+      sec.classList.add('host');
+      revealBtn.addEventListener('click', ()=> backend.mergeDoc('polls', id, {released:!state.released}));
+      resetBtn.addEventListener('click', ()=>{ if(confirm('Reset all answers for both questions?')) backend.setDoc('polls', id, {counts:{}, released:false}); });
+    } else {
+      lockIfDone();
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(mine!==null) return;
+        let v=parseFloat(input.value);
+        if(isNaN(v)||v<0){ input.focus(); return; }
+        v=Math.min(MAXV, Math.round(v));
+        mine=v; localStorage.setItem(doneKey, String(v));
+        lockIfDone(); backend.bump('polls', id, role+'_'+v);
       });
     }
     backend.subscribeDoc('polls', id, function(d){ state=d||{counts:{},released:false}; render(); });

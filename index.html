@@ -16,6 +16,12 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
+/* Master type scale. Everything in this stylesheet is sized in rem, so this one
+   number makes the whole deck bigger or smaller together. It is set above 100%
+   so the text carries to the back of a lecture hall; a deck that runs out of
+   room on a dense slide can dial it back with `html{font-size:…}` in its own
+   EXTRA_CSS. */
+html{font-size:112%;}
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   color:var(--ink); background:#0c1411; overflow:hidden;
@@ -50,14 +56,39 @@ h1,h2,h3,.heading{font-family:'Merriweather',Georgia,serif;}
 .bullets li::before{content:""; position:absolute; left:0; top:.5em; width:.5rem; height:.5rem;
   border-radius:50%; background:var(--accent,var(--green-light));}
 .bullets li strong{color:var(--forest);}
-.note{margin-top:1.1rem; padding:.7rem .95rem; background:var(--pale); border-left:3px solid var(--green);
+/* works-cited small print (content_slide refs=): sits under the content, set
+   small and muted with a hairline rule and a hanging indent, so a real citation
+   can appear on the slide without competing with the teaching text */
+.refs{margin-top:.9rem; padding-top:.5rem; border-top:1px solid var(--line);}
+/* a cited slide carries an extra block, so tighten its rhythm to keep the
+   citation above the fold on a 16:9 projector */
+.slide.has-refs .bullets{gap:.5rem;}
+.slide.has-refs .lead{margin-bottom:.8rem;}
+.slide.has-refs .heading{margin-bottom:.75rem;}
+.refs p{font-size:clamp(.6rem,.92vw,.72rem); line-height:1.4; color:var(--muted);
+  padding-left:1.15em; text-indent:-1.15em; margin-top:.3rem;}
+.refs p:first-child{margin-top:0;}
+.refs em{font-style:italic;}
+/* sub-bullet (authored as "- text"): indented under its parent, a shade smaller,
+   hollow marker so the hierarchy reads at projector distance */
+.bullets li.sub{padding-left:3rem; font-size:clamp(.82rem,1.32vw,.95rem); color:#48594f;
+  margin-top:-.25rem;}
+.bullets li.sub::before{left:1.55rem; top:.55em; width:.42rem; height:.42rem;
+  background:transparent; border:2px solid var(--accent,var(--green-light));}
+/* staged reveal (content_slide staged=True): fade each item in on a clicker
+   press. Opacity, not display, so the space is reserved up front and nothing
+   reflows as items appear. */
+.stage-item{opacity:0; transition:opacity .3s ease;}
+.stage-item.shown{opacity:1;}
+@media (prefers-reduced-motion:reduce){ .stage-item{transition:none;} }
+.note{margin-top:.85rem; padding:.62rem .95rem; background:var(--pale); border-left:3px solid var(--green);
   border-radius:0 8px 8px 0; font-size:clamp(.8rem,1.25vw,.92rem); color:#3a4a43; font-style:italic;}
 .col-media{height:100%; display:flex; align-items:center;}
 .col-media img{width:100%; height:auto; max-height:74vh; object-fit:cover; border-radius:16px; box-shadow:var(--shadow);}
 
 /* pairs */
-.pairs{display:flex; flex-direction:column; gap:.6rem;}
-.pair{background:var(--pale); border:1px solid var(--line); border-radius:12px; padding:.7rem .95rem;}
+.pairs{display:flex; flex-direction:column; gap:.5rem;}
+.pair{background:var(--pale); border:1px solid var(--line); border-radius:12px; padding:.62rem .95rem;}
 .pair-head{font-weight:700; color:var(--forest); font-size:clamp(.86rem,1.4vw,1rem);}
 .pair-desc{font-size:clamp(.8rem,1.3vw,.95rem); color:#3a4a43; line-height:1.4; margin-top:.15rem;}
 
@@ -252,6 +283,8 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   font-family:'Inter',sans-serif; color:var(--ink); font-size:clamp(.85rem,1.4vw,1.05rem); line-height:1.35;}
 .iv-cost[hidden]{display:none;}
 .iv-cost-lead{font-weight:800; font-size:1.15em; color:var(--accent);}
+.iv-cite{color:var(--muted); font-size:.85em; text-decoration:underline; white-space:nowrap;}
+.iv-cite:hover{color:var(--accent);}
 .iv-costbtn{font-family:inherit; font-weight:800; font-size:clamp(.82rem,1.3vw,.96rem);
   padding:.5rem 1.15rem; border-radius:10px; cursor:pointer; color:var(--accent);
   background:#fff; border:2px solid var(--accent); transition:filter .15s,background .15s,color .15s;}
@@ -300,6 +333,73 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   .an-main{flex:1 1 60%;}
   .an-due{min-width:0; margin-left:3.1rem;}
 }
+/* live attendance — host bar (only rendered on the ?host copy) */
+.an-att{display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;
+  margin-top:clamp(.6rem,1.6vh,1.1rem);}
+.an-att[hidden]{display:none;}
+.an-att-btn{font-family:inherit; font-weight:800; color:#fff; border:none; cursor:pointer;
+  background:var(--accent,var(--forest-mid)); border-radius:11px; padding:.6rem 1.4rem;
+  font-size:clamp(.85rem,1.4vw,1rem); transition:filter .15s;}
+.an-att-btn:hover{filter:brightness(1.1);}
+.an-att-btn[hidden]{display:none;}
+.an-att-btn.go{background:#A4373A;}
+.an-att-cancel{font-family:inherit; font-weight:600; color:var(--muted); background:#fff;
+  border:1.5px solid var(--line); border-radius:11px; padding:.6rem 1rem; cursor:pointer;
+  font-size:clamp(.78rem,1.2vw,.9rem);}
+.an-att-cancel:hover{border-color:var(--accent); color:var(--accent);}
+.an-att-cancel[hidden]{display:none;}
+.an-att-sel{font-family:inherit; font-size:clamp(.8rem,1.28vw,.94rem); font-weight:700;
+  color:var(--forest); background:#fff; border:2px solid var(--line); border-radius:11px;
+  padding:.55rem .7rem; cursor:pointer;}
+.an-att-sel:focus{outline:none; border-color:var(--accent,var(--forest-mid));}
+.an-att-sel:disabled{opacity:.55; cursor:not-allowed;}
+.an-att-status{font-size:clamp(.78rem,1.2vw,.92rem); color:var(--muted);}
+.an-att-status em{font-style:normal; font-weight:800; color:var(--forest);}
+.an-att-status strong{font-family:'Merriweather',serif; color:var(--forest); font-size:1.15em;}
+.an-att-status.warn{color:#A4373A; font-weight:700; font-style:italic;}
+/* live attendance — student pop-up (appended to <body>, shows over any slide) */
+.at-modal{position:fixed; inset:0; z-index:120; display:flex; align-items:center;
+  justify-content:center; padding:1.2rem; background:rgba(16,28,23,.55);
+  backdrop-filter:blur(3px); animation:at-fade .22s ease;}
+.at-modal[hidden]{display:none;}
+@keyframes at-fade{from{opacity:0;}}
+.at-box{background:#fff; border-radius:18px; box-shadow:0 24px 60px rgba(0,0,0,.35);
+  width:min(470px,100%); max-height:92vh; overflow-y:auto;
+  padding:clamp(1.2rem,3.4vw,1.9rem); animation:at-rise .26s cubic-bezier(.22,.61,.36,1);}
+@keyframes at-rise{from{transform:translateY(16px) scale(.97); opacity:0;}}
+.at-title{font-family:'Merriweather',serif; font-weight:800; color:var(--forest);
+  font-size:clamp(1.15rem,2.4vw,1.5rem); line-height:1.2;}
+.at-chapter{font-size:clamp(.8rem,1.3vw,.94rem); color:var(--muted); margin-top:.25rem;}
+.at-section{display:inline-block; margin-top:.45rem; padding:.2em .7em; border-radius:20px;
+  background:var(--pale); border:1px solid var(--line); font-size:clamp(.72rem,1.15vw,.84rem);
+  font-weight:800; color:var(--forest);}
+.at-section[hidden]{display:none;}
+.at-field{display:block; margin-top:.9rem;}
+.at-two{display:grid; grid-template-columns:1fr 1fr; gap:.6rem;}
+@media (max-width:400px){ .at-two{grid-template-columns:1fr;} }
+.at-lbl{display:block; font-size:clamp(.7rem,1.1vw,.8rem); font-weight:800; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:.25rem;}
+.at-input{width:100%; font-family:inherit; font-size:clamp(.92rem,1.5vw,1.05rem);
+  padding:.62rem .8rem; border:2px solid var(--line); border-radius:11px; color:var(--ink);
+  background:#fff;}
+.at-input:focus{outline:none; border-color:var(--accent,var(--forest-mid));}
+.at-input.bad{border-color:#A4373A; background:#fdf6f6;}
+.at-submit{width:100%; margin-top:1.1rem; font-family:inherit; font-weight:800; color:#fff;
+  border:none; cursor:pointer; background:var(--forest-mid); border-radius:12px;
+  padding:.78rem 1rem; font-size:clamp(.98rem,1.6vw,1.12rem); transition:filter .15s;}
+.at-submit:hover:not(:disabled){filter:brightness(1.1);}
+.at-submit:disabled{background:#bcc7c2; cursor:default;}
+.at-msg{margin-top:.7rem; font-size:clamp(.78rem,1.25vw,.9rem); line-height:1.4; min-height:1.2em;}
+.at-msg.err{color:#A4373A; font-weight:700;}
+.at-msg.ok{color:#2D6A4F; font-weight:700;}
+.at-done{text-align:center; padding:.4rem 0 .2rem;}
+.at-done-tick{font-size:2.6rem; line-height:1;}
+.at-done-txt{font-family:'Merriweather',serif; font-weight:800; color:#2D6A4F;
+  font-size:clamp(1.05rem,2vw,1.3rem); margin-top:.4rem;}
+.at-done-sub{font-size:clamp(.8rem,1.28vw,.94rem); color:var(--muted); margin-top:.35rem; line-height:1.45;}
+.at-close{margin-top:1rem; font-family:inherit; font-weight:700; color:var(--muted); background:#fff;
+  border:1.5px solid var(--line); border-radius:11px; padding:.5rem 1.2rem; cursor:pointer;}
+.at-close:hover{border-color:var(--accent); color:var(--accent);}
 
 
 /* opinion-spectrum (Agree ←→ Disagree) live slide */
@@ -493,8 +593,9 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       <h2 class="heading">Upcoming Assignments</h2>
       <p class="an-sub">Here's what's on deck. Check Canvas for full instructions and submission links.</p>
     </div>
-    <div class="an-list"><div class="an-row"><span class="an-num">1</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 3 — Matter and Energy</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div><div class="an-row"><span class="an-num">2</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 4 — Life: What Shapes Biodiversity?</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div><div class="an-row"><span class="an-num">3</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 5 — Conservation: Why Is It Important to Protect Biodiversity?</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div><div class="an-row"><span class="an-num">4</span><div class="an-main"><div class="an-name">Module 2: Biomimicry Quiz (Canvas)</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div><div class="an-row"><span class="an-num">5</span><div class="an-main"><div class="an-name">What Would You Do Exercise #1</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div><div class="an-row"><span class="an-num">6</span><div class="an-main"><div class="an-name">Review Exercise #1 (in class)</div></div><div class="an-due tba"><span class="an-due-lbl">Due</span><span class="an-due-val">TBA</span></div></div></div>
+    <div class="an-list"><div class="an-row"><span class="an-num">1</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 3 — Matter and Energy</div></div></div><div class="an-row"><span class="an-num">2</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 4 — Life: What Shapes Biodiversity?</div></div></div><div class="an-row"><span class="an-num">3</span><div class="an-main"><div class="an-name">InQuizitive: Chapter 5 — Conservation: Why Is It Important to Protect Biodiversity?</div></div></div><div class="an-row"><span class="an-num">4</span><div class="an-main"><div class="an-name">Module 2: Biomimicry Quiz (Canvas)</div></div></div><div class="an-row"><span class="an-num">5</span><div class="an-main"><div class="an-name">What Would You Do Exercise #1</div></div></div><div class="an-row"><span class="an-num">6</span><div class="an-main"><div class="an-name">Review Exercise #1 (in class)</div></div></div></div>
     <p class="an-note">Due dates to be announced — mark your calendar once they're posted.</p>
+    
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -756,6 +857,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         <div class="iv-cost" data-iv-cost hidden>
           <span class="iv-cost-lead">Quantifiable Cost to Society</span> (car accidents):
           $1.73&nbsp;million per year on a 30&#8209;mile stretch of I&#8209;17.
+          <a class="iv-cite" href="https://aztransportationboard.gov/sites/default/files/docs/2021/03/2015-082515-Game-Fish.pdf" target="_blank" rel="noopener">(citation)</a>
         </div>
       </div>
       <div class="dl-foot">
@@ -938,7 +1040,14 @@ const progress = document.getElementById('progress');
 const counter  = document.getElementById('counter');
 const menu = document.getElementById('menu');
 
-function show(i){
+// ── staged reveals ─────────────────────────────────────────────────────────
+// A slide can hold .stage-item elements that the clicker uncovers one at a
+// time before moving on. Slides without them are unaffected.
+function stageItems(s){ return Array.prototype.slice.call(s.querySelectorAll('.stage-item')); }
+function stageShown(s){ return stageItems(s).filter(function(e){ return e.classList.contains('shown'); }).length; }
+function setStage(s, n){ stageItems(s).forEach(function(e, i){ e.classList.toggle('shown', i < n); }); }
+
+function show(i, back){
   i = Math.max(0, Math.min(slides.length-1, i));
   slides[cur].classList.remove('active');
   cur = i;
@@ -946,14 +1055,26 @@ function show(i){
   s.classList.add('active');
   const f = s.querySelector('iframe[data-src]');
   if(f && !f.src){ f.src = f.getAttribute('data-src'); }
+  // arriving forward starts a staged slide covered; stepping back into one
+  // shows everything, so you don't have to click through it again
+  const st = stageItems(s);
+  if(st.length){ setStage(s, back ? st.length : 0); }
   progress.style.width = ((cur+1)/slides.length*100)+'%';
   var ac = (getComputedStyle(s).getPropertyValue('--accent') || '').trim();
   progress.style.background = ac || 'var(--green-light)';
   counter.textContent = (cur+1)+' / '+slides.length;
   location.hash = 'slide-'+(cur+1);
 }
-function next(){ show(cur+1); }
-function prev(){ show(cur-1); }
+function next(){
+  const s = slides[cur], n = stageItems(s).length;
+  if(n){ const k = stageShown(s); if(k < n){ setStage(s, k + 1); return; } }
+  show(cur+1);
+}
+function prev(){
+  const s = slides[cur];
+  if(stageItems(s).length){ const k = stageShown(s); if(k > 0){ setStage(s, k - 1); return; } }
+  show(cur-1, true);
+}
 
 document.addEventListener('keydown', e=>{
   if(menu.classList.contains('open')){ if(e.key==='Escape') toggleMenu(false); return; }
@@ -975,7 +1096,7 @@ const start = m ? (+m[1]-1) : 0;
 slides.forEach(s=>s.classList.remove('active'));
 show(start);
 </script>
-<script src="firebase-config.js"></script>
+<script src="firebase-config.js?v=e1671c74ba"></script>
 <script type="module">
 (async function(){
   const HOST = new URLSearchParams(location.search).has('host');
@@ -992,14 +1113,18 @@ show(start);
   const splitdollars = Array.from(document.querySelectorAll('.slide.splitdollar'));
   const endows = Array.from(document.querySelectorAll('.slide.endow'));
   const captrades = Array.from(document.querySelectorAll('.slide.captrade'));
+  const inspects = Array.from(document.querySelectorAll('.slide.inspect'));
   const qafeeds = Array.from(document.querySelectorAll('.slide.qa'));
   const gridmixes = Array.from(document.querySelectorAll('.slide.gridmix'));
   const paybacks = Array.from(document.querySelectorAll('.slide.payback'));
   const shifts = Array.from(document.querySelectorAll('.slide.shift'));
+  const guessembeds = Array.from(document.querySelectorAll('.guess-embed'));
+  const attends = Array.from(document.querySelectorAll('[data-at-id]'));
   if(!polls.length && !clouds.length && !probpolls.length && !dpolls.length && !commons.length
      && !guesses.length && !heatmaps.length && !rankings.length && !spectrums.length && !dollars.length
      && !captrades.length && !qafeeds.length && !gridmixes.length && !paybacks.length && !shifts.length
-     && !endows.length && !splitdollars.length) return;
+     && !endows.length && !splitdollars.length && !guessembeds.length && !inspects.length
+     && !attends.length) return;
 
   // ---- pick a backend -----------------------------------------------------
   // Simple counts API (poll, wordcloud, dpoll votes): subscribe / bump / reset
@@ -1148,12 +1273,13 @@ show(start);
     }
 
     let collapseReveal = function(){};  // set below if this poll has a reveal-able answer
+    let rewindStage = function(){};     // set below if this poll reveals options one at a time
 
     if(HOST){
       sec.classList.add('host');
       hintEl.textContent='Live results — students vote on their own screens.';
       resetBtn.hidden=false;
-      resetBtn.addEventListener('click', ()=>{ if(confirm('Reset all results for this question?')){ backend.reset('polls',id); collapseReveal(); } });
+      resetBtn.addEventListener('click', ()=>{ if(confirm('Reset all results for this question?')){ backend.reset('polls',id); collapseReveal(); rewindStage(); } });
     } else {
       lockIfVoted();
       opts.forEach(function(b,i){
@@ -1188,6 +1314,10 @@ show(start);
         let shown=false;
         function setReveal(on){
           shown=on; answerBox.hidden=!on; sec.classList.toggle('revealed',on);
+          // a concealed poll also uncovers its bars/percentages on reveal
+          if(sec.dataset.pollConceal) sec.classList.toggle('concealed', !on);
+          var refsEl=sec.querySelector('[data-poll-refs]');
+          if(refsEl) refsEl.hidden=!on;
           opts.forEach((b,i)=>b.classList.toggle('correct', on && i===ansIdx));
           revealBtn.textContent = on ? 'Hide answer' : 'Reveal answer';
           revealBtn.setAttribute('aria-expanded', on?'true':'false');
@@ -1195,6 +1325,57 @@ show(start);
         revealBtn.hidden=false;
         revealBtn.addEventListener('click', ()=>setReveal(!shown));
         collapseReveal = ()=>setReveal(false);  // let "Reset results" also hide the answer
+      }
+    }
+
+    // optional STAGED options: the instructor uncovers one answer at a time and
+    // the stage index rides the same poll document, so every open copy of the
+    // deck reveals in step with the projector.
+    if(sec.dataset.pollStaged==='1'){
+      const stageBtn=sec.querySelector('[data-poll-stage]');
+      let stage=0, want=1;   // `want` is the host's own count, so pressing the
+                             // clicker fast never waits on a round trip
+      function applyStage(k){
+        k=Math.max(1, Math.min(n, k||1));
+        const grew = k>stage;
+        opts.forEach(function(b,i){
+          const pending = i>=k;
+          b.classList.toggle('pending', pending);
+          b.setAttribute('aria-hidden', pending?'true':'false');
+          if(grew && !pending && i>=stage){
+            b.classList.add('just-in');
+            setTimeout(()=>b.classList.remove('just-in'), 400);
+          }
+        });
+        stage=k;
+        if(stageBtn){
+          stageBtn.disabled = stage>=n;
+          stageBtn.textContent = stage>=n ? 'All options showing' : 'Show next option ('+stage+'/'+n+')';
+        }
+      }
+      applyStage(1);
+      backend.subscribeDoc('polls', id, function(d){
+        let k=(d&&d.stage)||1;
+        if(HOST) k=Math.max(k, want);   // don't let a stale snapshot re-cover an option
+        applyStage(k);
+      });
+      if(HOST){
+        stageBtn.hidden=false;
+        const bump=function(){
+          if(want>=n) return;
+          want++; applyStage(want); backend.mergeDoc('polls', id, {stage: want});
+        };
+        stageBtn.addEventListener('click', bump);
+        rewindStage = function(){ want=1; applyStage(1); backend.mergeDoc('polls', id, {stage:1}); };
+        // the clicker: while options are still covered, → / space / PageDown
+        // uncovers the next one instead of leaving the slide.
+        document.addEventListener('keydown', function(e){
+          if(!sec.classList.contains('active') || want>=n) return;
+          if(e.key!=='ArrowRight' && e.key!==' ' && e.key!=='PageDown') return;
+          const t=e.target, tag=t&&t.tagName;
+          if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable)) return;
+          e.preventDefault(); e.stopPropagation(); bump();
+        }, true);
       }
     }
 
@@ -1579,10 +1760,15 @@ show(start);
       submitBtn=el('[data-cm-submit]'), revealBox=el('[data-cm-reveal]'),
       zoneEl=el('[data-cm-zone]'), revLines=el('[data-cm-revlines]'),
       meEl=el('[data-cm-me]'), board=el('[data-cm-board]'),
+      dist=el('[data-cm-dist]'), youLbl=el('[data-cm-youlbl]'), youVal=el('[data-cm-youval]'),
+      avgVal=el('[data-cm-avgval]'), histo=el('[data-cm-histo]'),
       boardTitle=el('[data-cm-boardtitle]'), boardRows=el('[data-cm-boardrows]'),
       water=el('[data-cm-water]'), fishBox=el('[data-cm-fish]'),
       poolNum=el('[data-cm-poolnum]'), poolLbl=el('[data-cm-poollbl]'), capEl=el('[data-cm-cap]'),
       hist=el('[data-cm-hist]'), histTitle=el('[data-cm-histtitle]'), histBars=el('[data-cm-histbars]'),
+      picks=el('[data-cm-picks]'), picksTitle=el('[data-cm-pickstitle]'),
+      picksSub=el('[data-cm-pickssub]'), picksSvg=el('[data-cm-picksvg]'),
+      summary=el('[data-cm-summary]'), sumSvg=el('[data-cm-sumsvg]'), sumChips=el('[data-cm-sumchips]'),
       banner=el('[data-cm-banner]');
     sec.addEventListener('keydown', e=>{ if(navKeys.indexOf(e.key)>-1) e.stopPropagation(); });
     if(HOST) sec.classList.add('host');
@@ -1635,7 +1821,8 @@ show(start);
     }
     function renderHist(){
       const rounds=[]; for(let r=1;r<=(state.round||0);r++){ if(histEntry(r)) rounds.push([r,histEntry(r)]); }
-      hist.hidden=!rounds.length; histTitle.textContent=S().resName+', round by round';
+      hist.hidden=!rounds.length || (state.phase||'idle')==='final';
+      histTitle.textContent=S().resName+', round by round';
       if(!rounds.length){ histBars.innerHTML=''; return; }
       histBars.innerHTML='';
       function bar(lbl,frac,cls){ const w=document.createElement('div'); w.className='cm-hbar'+(cls?' '+cls:'');
@@ -1645,6 +1832,190 @@ show(start);
         histBars.appendChild(w); }
       bar('start',1);
       rounds.forEach(e=>bar('R'+e[0], e[1].health, e[1].health<=0.05?'dead':''));
+    }
+    // How many people chose each amount in the last revealed round. The choices
+    // are integers on a 0..max slider, so every possible answer gets its own
+    // column — including the ones nobody picked, which is itself the finding.
+    // Only a REVEALED round is ever drawn: the round in play stays secret.
+    function lastRevealed(){ let last=0;
+      for(let r=1;r<=(state.round||0);r++){ if(histEntry(r)) last=r; }
+      return last; }
+    function renderPicks(){
+      const r=lastRevealed();
+      if(!r || (state.phase||'idle')==='final'){ picks.hidden=true; picksSvg.innerHTML=''; return; }
+      picks.hidden=false;
+      const ch=roundChoices(r), e=histEntry(r), MX=S().max;
+      const counts=new Array(MX+1).fill(0);
+      let n=0, sum=0;
+      Object.keys(ch).forEach(function(k){
+        const v=Math.max(0, Math.min(MX, Math.round(ch[k])));
+        counts[v]++; n++; sum+=ch[k];
+      });
+      const safeMax = (e && e.coopPer!==undefined) ? e.coopPer : null;   // per-person sustainable share
+      const mine = (!HOST) ? myChoice(r) : null;
+      const myV = (mine===null) ? -1 : Math.max(0, Math.min(MX, Math.round(mine)));
+
+      picksTitle.textContent = 'What the class chose · Round '+r;
+
+      const W=400, PADL=16, PADR=16, BASE=112, TOP=34;
+      const nb=MX+1, plotW=W-PADL-PADR, slot=plotW/nb,
+            bw=Math.min(slot*0.74, 42), peak=Math.max.apply(null, counts.concat([1]));
+      let sv='<defs><filter id="cmPk-'+id+'" x="-4%" y="-4%" width="108%" height="108%">'
+        +'<feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="5" result="n"/>'
+        +'<feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>'
+        +'</filter></defs><g filter="url(#cmPk-'+id+')">';
+      counts.forEach(function(c,i){
+        const h=c ? Math.max((c/peak)*(BASE-TOP), 3) : 2.5,
+              x=PADL+i*slot+(slot-bw)/2, y=BASE-h;
+        const cls = !c ? 'empty' : ((safeMax!==null && i>safeMax) ? 'over' : '');
+        sv+='<rect class="cm-pk-bar'+(cls?' '+cls:'')+(i===myV?' me':'')+'" x="'+x.toFixed(1)
+          +'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"/>';
+        if(c) sv+='<text class="cm-pk-cnt" x="'+(x+bw/2).toFixed(1)+'" y="'+(y-4).toFixed(1)+'">'+c+'</text>';
+      });
+      sv+='<path class="cm-pk-axis" d="M'+PADL+' '+BASE+' H'+(W-PADR)+'"/></g>';
+      // one tick per possible answer
+      counts.forEach(function(c,i){
+        sv+='<text class="cm-pk-x" x="'+(PADL+i*slot+slot/2).toFixed(1)+'" y="'+(BASE+15)+'">'+i+'</text>';
+      });
+      // the line between "kept it alive" and "took more than it could give"
+      if(safeMax!==null && safeMax<MX){
+        const lx=PADL+(safeMax+1)*slot;
+        sv+='<path class="cm-pk-line" d="M'+lx.toFixed(1)+' 16 V'+BASE+'"/>';
+        const right = lx < W*0.62;
+        sv+='<text class="cm-pk-lbl" x="'+(right?lx+4:lx-4).toFixed(1)+'" y="13" text-anchor="'
+          +(right?'start':'end')+'">sustainable share: '+safeMax+' or less</text>';
+      }
+      if(myV>=0) sv+='<text class="cm-pk-you" x="'+(PADL+myV*slot+slot/2).toFixed(1)+'" y="'+(BASE+29)+'">you</text>';
+      picksSvg.innerHTML=sv;
+      picksSub.textContent = n + (n===1?' player':' players')
+        + (n ? ' · average ' + (sum/n).toFixed(1) + ' ' + S().unit + ' each' : '');
+    }
+
+    // ── end-of-game debrief ───────────────────────────────────────────────────
+    // Per-round behaviour, which is what the class can actually argue about
+    // afterwards: what people took, whether the safe level moved under them,
+    // and how many stayed inside it.
+    function roundStats(){
+      const out=[];
+      for(let r=1;r<=(state.round||0);r++){
+        const e=histEntry(r); if(!e) continue;
+        const ch=roundChoices(r), ks=Object.keys(ch);
+        let sum=0, within=0;
+        ks.forEach(function(k){ sum+=ch[k]; if(e.coopPer!==undefined && ch[k]<=e.coopPer) within++; });
+        out.push({r:r, n:ks.length, avg:ks.length?sum/ks.length:0,
+                  coop:(e.coopPer===undefined?null:e.coopPer),
+                  within:ks.length?within/ks.length:null, health:e.health});
+      }
+      return out;
+    }
+    function playedKeys(){
+      const seen={};
+      for(let r=1;r<=(state.round||0);r++){
+        const c=roundChoices(r); Object.keys(c).forEach(function(k){ seen[k]=1; });
+      }
+      let ks=Object.keys(players()).filter(function(k){ return seen[k]; });
+      return ks.length ? ks : Object.keys(players());
+    }
+    function takeTotal(who){ let t=0;
+      for(let r=1;r<=(state.round||0);r++){ const v=roundChoices(r)[who]; if(v!==undefined) t+=v; }
+      return t; }
+    function renderSummary(){
+      const R=roundStats();
+      if((state.phase||'idle')!=='final' || !R.length){ summary.hidden=true; return; }
+      summary.hidden=false;
+
+      const W=640, PADL=44, PADR=18, BASE=112, TOP=32, nR=R.length;
+      const plotW=W-PADL-PADR, slot=plotW/nR, bw=Math.min(slot*0.42, 38);
+      let top=0; R.forEach(function(d){ top=Math.max(top, d.avg, d.coop||0); });
+      const ymax=Math.max(1, top)*1.2, sy=function(v){ return BASE-(v/ymax)*(BASE-TOP); };
+      const cx=function(i){ return PADL+i*slot+slot/2; };
+
+      let sv='<defs><filter id="cmSm-'+id+'" x="-3%" y="-3%" width="106%" height="106%">'
+        +'<feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11" result="n"/>'
+        +'<feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>'
+        +'</filter></defs>';
+      // legend, above the plot
+      sv+='<rect class="cm-sm-bar" x="'+PADL+'" y="6" width="14" height="9" rx="2"/>'
+        + '<text class="cm-sm-leg" x="'+(PADL+20)+'" y="14">average taken</text>'
+        + '<path class="cm-sm-line" d="M'+(PADL+128)+' 11 H'+(PADL+150)+'"/>'
+        + '<text class="cm-sm-leg" x="'+(PADL+156)+'" y="14">what the resource could sustain</text>';
+      // y gridlines
+      [0, ymax/2, ymax].forEach(function(v){
+        sv+='<path class="cm-sm-grid" d="M'+PADL+' '+sy(v).toFixed(1)+' H'+(W-PADR)+'"/>'
+          + '<text class="cm-sm-y" x="'+(PADL-7)+'" y="'+(sy(v)+3.5).toFixed(1)+'" text-anchor="end">'
+          + v.toFixed(v<10?1:0)+'</text>';
+      });
+      sv+='<g filter="url(#cmSm-'+id+')">';
+      R.forEach(function(d,i){
+        const y=sy(d.avg), h=Math.max(BASE-y, 2);
+        sv+='<rect class="cm-sm-bar" x="'+(cx(i)-bw/2).toFixed(1)+'" y="'+y.toFixed(1)
+          +'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"/>';
+      });
+      sv+='<path class="cm-sm-axis" d="M'+PADL+' '+BASE+' H'+(W-PADR)+'"/></g>';
+      // the safe level, which shrinks as the resource is damaged
+      const pts=R.filter(function(d){ return d.coop!==null; });
+      if(pts.length){
+        let dPath='';
+        R.forEach(function(d,i){ if(d.coop===null) return;
+          dPath += (dPath?' L':'M')+cx(i).toFixed(1)+' '+sy(d.coop).toFixed(1); });
+        sv+='<path class="cm-sm-line" d="'+dPath+'"/>';
+        R.forEach(function(d,i){ if(d.coop===null) return;
+          sv+='<circle class="cm-sm-dot" cx="'+cx(i).toFixed(1)+'" cy="'+sy(d.coop).toFixed(1)+'" r="2.6"/>'; });
+      }
+      R.forEach(function(d,i){
+        sv+='<text class="cm-sm-val" x="'+cx(i).toFixed(1)+'" y="'+(sy(d.avg)-5).toFixed(1)+'">'
+          + d.avg.toFixed(1)+'</text>'
+          + '<text class="cm-sm-x" x="'+cx(i).toFixed(1)+'" y="'+(BASE+16)+'">Round '+d.r+'</text>'
+          + '<text class="cm-sm-h" x="'+cx(i).toFixed(1)+'" y="'+(BASE+31)+'">'
+          + Math.round(d.health*100)+'% left</text>';
+      });
+      sv+='<text class="cm-sm-note" x="'+(W-PADR)+'" y="'+(BASE+43)+'">'
+        + '% = '+S().resName.toLowerCase()+' still left</text>';
+      sumSvg.innerHTML=sv;
+
+      // ── the chips ───────────────────────────────────────────────────────────
+      const uv=S().unitValue, ks=playedKeys(), nP=ks.length;
+      function chip(k,v,c){ return '<div class="cm-sum-chip"><span class="k">'+k+'</span>'
+        + '<span class="v">'+v+'</span><span class="c">'+c+'</span></div>'; }
+      let chips='';
+
+      // 1 — did restraint hold, or erode?
+      const w0=R[0].within, wN=R[nR-1].within;
+      if(w0!==null && wN!==null){
+        chips += (nR===1)
+          ? chip('Stayed within the limit', Math.round(w0*100)+'%', 'of players, in the one round played')
+          : chip('Stayed within the limit', Math.round(w0*100)+'% → '+Math.round(wN*100)+'%',
+              'of players, round 1 → round '+R[nR-1].r);
+      }
+      // 2 — the cost of the trap. If everyone had held to the share the resource
+      // could carry at full health, health never falls, so that share holds all
+      // game and the counterfactual is just share x value x rounds x players.
+      const idealPer=Math.floor(S().max*0.4);
+      const idealTotal=idealPer*uv*nR*nP;
+      let actualTotal=0; ks.forEach(function(k){ actualTotal+=totalEarned(k); });
+      const gap=idealTotal-actualTotal;
+      chips+=chip(gap>0?'Left on the table':'Earned above the safe path',
+        CM_FMT(Math.abs(gap)),
+        CM_FMT(actualTotal)+' earned vs '+CM_FMT(idealTotal)+' if everyone had held to '
+        + idealPer+' '+S().unit+' a round');
+      // 3 — did taking more actually pay? Thirds need enough players to mean much.
+      if(nP>=6){
+        const arr=ks.map(function(k){ return {take:takeTotal(k), earn:totalEarned(k)}; });
+        arr.sort(function(a,b){ return b.take-a.take; });
+        const q=Math.max(1, Math.floor(arr.length/3));
+        const mean=function(list){ let t=0; list.forEach(function(o){ t+=o.earn; }); return t/list.length; };
+        const hi=mean(arr.slice(0,q)), lo=mean(arr.slice(-q));
+        chips+=chip('Did taking more pay?', CM_FMT(hi)+' vs '+CM_FMT(lo),
+          'average earnings of the top third of takers vs the bottom third');
+      }
+      // 4 — students only: where you sat against the room
+      if(!HOST && players()[pk]!==undefined){
+        const myTake=takeTotal(pk), rPlayed=nR||1;
+        let allTake=0; ks.forEach(function(k){ allTake+=takeTotal(k); });
+        chips+=chip('You took', (myTake/rPlayed).toFixed(1)+' a round',
+          'the class averaged '+(nP?(allTake/nP/rPlayed).toFixed(1):'—')+' '+S().unit);
+      }
+      sumChips.innerHTML=chips;
     }
     function renderBoard(){
       const ph=state.phase||'idle';
@@ -1657,29 +2028,78 @@ show(start);
           +nameOf(k)+'</span></div>').join('');
         if(ks.length>14) roster+='<div class="cm-brow"><span class="nm" style="color:var(--muted)">…and '+(ks.length-14)+' more</span></div>';
         boardRows.innerHTML = roster || '<div class="cm-brow"><span class="nm" style="color:var(--muted)">No one yet…</span></div>';
+        boardRows.hidden=false; dist.hidden=true;
         return;
       }
-      boardTitle.textContent = ph==='final' ? '🏆 Final standings' : 'Leaderboard — total earnings';
-      const lastDone = histEntry(state.round||0) ? (state.round||0)
-        : Math.max(0,(state.round||0)-1);
-      const rows=Object.keys(players()).map(k=>({k:k, name:nameOf(k), tot:totalEarned(k),
-        take:histEntry(lastDone)? roundChoices(lastDone)[k] : undefined}));
-      rows.sort((a,b)=> b.tot-a.tot || a.name.localeCompare(b.name));
-      // big classes: top 10 + your own row (with true rank) + a "+N more" line
-      const rowHtml=(r,i)=>'<div class="cm-brow'+(r.k===pk?' me':'')+'">'
-        +'<span class="rk">'+(i+1)+'.</span><span class="nm">'+r.name+'</span>'
-        +(r.take!==undefined?'<span class="tk">took '+r.take+'</span>':'')
-        +'<span class="er">'+CM_FMT(r.tot)+'</span></div>';
-      let html;
-      if(rows.length<=12){ html=rows.map(rowHtml).join(''); }
-      else {
-        html=rows.slice(0,10).map(rowHtml).join('');
-        const meIdx=rows.findIndex(r=>r.k===pk);
-        if(meIdx>=10) html+=rowHtml(rows[meIdx], meIdx);
-        const others=rows.length-10-(meIdx>=10?1:0);
-        if(others>0) html+='<div class="cm-brow"><span class="nm" style="color:var(--muted)">…and '+others+' more players</span></div>';
+      // No ranking table: a leaderboard invites "who won", when the point is that
+      // the class as a whole did worse than it could have. Show where YOU sit
+      // against the class average, and how the whole class is spread.
+      boardTitle.textContent = ph==='final' ? 'Final results' : 'Where the class stands';
+      boardRows.hidden=true; dist.hidden=false;
+      // Count only students who actually submitted a choice in a played round.
+      // Someone sitting in the roster without ever playing would otherwise sit at
+      // $0 and drag the class average down — and it keeps the figure honest if a
+      // stale entry ever lingers in the roster.
+      const playedSet={};
+      for(let rr=1; rr<=(state.round||0); rr++){
+        const c=roundChoices(rr); Object.keys(c).forEach(function(k){ playedSet[k]=1; });
       }
-      boardRows.innerHTML=html;
+      let ks=Object.keys(players()).filter(function(k){ return playedSet[k]; });
+      if(!ks.length) ks=Object.keys(players());
+      const vals=ks.map(function(k){ return totalEarned(k); });
+      const nP=vals.length;
+      const sum=vals.reduce((a,b)=>a+b,0);
+      const avg=nP? sum/nP : 0;
+      const mine=(!HOST && pk && players()[pk]!==undefined) ? totalEarned(pk) : null;
+      youLbl.textContent = (mine===null) ? 'Class total' : 'You earned';
+      youVal.textContent = (mine===null) ? CM_FMT(sum) : CM_FMT(mine);
+      avgVal.textContent = CM_FMT(avg);
+
+      // histogram of earnings — a pie can't show a spread, so this buckets the
+      // class into columns, tints your own bucket, and marks the average.
+      // Bins span the OBSERVED range rather than 0..max: earnings cluster in a
+      // narrow band well above zero, so anchoring at 0 crushed the whole class
+      // into two or three columns. Empty buckets keep a faint stub so the axis
+      // still reads as eight buckets rather than a handful of floating bars.
+      const W=640, PADL=14, PADR=14, BASE=58, TOP=18, BINS=8;   // TOP leaves headroom for the count above the tallest bar;
+      // the box is deliberately wide and short so eight buckets plus two label
+      // rows fit without the panel growing taller than the column it sits in
+      let lo = vals.length ? Math.min.apply(null, vals) : 0;
+      let hi = vals.length ? Math.max.apply(null, vals) : 1;
+      if(!(hi>lo)){ const pad=Math.max(1, Math.abs(hi)*0.15); lo=Math.max(0, hi-pad); hi=hi+pad; }
+      const span=hi-lo, step=span/BINS;
+      const binOf=function(v){ return Math.max(0, Math.min(BINS-1, Math.floor((v-lo)/step))); };
+      const counts=new Array(BINS).fill(0);
+      vals.forEach(function(v){ counts[binOf(v)]++; });
+      const myBin = (mine===null) ? -1 : binOf(mine);
+      const peak=Math.max.apply(null, counts.concat([1]));
+      const plotW=W-PADL-PADR, bw=plotW/BINS;
+      let sv='<defs><filter id="cmRough-'+id+'" x="-6%" y="-6%" width="112%" height="112%">'
+        +'<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="9" result="n"/>'
+        +'<feDisplacementMap in="SourceGraphic" in2="n" scale="1.3" xChannelSelector="R" yChannelSelector="G"/>'
+        +'</filter></defs><g filter="url(#cmRough-'+id+')">';
+      counts.forEach(function(c,i){
+        const h=c ? Math.max((c/peak)*(BASE-TOP), 2.5) : 2,
+              x=PADL+i*bw+2, y=BASE-h;
+        sv+='<rect class="cm-hbar2'+(c?'':' ghost')+(i===myBin?' me':'')+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)
+          +'" width="'+(bw-4).toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"/>';
+        if(c) sv+='<text class="cm-hcount" x="'+(x+(bw-4)/2).toFixed(1)+'" y="'+(y-3).toFixed(1)+'">'+c+'</text>';
+      });
+      sv+='<path class="cm-haxis" d="M'+PADL+' '+BASE+' H'+(W-PADR)+'"/></g>';
+      // average marker — nudged sideways if it would sit on top of "you"
+      const ax=PADL+((avg-lo)/span)*plotW;
+      const axc=Math.min(W-PADR-8, Math.max(PADL+12, ax));
+      const youX=(myBin>=0) ? PADL+myBin*bw+bw/2 : null;
+      let avgLblX=axc;
+      if(youX!==null && Math.abs(axc-youX)<26) avgLblX = (axc>=youX) ? Math.min(W-PADR-8, youX+26) : Math.max(PADL+12, youX-26);
+      sv+='<path class="cm-havg" d="M'+ax.toFixed(1)+' '+TOP+' V'+BASE+'"/>'
+        + '<text class="cm-havglbl" x="'+avgLblX.toFixed(1)+'" y="'+(BASE+13)+'" text-anchor="middle">avg</text>';
+      if(youX!==null) sv+='<text class="cm-hyou" x="'+youX.toFixed(1)+'" y="'+(BASE+13)+'" text-anchor="middle">you</text>';
+      // range labels: inset from the edges so they can't clip out of the viewBox
+      sv+='<text class="cm-hend" x="'+PADL+'" y="'+(BASE+28)+'">'+CM_FMT(lo)+'</text>'
+        + '<text class="cm-hend mid" x="'+(W/2)+'" y="'+(BASE+28)+'" text-anchor="middle">lowest → highest in the class</text>'
+        + '<text class="cm-hend" x="'+(W-PADR)+'" y="'+(BASE+28)+'" text-anchor="end">'+CM_FMT(hi)+'</text>';
+      histo.innerHTML=sv;
     }
     function renderReveal(){
       const ph=state.phase||'idle', r=state.round||0, e=histEntry(r);
@@ -1742,7 +2162,8 @@ show(start);
     function render(){
       const ph=state.phase||'idle', r=state.round||0;
       rebuildNames();
-      theme(); renderMeter(); renderHist(); renderBoard(); renderReveal(); renderMe();
+      sec.classList.toggle('is-final', ph==='final');
+      theme(); renderMeter(); renderHist(); renderPicks(); renderSummary(); renderBoard(); renderReveal(); renderMe();
       // scenario story card
       scenCard.hidden = !(ph==='lobby' || (ph!=='idle' && !joined() && !HOST && ph!=='final'));
       if(!scenCard.hidden){ scenName.textContent=S().icon+' '+S().name;
@@ -2419,6 +2840,137 @@ show(start);
       });
     }
     backend.subscribeDoc('polls', id, function(d){ state=d||{counts:{},released:false}; render(); });
+  });
+
+  // ---- wire each nested guess-a-number poll (guess_embed) ------------------
+  // Sharded counts key "g_<value × 10^dec>" plus broadcast `opened`/`released`
+  // flags in 'polls'. TWO instructor gates: the whole block is hidden on every
+  // screen until the host opens the poll, and the distribution stays hidden
+  // until the host releases it. The host copy never shows the input.
+  guessembeds.forEach(function(root){
+    const id = root.dataset.guessId;
+    const unit = root.dataset.geUnit || '';
+    const dec = parseInt(root.dataset.geDec||'1', 10);
+    const scale = Math.pow(10, dec);
+    const MAXV = parseFloat(root.dataset.geMax||'100');
+    const launch = root.querySelector('[data-ge-launch]');
+    const body = root.querySelector('[data-ge-body]');
+    const form = root.querySelector('[data-ge-form]');
+    const input = root.querySelector('[data-ge-input]');
+    const studentBox = root.querySelector('[data-ge-student]');
+    const submitBtn = root.querySelector('[data-ge-submit]');
+    const resultBox = root.querySelector('[data-ge-result]');
+    const avgEl = root.querySelector('[data-ge-avg]');
+    const histEl = root.querySelector('[data-ge-hist]');
+    const statsEl = root.querySelector('[data-ge-stats]');
+    const answerEl = root.querySelector('[data-ge-answer]');
+    const totalEl = root.querySelector('[data-ge-total]');
+    const hintEl = root.querySelector('[data-ge-hint]');
+    const openBtn = root.querySelector('[data-ge-open]');
+    const revealBtn = root.querySelector('[data-ge-reveal]');
+    const closeBtn = root.querySelector('[data-ge-close]');
+    const resetBtn = root.querySelector('[data-ge-reset]');
+    root.addEventListener('keydown', e=>{ if(navKeys.indexOf(e.key)>-1) e.stopPropagation(); });
+
+    const trim = v => (Math.round(v*scale)/scale).toFixed(dec).replace(/\.0+$/,'');
+    const fmt = v => trim(v) + (unit ? ' ' + unit : '');
+    function niceStep(range){
+      const raw = (range||1)/6;
+      const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+      const norm = raw/mag;
+      const step = norm<=1?1 : norm<=2?2 : norm<=5?5 : 10;
+      return Math.max(1/scale, step*mag);
+    }
+
+    const doneKey='guess-done:'+id;
+    let mine=null; try{ const v=localStorage.getItem(doneKey); mine=(v===null||v==='')?null:parseFloat(v); }catch(e){ mine=null; }
+    let state={counts:{},opened:false,released:false};
+
+    function aggregate(counts){
+      let n=0, sum=0, min=Infinity, max=-Infinity; const vals=[];
+      Object.keys(counts).forEach(function(k){
+        const m=k.match(/^g_(\d+)$/); if(!m) return;
+        const v=parseInt(m[1],10)/scale, c=counts[k]||0;
+        if(v<0 || v>MAXV || c<=0) return;
+        n+=c; sum+=v*c; vals.push([v,c]); if(v<min)min=v; if(v>max)max=v;
+      });
+      if(!n){ min=0; max=0; }
+      return {n:n, sum:sum, min:min, max:max, vals:vals};
+    }
+    function renderResult(agg){
+      avgEl.textContent = agg.n ? fmt(agg.sum/agg.n) : '—';
+      if(!agg.n){ histEl.innerHTML=''; statsEl.textContent='No guesses yet.'; return; }
+      const step = niceStep(agg.max-agg.min);
+      const lo = Math.floor(agg.min/step)*step;
+      const NB = Math.max(1, Math.min(10, Math.floor((agg.max-lo)/step)+1));
+      const bins = new Array(NB).fill(0);
+      agg.vals.forEach(function(e){
+        const b=Math.max(0, Math.min(NB-1, Math.floor((e[0]-lo)/step)));
+        bins[b]+=e[1];
+      });
+      const maxBin = Math.max.apply(null, bins.concat([1]));
+      let hh='';
+      for(let b=0;b<NB;b++){
+        const h = bins[b]>0 ? Math.max(6, bins[b]/maxBin*100) : 0;
+        hh+='<div class="ge-bin"><div class="ge-bin-col"><div class="ge-bin-fill" style="height:'+h+'%">'
+          +(bins[b]>0?'<span class="ge-bin-cnt">'+bins[b]+'</span>':'')
+          +'</div></div><div class="ge-bin-lbl">'+trim(lo+b*step)+'</div></div>';
+      }
+      histEl.innerHTML=hh;
+      agg.vals.sort(function(a,b){return a[0]-b[0];});
+      let med=0, seen=0, half=(agg.n+1)/2;
+      for(const pair of agg.vals){ seen+=pair[1]; if(seen>=half){ med=pair[0]; break; } }
+      statsEl.textContent='n='+agg.n+' · median '+fmt(med)+' · range '+trim(agg.min)+'–'+fmt(agg.max);
+    }
+    function render(){
+      const agg=aggregate(state.counts||{});
+      const opened=!!state.opened, released=!!state.released;
+      root.hidden = !(HOST || opened);
+      launch.hidden = !(HOST && !opened);
+      body.hidden = !opened;
+      totalEl.textContent=agg.n;
+      resultBox.hidden=!released;
+      if(answerEl) answerEl.hidden=!released;
+      if(released) renderResult(agg);
+      if(HOST){
+        studentBox.hidden=true;
+        revealBtn.hidden=!opened; closeBtn.hidden=!opened; resetBtn.hidden=!opened;
+        revealBtn.textContent = released ? 'Hide results' : 'Release results';
+        hintEl.textContent = released ? 'Results are on every screen.'
+          : (agg.n+' guess'+(agg.n===1?'':'es')+' in — release when the class is ready.');
+      } else {
+        studentBox.hidden=released;
+        if(released) hintEl.textContent='The results are in!';
+        else if(mine!==null) hintEl.textContent='Your guess is locked in. Results appear when your instructor releases them…';
+        else hintEl.textContent='Type a number, then lock it in.';
+      }
+    }
+    function lockIfDone(){
+      if(mine===null) return;
+      input.value=trim(mine); input.disabled=true;
+      submitBtn.disabled=true; submitBtn.textContent='Locked in ✓';
+    }
+
+    if(HOST){
+      root.classList.add('host');
+      openBtn.addEventListener('click', ()=> backend.mergeDoc('polls', id, {opened:true}));
+      revealBtn.addEventListener('click', ()=> backend.mergeDoc('polls', id, {released:!state.released}));
+      closeBtn.addEventListener('click', ()=> backend.mergeDoc('polls', id, {opened:false, released:false}));
+      resetBtn.addEventListener('click', ()=>{ if(confirm('Reset all guesses for this question?')) backend.setDoc('polls', id, {counts:{}, opened:true, released:false}); });
+    } else {
+      lockIfDone();
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(mine!==null) return;
+        let v=parseFloat(input.value);
+        if(isNaN(v) || v<0){ input.focus(); return; }
+        const key=Math.round(Math.min(MAXV, v)*scale);
+        mine=key/scale; localStorage.setItem(doneKey, String(mine));
+        lockIfDone(); backend.bump('polls', id, 'g_'+key);
+      });
+    }
+    render();
+    backend.subscribeDoc('polls', id, function(d){ state=d||{counts:{},opened:false,released:false}; render(); });
   });
 
   // ---- wire each type-a-dollar-amount slide --------------------------------
@@ -3186,6 +3738,487 @@ show(start);
     backend.subscribeDoc('polls', id, function(d){ state=(d&&d.v===4)?d:{phase:'idle'}; render(); });
   });
 
+  // ---- wire each Inspector game (adversarial pursuit, Ch 8.7) --------------
+  // Half the room runs plants (comply / cheat quietly / cheat openly), half
+  // inspects them (random / target big emitters / follow up on complaints).
+  // Both move at once, and the inspectors' MIX sets the probability each kind
+  // of cheat is caught — so there is no dominant move on either side.
+  //
+  // The teaching object is Becker (1968): deterrence = probability x penalty.
+  // The payoffs are tuned so pulling ONE lever leaves cheating just as common
+  // but drives it from open to quiet, and only pulling BOTH produces
+  // compliance. Both single-lever paths give identical numbers, which is the
+  // proof that only the product matters.
+  //
+  // Shared doc in 'polls':
+  //   { iv:1, phase:'idle'|'lobby'|'open'|'reveal'|'final', gameId, rounds, round,
+  //     cov, fine, players:{pk:ts}, roles:{pk:'p'|'i'}, choices:{rN:{pk:key}},
+  //     caught:{rN:{pk:1}}, hist:{rN:{...}} }
+  const INS_PAY  = {comply:60, quiet:85, open:100};   // revenue net of cleanup
+  const INS_GAIN = {quiet:25, open:40};               // saved vs complying
+  const INS_D = {                                     // detection before coverage
+    rand:{quiet:0.18, open:0.30},
+    big: {quiet:0.06, open:0.62},
+    comp:{quiet:0.30, open:0.28}
+  };
+  const INS_COV={off:0.5, on:1.0}, INS_FINE={off:100, on:200};
+  const INS_PMOVE=[
+    {k:'comply', n:'Comply',            d:'Run the scrubbers. Costs you $40 in cleanup.',      p:'$60'},
+    {k:'quiet',  n:'Cheat quietly',     d:'Cut cleanup back where it is hard to notice.',      p:'$85'},
+    {k:'open',   n:'Cheat openly',      d:'Skip cleanup altogether. Cheapest, and obvious.',   p:'$100'}
+  ];
+  const INS_IMOVE=[
+    {k:'rand', n:'Random spot checks',      d:'Even coverage — catches a little of everything.'},
+    {k:'big',  n:'Target the big emitters', d:'Strong against blatant violations, weak on subtle ones.'},
+    {k:'comp', n:'Follow up on complaints', d:'Strong against subtle violations near neighborhoods.'}
+  ];
+  const INS_FMT = n => '$'+Math.round(n).toLocaleString('en-US');
+  const INS_PCT = x => Math.round(x*100)+'%';
+  function insHash(s){ let h=2166136261>>>0; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
+  function insRnd(s){ let h=insHash(s); h^=h>>>16; h=Math.imul(h,2246822507)>>>0; h^=h>>>13; h=Math.imul(h,3266489909)>>>0; h^=h>>>16; return (h>>>0)/4294967296; }
+
+  inspects.forEach(function(sec){
+    const id = sec.dataset.insId;
+    const el = s=>sec.querySelector(s);
+    const roundsIn=el('[data-ins-rounds]'), startBtn=el('[data-ins-start]'),
+      nextBtn=el('[data-ins-next]'), endBtn=el('[data-ins-end]'), finishBtn=el('[data-ins-finish]'),
+      leversBox=el('[data-ins-levers]'), statusEl=el('[data-ins-status]'),
+      joinBox=el('[data-ins-join]'), joinBtn=el('[data-ins-joinbtn]'),
+      roleCard=el('[data-ins-rolecard]'), roleTag=el('[data-ins-roletag]'),
+      roleName=el('[data-ins-rolename]'), roleDesc=el('[data-ins-roledesc]'),
+      decideBox=el('[data-ins-decide]'), promptEl=el('[data-ins-prompt]'), optsEl=el('[data-ins-opts]'),
+      submitBtn=el('[data-ins-submit]'), revealBox=el('[data-ins-reveal]'),
+      verdictEl=el('[data-ins-verdict]'), revLines=el('[data-ins-revlines]'),
+      meEl=el('[data-ins-me]'), boardBox=el('[data-ins-board]'),
+      boardP=el('[data-ins-boardplants]'), boardI=el('[data-ins-boardinsp]'),
+      gaugeSvg=el('[data-ins-gauge]'), eqEl=el('[data-ins-eq]'),
+      mixBox=el('[data-ins-mix]'), mixSvg=el('[data-ins-mixsvg]'),
+      sumBox=el('[data-ins-summary]'), chipsEl=el('[data-ins-chips]');
+    sec.addEventListener('keydown', e=>{ if(navKeys.indexOf(e.key)>-1) e.stopPropagation(); });
+    if(HOST) sec.classList.add('host');
+
+    let pk=localStorage.getItem('ins-pk:'+id);
+    if(!pk){ pk='p'+Math.random().toString(36).slice(2,10); localStorage.setItem('ins-pk:'+id, pk); }
+
+    let state={phase:'idle'}, pick=null, pickRound=-1;
+    const players=()=>state.players||{};
+    const roles=()=>state.roles||{};
+    const R=()=>state.round||0;
+    const NR=()=>state.rounds||5;
+    const cov=()=>state.cov||INS_COV.off;
+    const fine=()=>state.fine||INS_FINE.off;
+    const joined=()=>!HOST && players()[pk]!==undefined;
+    const myRole=()=>roles()[pk]||null;
+    const choicesFor=r=>(state.choices&&state.choices['r'+r])||{};
+    const caughtFor=r=>(state.caught&&state.caught['r'+r])||{};
+    const histFor=r=>(state.hist&&state.hist['r'+r])||null;
+
+    // display names by join order, exactly as the commons game numbers players
+    let nameMap={};
+    function rebuildNames(){
+      const ks=Object.keys(players()).sort((a,b)=>(players()[a]-players()[b])||(a<b?-1:1));
+      nameMap={}; let np=0, ni=0;
+      ks.forEach(function(k){
+        const r=roles()[k];
+        if(r==='i'){ ni++; nameMap[k]='Inspector '+ni; }
+        else { np++; nameMap[k]='Plant '+np; }
+      });
+    }
+    const nameOf=k=>nameMap[k]||'Player';
+    function roleCounts(){
+      let p=0,i=0; Object.keys(players()).forEach(function(k){ if(roles()[k]==='i') i++; else if(roles()[k]==='p') p++; });
+      return {p:p,i:i};
+    }
+
+    // detection probabilities implied by the inspectors' actual mix this round
+    function probs(imix, coverage){
+      const tot=(imix.rand||0)+(imix.big||0)+(imix.comp||0);
+      let q=0,o=0;
+      if(!tot){ ['rand','big','comp'].forEach(function(s){ q+=INS_D[s].quiet/3; o+=INS_D[s].open/3; }); }
+      else ['rand','big','comp'].forEach(function(s){
+        const sh=(imix[s]||0)/tot; q+=sh*INS_D[s].quiet; o+=sh*INS_D[s].open; });
+      return {q:Math.min(1,q*coverage), o:Math.min(1,o*coverage)};
+    }
+    // what a rational plant would do, given those probabilities
+    function bestMove(p, f){
+      const v={comply:INS_PAY.comply, quiet:INS_PAY.quiet-p.q*f, open:INS_PAY.open-p.o*f};
+      let bk='comply'; ['quiet','open'].forEach(function(k){ if(v[k]>v[bk]) bk=k; });
+      return {key:bk, v:v};
+    }
+
+    function totals(){
+      const out={};
+      Object.keys(players()).forEach(function(k){ out[k]={earn:0, caught:0, n:0}; });
+      for(let r=1;r<=R();r++){
+        const h=histFor(r); if(!h) continue;
+        const ch=choicesFor(r), cg=caughtFor(r);
+        Object.keys(players()).forEach(function(k){
+          if(!out[k]) return;
+          const c=ch[k]; if(c===undefined) return;
+          out[k].n++;
+          if(roles()[k]==='i'){
+            const per=(h.perInsp&&h.perInsp[c]!==undefined)?h.perInsp[c]:0;
+            out[k].earn+=50+80*per; out[k].caught+=per;
+          } else {
+            out[k].earn+=INS_PAY[c]-(cg[k]?h.fine:0);
+          }
+        });
+      }
+      return out;
+    }
+
+    // ── the gauge: what each cheat nets you AFTER the expected penalty,
+    // measured against simply complying. Zero is the break-even line, so a bar
+    // to the right means that cheat still pays. Showing BOTH cheats matters:
+    // at the half-measure the open bar falls to zero while the quiet bar is
+    // still positive, which is the whole lesson made visible.
+    function renderGauge(){
+      const h=histFor(R());
+      const imix=h?h.imix:null, c=h?h.cov:cov(), f=h?h.fine:fine();
+      const p=probs(imix||{}, c);
+      const net={quiet:(INS_PAY.quiet-p.q*f)-INS_PAY.comply, open:(INS_PAY.open-p.o*f)-INS_PAY.comply};
+      const best=bestMove(p,f);
+      const W=460, CX=292, TOP=30, BH=28, GAP=20, HALF=150, GUT=8;
+      const max=Math.max(25, Math.abs(net.quiet), Math.abs(net.open))*1.12;
+      const w=v=>Math.max(2,(Math.abs(v)/max)*HALF);
+      const rows=[{k:'quiet', n:'Cheat quietly', v:net.quiet},{k:'open', n:'Cheat openly', v:net.open}];
+      let sv='';
+      rows.forEach(function(o,i){
+        const y=TOP+i*(BH+GAP), pays=o.v>0.5, bw=w(o.v);
+        const x=pays?CX:CX-bw;
+        sv+='<text class="ins-glbl" x="'+GUT+'" y="'+(y+19)+'">'+o.n+'</text>';
+        sv+='<rect class="ins-gbar '+(pays?'gain':'pen over')+'" x="'+x.toFixed(1)+'" y="'+y+'" width="'
+          + bw.toFixed(1)+'" height="'+BH+'" rx="4"/>';
+        // a long bar reaches back under the row label, so its value goes INSIDE
+        const inside = bw>62;
+        const lx = inside ? (pays ? x+bw-8 : x+8) : (pays ? x+bw+7 : x-7);
+        const anch = inside ? (pays?'end':'start') : (pays?'start':'end');
+        sv+='<text class="ins-gnum'+(inside?' in':'')+'" x="'+lx.toFixed(1)+'" y="'+(y+20)
+          + '" text-anchor="'+anch+'">'+(o.v>0?'+':'')+INS_FMT(o.v)+'</text>';
+      });
+      const BOT=TOP+2*BH+GAP;
+      sv+='<path class="ins-gaxis" d="M'+CX+' '+(TOP-9)+' V'+(BOT+8)+'"/>';
+      sv+='<text class="ins-gsub" x="'+CX+'" y="'+(TOP-14)+'" text-anchor="middle">same as complying</text>';
+      sv+='<text class="ins-gsub" x="'+(CX-8)+'" y="'+(BOT+21)+'" text-anchor="end">&#8592; complying pays more</text>';
+      sv+='<text class="ins-gsub" x="'+(CX+8)+'" y="'+(BOT+21)+'">cheating still pays &#8594;</text>';
+      const vTxt={comply:'Complying pays best.', quiet:'Cheating still pays — quietly.', open:'Cheating openly pays best.'}[best.key];
+      sv+='<text class="ins-gverdict" x="'+GUT+'" y="'+(BOT+42)+'" fill="'
+        + (best.key==='comply'?'#2f6b4f':(best.key==='quiet'?'#8a6a2f':'#a1503c'))+'">'+vTxt+'</text>';
+      gaugeSvg.innerHTML=sv;
+      eqEl.innerHTML='Deterrence = chance caught &times; the fine. Quiet cheat: <b>'+INS_PCT(p.q)+'</b> &times; '
+        + INS_FMT(f)+' = <b>'+INS_FMT(p.q*f)+'</b> against '+INS_FMT(INS_GAIN.quiet)+' saved. Open cheat: <b>'
+        + INS_PCT(p.o)+'</b> &times; '+INS_FMT(f)+' = <b>'+INS_FMT(p.o*f)+'</b> against '+INS_FMT(INS_GAIN.open)
+        + ' saved.'+(h?'':' Figures update as soon as a round is played.');
+    }
+
+    // ── round-by-round mix of what plants actually did ──
+    function renderMix(){
+      const rounds=[]; for(let r=1;r<=R();r++){ const h=histFor(r); if(h) rounds.push({r:r,h:h}); }
+      mixBox.hidden = rounds.length===0;
+      if(!rounds.length) return;
+      const W=460, H=150, PADL=8, PADR=8, TOP=10, BASE=112;
+      const n=rounds.length, slot=(W-PADL-PADR)/n, bw=Math.min(52, slot*0.62);
+      let sv='';
+      rounds.forEach(function(o,i){
+        const h=o.h, m=h.mix||{}, tot=(m.comply||0)+(m.quiet||0)+(m.open||0);
+        const x=PADL+i*slot+(slot-bw)/2;
+        if(!tot){
+          sv+='<rect class="ins-seg comply" x="'+x.toFixed(1)+'" y="'+(BASE-2)+'" width="'+bw.toFixed(1)+'" height="2"/>';
+        } else {
+          let y=BASE;
+          [['open',m.open||0],['quiet',m.quiet||0],['comply',m.comply||0]].forEach(function(pair){
+            const cls=pair[0], v=pair[1]; if(!v) return;
+            const hgt=(v/tot)*(BASE-TOP); y-=hgt;
+            sv+='<rect class="ins-seg '+cls+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hgt.toFixed(1)+'"/>';
+            if(hgt>13) sv+='<text class="ins-mixnum" x="'+(x+bw/2).toFixed(1)+'" y="'+(y+hgt/2+3.5).toFixed(1)+'" text-anchor="middle">'+v+'</text>';
+          });
+        }
+        sv+='<text class="ins-mixlbl" x="'+(x+bw/2).toFixed(1)+'" y="'+(BASE+13)+'" text-anchor="middle">R'+o.r+'</text>';
+        sv+='<text class="ins-mixlbl" x="'+(x+bw/2).toFixed(1)+'" y="'+(BASE+26)+'" text-anchor="middle" fill="#3f5f7a">'
+          + INS_FMT(h.det||0)+'</text>';
+      });
+      sv+='<text class="ins-mixlbl" x="'+PADL+'" y="'+(BASE+39)+'" fill="#3f5f7a">deterrence = chance caught &#215; fine</text>';
+      mixSvg.innerHTML=sv;
+    }
+
+    // ── the round verdict, written to explain WHY it came out that way ──
+    function renderReveal(){
+      const ph=state.phase, r=R(), h=histFor(r);
+      const show=(ph==='reveal'||ph==='final')&&h;
+      revealBox.hidden=!show;
+      if(!show) return;
+      const m=h.mix||{}, im=h.imix||{}, nP=(m.comply||0)+(m.quiet||0)+(m.open||0);
+      const p={q:h.pq, o:h.po};
+      const best=bestMove(p, h.fine);
+      const bestName={comply:'complying', quiet:'cheating quietly', open:'cheating openly'}[best.key];
+      verdictEl.className='ins-verdict '+best.key;
+      const cheats=(m.quiet||0)+(m.open||0), caughtN=(h.caughtQ||0)+(h.caughtO||0);
+      verdictEl.textContent = best.key==='comply'
+        ? 'Round '+r+': complying was the profitable move — and '+(m.comply||0)+' of '+nP+' plants took it.'
+        : 'Round '+r+': '+bestName+' was the profitable move. '+cheats+' of '+nP+' plants cheated; '
+          + caughtN+(caughtN===1?' was':' were')+' caught.';
+      let s='Plants: <strong>'+(m.comply||0)+'</strong> complied, <strong>'+(m.quiet||0)
+        +'</strong> cheated quietly, <strong>'+(m.open||0)+'</strong> cheated openly. '
+        +'Inspectors: <strong>'+(im.rand||0)+'</strong> ran spot checks, <strong>'+(im.big||0)
+        +'</strong> targeted big emitters, <strong>'+(im.comp||0)+'</strong> worked complaints. '
+        +'That mix caught a quiet cheat <strong>'+INS_PCT(h.pq)+'</strong> of the time and an open one <strong>'
+        +INS_PCT(h.po)+'</strong> of the time.';
+      // The explainer has to reason about the move that ACTUALLY won, not just
+      // the open cheat: at the half-measure the open cheat is deterred while
+      // the quiet one is not, and saying "complying won" there would be false.
+      const penO=h.po*h.fine, penQ=h.pq*h.fine;
+      s+='<span class="why"><b>Why it came out that way.</b> ';
+      if(best.key==='open'){
+        s+='Cheating openly saved '+INS_FMT(INS_GAIN.open)+' against an expected penalty of '+INS_PCT(h.po)
+          +' &times; '+INS_FMT(h.fine)+' = <strong>'+INS_FMT(penO)+'</strong>. The penalty was smaller than the saving, '
+          +'so the most blatant cheat was also the most profitable one.';
+      } else if(best.key==='quiet'){
+        s+='The open cheat is now deterred — it saves '+INS_FMT(INS_GAIN.open)+' against an expected penalty of <strong>'
+          +INS_FMT(penO)+'</strong>. But a quiet cheat saves '+INS_FMT(INS_GAIN.quiet)+' against only <strong>'
+          +INS_FMT(penQ)+'</strong>, so cheating did not stop; it <strong>changed form</strong>. '
+          +'Raising the penalty and funding inspections each double deterrence — it takes both to get past '
+          +INS_FMT(INS_GAIN.open)+'.';
+      } else {
+        s+='Both cheats are now deterred: openly saves '+INS_FMT(INS_GAIN.open)+' against <strong>'+INS_FMT(penO)
+          +'</strong> expected, quietly saves '+INS_FMT(INS_GAIN.quiet)+' against <strong>'+INS_FMT(penQ)
+          +'</strong>. Complying is worth more than either — which took the penalty <em>and</em> the odds of being caught.';
+      }
+      s+=' Expected payouts this round: comply '+INS_FMT(best.v.comply)+', cheat quietly '
+        + INS_FMT(best.v.quiet)+', cheat openly '+INS_FMT(best.v.open)+'.</span>';
+      if(ph==='final'){
+        s+='<span class="why"><b>Game over.</b> The scoreboard is below and the summary is on the right.</span>';
+      }
+      revLines.innerHTML=s;
+    }
+
+    function renderMe(){
+      const r=R(), h=histFor(r);
+      if(HOST||!joined()||!h||!(state.phase==='reveal'||state.phase==='final')){ meEl.hidden=true; return; }
+      const c=choicesFor(r)[pk];
+      if(c===undefined){ meEl.hidden=false; meEl.innerHTML='You sat this round out.'; return; }
+      meEl.hidden=false;
+      if(myRole()==='i'){
+        const per=(h.perInsp&&h.perInsp[c]!==undefined)?h.perInsp[c]:0;
+        const nm=(INS_IMOVE.filter(o=>o.k===c)[0]||{}).n||'your strategy';
+        meEl.innerHTML='You ran <b>'+nm+'</b>. It caught <b>'+per.toFixed(2)
+          +'</b> violations per inspector this round — you earned <b>'+INS_FMT(50+80*per)+'</b>.';
+      } else {
+        const got=caughtFor(r)[pk], base=INS_PAY[c];
+        const nm={comply:'complied',quiet:'cheated quietly',open:'cheated openly'}[c];
+        meEl.innerHTML='You <b>'+nm+'</b> for '+INS_FMT(base)+'. '
+          + (got? 'You were <b>caught</b> and fined '+INS_FMT(h.fine)+' — you kept <b>'+INS_FMT(base-h.fine)+'</b>.'
+                : (c==='comply'? 'No fine was possible.' : 'You were <b>not</b> caught — you kept <b>'+INS_FMT(base)+'</b>.'));
+      }
+    }
+
+    function renderBoard(){
+      const ph=state.phase;
+      const show=(ph==='reveal'||ph==='final')&&Object.keys(players()).length>0;
+      boardBox.hidden=!show; if(!show) return;
+      const t=totals();
+      const ks=Object.keys(t);
+      const plants=ks.filter(k=>roles()[k]!=='i').sort((a,b)=>t[b].earn-t[a].earn).slice(0,5);
+      const insp=ks.filter(k=>roles()[k]==='i').sort((a,b)=>t[b].caught-t[a].caught).slice(0,5);
+      const rowsP=plants.map(k=>'<div class="ins-board-row'+(k===pk?' you':'')+'"><span class="nm">'
+        +nameOf(k)+(k===pk?' (you)':'')+'</span><span class="vv">'+INS_FMT(t[k].earn)+'</span></div>').join('');
+      const rowsI=insp.map(k=>'<div class="ins-board-row'+(k===pk?' you':'')+'"><span class="nm">'
+        +nameOf(k)+(k===pk?' (you)':'')+'</span><span class="vv">'+t[k].caught.toFixed(1)+'</span></div>').join('');
+      boardP.innerHTML=rowsP||'<div class="ins-board-empty">No plants yet.</div>';
+      boardI.innerHTML=rowsI||'<div class="ins-board-empty">No inspectors yet.</div>';
+    }
+
+    // ── closing summary: the chips do the teaching, like the commons game ──
+    function renderSummary(){
+      const show=state.phase==='final';
+      sumBox.hidden=!show; if(!show) return;
+      const hs=[]; for(let r=1;r<=R();r++){ const h=histFor(r); if(h) hs.push(h); }
+      if(!hs.length){ chipsEl.innerHTML=''; return; }
+      const chip=(l,v,e,cls)=>'<div class="ins-chip'+(cls?' '+cls:'')+'"><span>'+l+'</span><b>'+v+'</b><em>'+e+'</em></div>';
+      const first=hs[0], last=hs[hs.length-1];
+      const share=h=>{ const m=h.mix||{}, t=(m.comply||0)+(m.quiet||0)+(m.open||0);
+        return t? {cheat:((m.quiet||0)+(m.open||0))/t, open:(m.open||0)/t, quiet:(m.quiet||0)/t} : {cheat:0,open:0,quiet:0}; };
+      const s0=share(first), s1=share(last);
+      let chips='';
+      // 1 — the number the whole game is about
+      chips+=chip('Deterrence, first round to last',
+        INS_FMT(first.det)+' &rarr; '+INS_FMT(last.det),
+        'chance of being caught &times; the fine, against the '+INS_FMT(INS_GAIN.open)+' an open cheat saves');
+      // 2 — did cheating actually stop?
+      chips+=chip('Plants cheating', INS_PCT(s0.cheat)+' &rarr; '+INS_PCT(s1.cheat),
+        'share of plants that cheated in round 1 versus the final round');
+      // 3 — the form of cheating, which is where the half-measure shows up
+      chips+=chip('Of those cheats, done openly', INS_PCT(s0.cheat?s0.open/s0.cheat:0)+' &rarr; '+INS_PCT(s1.cheat?s1.open/s1.cheat:0),
+        'when penalties rise but detection stays low, cheating gets quieter rather than rarer');
+      // 4 — enforcement actually delivered
+      let cheatsAll=0, caughtAll=0, finesAll=0;
+      hs.forEach(function(h){ const m=h.mix||{}; cheatsAll+=(m.quiet||0)+(m.open||0);
+        caughtAll+=(h.caughtQ||0)+(h.caughtO||0); finesAll+=((h.caughtQ||0)+(h.caughtO||0))*h.fine; });
+      chips+=chip('Cheats actually caught', caughtAll+' of '+cheatsAll,
+        INS_FMT(finesAll)+' collected in fines across the whole game');
+      // 5 — the lesson, stated against what this class actually produced
+      const bothOn=last.cov>=INS_COV.on && last.fine>=INS_FINE.on;
+      const oneOn=(last.cov>=INS_COV.on)!==(last.fine>=INS_FINE.on);
+      let key;
+      if(bothOn) key='Only the product deters. Raising the fine and funding inspections each doubled deterrence; neither alone was enough to beat the '+INS_FMT(INS_GAIN.open)+' a cheat saves, and together they were.';
+      else if(oneOn) key='One lever was pulled, and deterrence doubled to '+INS_FMT(last.det)+' — still short of the '+INS_FMT(INS_GAIN.open)+' an open cheat saves. Cheating did not stop; it got quieter. Pull the other lever and the product finally clears the bar.';
+      else key='With neither lever pulled, deterrence stayed at '+INS_FMT(last.det)+' against a '+INS_FMT(INS_GAIN.open)+' payoff for cheating. Adding inspectors or raising fines would each have doubled it — and only doing both clears the bar.';
+      chips+=chip('The point', 'Penalty &times; probability', key, 'key');
+      chipsEl.innerHTML=chips;
+    }
+
+    function renderDecide(){
+      const ph=state.phase, r=R(), role=myRole();
+      const canPlay = !HOST && joined() && ph==='open' && role;
+      decideBox.hidden = !canPlay;
+      roleCard.hidden = HOST || !joined() || !role;
+      if(!roleCard.hidden){
+        roleCard.classList.toggle('insp', role==='i');
+        roleTag.textContent = role==='i' ? 'Your side' : 'Your side';
+        roleName.textContent = role==='i' ? nameOf(pk)+' — enforcement agency' : nameOf(pk)+' — you run a plant';
+        roleDesc.textContent = role==='i'
+          ? 'You cannot inspect everyone. Choose where to put your effort each round, and you score on violations found.'
+          : 'You earn more by cutting cleanup, and you pay a fine if you are caught. You keep whatever you clear.';
+      }
+      if(!canPlay) return;
+      const already=choicesFor(r)[pk];
+      const list = role==='i' ? INS_IMOVE : INS_PMOVE;
+      promptEl.textContent = role==='i'
+        ? 'Round '+r+' — where will you put your inspection effort?'
+        : 'Round '+r+' — how will you run the plant this year? The fine, if you are caught, is '+INS_FMT(fine())+'.';
+      if(pickRound!==r){ pick=null; pickRound=r; }
+      optsEl.innerHTML = list.map(function(o){
+        const on = already!==undefined ? (already===o.k) : (pick===o.k);
+        return '<button class="ins-opt'+(on?(already!==undefined?' chosen':' on'):'')
+          +(already!==undefined?' done':'')+'" type="button" data-k="'+o.k+'">'
+          +'<span class="txt"><b>'+o.n+'</b><em>'+o.d+'</em></span>'
+          +(o.p?'<span class="pay">'+o.p+'</span>':'')+'</button>';
+      }).join('');
+      Array.from(optsEl.querySelectorAll('.ins-opt')).forEach(function(b){
+        b.addEventListener('click', function(){
+          if(choicesFor(R())[pk]!==undefined) return;
+          pick=b.dataset.k; renderDecide();
+        });
+      });
+      submitBtn.hidden = already!==undefined;
+      submitBtn.disabled = !pick;
+      submitBtn.textContent = already!==undefined ? 'Locked in' : 'Lock in my choice';
+    }
+
+    function render(){
+      rebuildNames();
+      const ph=state.phase||'idle', r=R(), rc=roleCounts();
+      joinBox.hidden = HOST || joined() || !(ph==='lobby'||ph==='open');
+      renderDecide(); renderReveal(); renderMe(); renderBoard(); renderGauge(); renderMix(); renderSummary();
+      if(HOST){
+        startBtn.hidden = !(ph==='idle'||ph==='final');
+        if(ph==='final') startBtn.textContent='Start a new game';
+        nextBtn.hidden = !(ph==='lobby' || (ph==='reveal' && r<NR()));
+        if(!nextBtn.hidden) nextBtn.textContent = ph==='lobby' ? 'Begin round 1 ▸' : 'Begin round '+(r+1)+' ▸';
+        endBtn.hidden = ph!=='open';
+        if(!endBtn.hidden) endBtn.textContent='End round '+r+' — reveal ▸';
+        finishBtn.hidden = !(ph==='reveal'||ph==='open');
+        leversBox.hidden = !(ph==='lobby'||ph==='reveal');
+        Array.from(leversBox.querySelectorAll('.ins-lever')).forEach(function(b){
+          b.classList.toggle('on', b.dataset.insLever==='cov' ? cov()>=INS_COV.on : fine()>=INS_FINE.on);
+        });
+        const n=Object.keys(players()).length;
+        if(ph==='idle') statusEl.textContent='Open the lobby once everyone has the deck open.';
+        else if(ph==='lobby') statusEl.textContent=n+' joined — '+rc.p+' plants, '+rc.i+' inspectors. Roles are dealt as students join.';
+        else if(ph==='open'){ const d=Object.keys(choicesFor(r)).length;
+          statusEl.textContent='Round '+r+' — '+d+' of '+n+' locked in. End the round when ready.'; }
+        else if(ph==='reveal') statusEl.textContent = r<NR()
+          ? 'Round '+r+' is on every screen. Pull a lever — or deliberately do not — then begin round '+(r+1)+'.'
+          : 'Final round revealed. End the game to show the summary.';
+        else statusEl.textContent='Game over — the summary is on every screen.';
+      } else {
+        if(ph==='idle') statusEl.textContent='Waiting for the instructor to open the inspection game…';
+        else if(ph==='lobby') statusEl.textContent = joined()
+          ? 'You’re in as '+nameOf(pk)+'. Waiting for round 1…' : 'Tap to join — you will be dealt a side.';
+        else if(ph==='open') statusEl.textContent = !joined() ? 'Round '+r+' is underway — join below to play.'
+          : (choicesFor(r)[pk]!==undefined ? 'Locked in — waiting for the round to close…' : 'Round '+r+' — make your choice.');
+        else if(ph==='reveal') statusEl.textContent='Round '+r+' results are in.';
+        else statusEl.textContent='Game over.';
+      }
+    }
+
+    if(HOST){
+      function fresh(){
+        return {iv:1, phase:'lobby', gameId:Date.now(), rounds:Math.max(2,Math.min(8,parseInt(roundsIn.value,10)||5)),
+                round:0, cov:INS_COV.off, fine:INS_FINE.off, players:{}, roles:{}, choices:{}, caught:{}, hist:{}};
+      }
+      startBtn.addEventListener('click', function(){
+        if(state.phase==='final' && !confirm('Start a new game? This clears the board for everyone.')) return;
+        backend.setDoc('polls', id, fresh());
+      });
+      leversBox.addEventListener('click', function(e){
+        const b=e.target.closest('.ins-lever'); if(!b) return;
+        if(b.dataset.insLever==='cov') backend.mergeDoc('polls', id, {cov: cov()>=INS_COV.on?INS_COV.off:INS_COV.on});
+        else backend.mergeDoc('polls', id, {fine: fine()>=INS_FINE.on?INS_FINE.off:INS_FINE.on});
+      });
+      nextBtn.addEventListener('click', function(){
+        const ph=state.phase;
+        if(!(ph==='lobby'||ph==='reveal')) return;
+        const r=(ph==='lobby')?1:R()+1;
+        if(ph==='lobby' && !Object.keys(players()).length && !confirm('Nobody has joined yet. Start anyway?')) return;
+        backend.mergeDoc('polls', id, {phase:'open', round:r});
+      });
+      function score(final){
+        const r=R(), ch=choicesFor(r), gid=String(state.gameId||0);
+        const mix={comply:0,quiet:0,open:0}, imix={rand:0,big:0,comp:0};
+        Object.keys(ch).forEach(function(k){
+          const c=ch[k];
+          if(roles()[k]==='i'){ if(imix[c]!==undefined) imix[c]++; }
+          else if(mix[c]!==undefined) mix[c]++;
+        });
+        const c=cov(), f=fine(), p=probs(imix, c);
+        // deterministic draws, so every open copy of the deck agrees
+        const caught={}; let cq=0, co=0;
+        const strat=['rand','big','comp'], itot=imix.rand+imix.big+imix.comp;
+        const credit={rand:0,big:0,comp:0};
+        Object.keys(ch).forEach(function(k){
+          if(roles()[k]==='i') return;
+          const mv=ch[k]; if(mv!=='quiet'&&mv!=='open') return;
+          const pr=(mv==='quiet')?p.q:p.o;
+          if(insRnd(gid+':'+r+':'+k+':catch')<pr){
+            caught[k]=1; if(mv==='quiet') cq++; else co++;
+            // attribute the catch to a strategy drawn from the inspectors' mix
+            let u=insRnd(gid+':'+r+':'+k+':who'), acc=0, s=strat[0];
+            if(itot){ for(let i=0;i<3;i++){ acc+=imix[strat[i]]/itot; if(u<=acc){ s=strat[i]; break; } } }
+            else s=strat[Math.floor(u*3)%3];
+            credit[s]++;
+          }
+        });
+        const perInsp={};
+        strat.forEach(function(s){ perInsp[s]= imix[s] ? credit[s]/imix[s] : 0; });
+        const entry={cov:c, fine:f, mix:mix, imix:imix, pq:p.q, po:p.o, det:p.o*f,
+                     caughtQ:cq, caughtO:co, credit:credit, perInsp:perInsp};
+        const upd={phase: final?'final':'reveal', hist:{}, caught:{}};
+        upd.hist['r'+r]=entry; upd.caught['r'+r]=caught;
+        backend.mergeDoc('polls', id, upd);
+      }
+      endBtn.addEventListener('click', function(){ if(state.phase==='open') score(R()>=NR()); });
+      finishBtn.addEventListener('click', function(){
+        if(state.phase==='open') score(true);
+        else if(state.phase==='reveal') backend.mergeDoc('polls', id, {phase:'final'});
+      });
+    } else {
+      joinBtn.addEventListener('click', function(){
+        if(joined() || !(state.phase==='lobby'||state.phase==='open')) return;
+        // roles alternate by join order so the two sides stay balanced without
+        // the host having to sort anybody: even -> plant, odd -> inspector
+        const n=Object.keys(players()).length;
+        backend.mergeDocShard('polls', id, {players:{[pk]:Date.now()}, roles:{[pk]:(n%2===0?'p':'i')}});
+      });
+      submitBtn.addEventListener('click', function(){
+        const r=R();
+        if(state.phase!=='open' || !joined() || !pick || choicesFor(r)[pk]!==undefined) return;
+        const upd={choices:{}}; upd.choices['r'+r]={[pk]:pick};
+        backend.mergeDocShard('polls', id, upd);
+      });
+    }
+    backend.subscribeDoc('polls', id, function(d){ state=(d&&d.iv===1)?d:{phase:'idle'}; render(); });
+  });
+
   // ---- wire each live Q&A / open-response feed ------------------------------
   // Doc in 'polls' (sharded): submissions live in the writer's shard as
   //   items:{rid:{text,ts}}; upvotes as up:{rid:increment} in the voter's shard
@@ -3742,6 +4775,274 @@ show(start);
     }
     backend.subscribeDoc('polls', selfId, function(d){ selfState=d||{}; render(); });
     if(phase==='post') backend.subscribeDoc('polls', preId, function(d){ preState=d||{}; render(); });
+  });
+
+  // ---- wire live attendance ------------------------------------------------
+  // Firestore carries ONLY {open, session, n} — never a name or an email. Student
+  // PII is POSTed straight from their browser to the Apps Script endpoint, because
+  // the Firestore rules for this project are world-readable.
+  attends.forEach(function(sec){
+    const id=sec.dataset.atId, CHAPTER=sec.dataset.atChapter;
+    const URL_=(window.ATTENDANCE_URL||'').trim();
+    // Students submit through a Google Form when one is configured (fast, and
+    // Forms does the writing); ATTENDANCE_URL is still what the INSTRUCTOR's
+    // "Submit Attendance" calls to mail the roster — one request, no burst.
+    const FORM=window.ATTENDANCE_FORM||null;
+    const FORM_OK=!!(FORM && FORM.url && FORM.fields && FORM.fields.first
+                     && FORM.fields.last && FORM.fields.email);
+    const bar=sec.querySelector('[data-at-bar]');
+    const openBtn=sec.querySelector('[data-at-open]');
+    const finBtn=sec.querySelector('[data-at-finalize]');
+    const cancelBtn=sec.querySelector('[data-at-cancel]');
+    const statusEl=sec.querySelector('[data-at-status]');
+    const selEl=sec.querySelector('[data-at-section]');
+    let st={};
+    // remember which section was last used on this machine
+    if(selEl){
+      try{ const sv=localStorage.getItem('att-sec:'+id); if(sv) selEl.value=sv; }catch(e){}
+      selEl.addEventListener('change', function(){
+        try{ localStorage.setItem('att-sec:'+id, selEl.value); }catch(e){}
+      });
+    }
+
+    // ---- the student pop-up lives on <body> so it shows over ANY slide ----
+    const modal=document.createElement('div');
+    modal.className='at-modal'; modal.hidden=true;
+    modal.innerHTML=
+      '<div class="at-box" role="dialog" aria-modal="true" aria-label="Attendance Information">'+
+        '<div data-at-form>'+
+          '<div class="at-title">Attendance Information</div>'+
+          '<div class="at-chapter" data-at-ch></div>'+
+          '<div class="at-section" data-at-sec hidden></div>'+
+          '<div class="at-two">'+
+            '<label class="at-field"><span class="at-lbl">First name</span>'+
+              '<input class="at-input" type="text" data-at-first autocomplete="given-name" '+
+              'placeholder="First"></label>'+
+            '<label class="at-field"><span class="at-lbl">Last name</span>'+
+              '<input class="at-input" type="text" data-at-last autocomplete="family-name" '+
+              'placeholder="Last"></label>'+
+          '</div>'+
+          '<label class="at-field"><span class="at-lbl">ASU email</span>'+
+            '<input class="at-input" type="email" data-at-email autocomplete="email" '+
+            'placeholder="asurite@asu.edu"></label>'+
+          '<button class="at-submit" type="button" data-at-send>Submit</button>'+
+          '<div class="at-msg" data-at-msg></div>'+
+        '</div>'+
+        '<div class="at-done" data-at-done hidden>'+
+          '<div class="at-done-tick">&#10003;</div>'+
+          '<div class="at-done-txt">Attendance submitted</div>'+
+          '<div class="at-done-sub" data-at-donesub></div>'+
+          '<button class="at-close" type="button" data-at-close>Close</button>'+
+        '</div>'+
+      '</div>';
+    document.body.appendChild(modal);
+    modal.querySelector('[data-at-ch]').textContent=CHAPTER;
+    const firstEl=modal.querySelector('[data-at-first]');
+    const lastEl=modal.querySelector('[data-at-last]');
+    const mailEl=modal.querySelector('[data-at-email]');
+    const sendBtn=modal.querySelector('[data-at-send]');
+    const msgEl=modal.querySelector('[data-at-msg]');
+    const formBox=modal.querySelector('[data-at-form]');
+    const doneBox=modal.querySelector('[data-at-done]');
+    // typing must not drive the deck's arrow/space slide navigation
+    modal.addEventListener('keydown', function(e){
+      if(navKeys.indexOf(e.key)>-1) e.stopPropagation();
+      if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); send(); }
+    });
+    modal.querySelector('[data-at-close]').addEventListener('click', function(){ modal.hidden=true; });
+
+    const doneKey=function(){ return 'att-done:'+id+':'+(st.session||''); };
+    function alreadyDone(){ try{ return !!localStorage.getItem(doneKey()); }catch(e){ return false; } }
+
+    function send(){
+      if(sendBtn.disabled) return;
+      const fn=(firstEl.value||'').trim(), ln=(lastEl.value||'').trim(), em=(mailEl.value||'').trim();
+      firstEl.classList.toggle('bad', !fn);
+      lastEl.classList.toggle('bad', !ln);
+      // must be an ASU address — the part before @ is the ASURITE, which is what
+      // Canvas exports as "SIS Login ID", so rosters match without name-guessing
+      const emOk=/^[^@\s]+@([\w-]+\.)*asu\.edu$/i.test(em);
+      mailEl.classList.toggle('bad', !emOk);
+      if(!fn || !ln || !emOk){
+        msgEl.className='at-msg err';
+        msgEl.textContent = !fn ? 'Please enter your first name.'
+                          : !ln ? 'Please enter your last name.'
+                                : 'Please use your ASU email address — it must end in @asu.edu.';
+        return;
+      }
+      sendBtn.disabled=true; sendBtn.textContent='Sending…';
+      msgEl.className='at-msg'; msgEl.textContent='';
+      const payload={action:'record', session:String(st.session||''), chapter:CHAPTER,
+                     section:String(st.sec||''), sectionLabel:String(st.secLabel||''),
+                     first:fn, last:ln, email:em};
+      function finish(warn){
+        try{ localStorage.setItem(doneKey(),'1'); }catch(e){}
+        backend.mergeDocShard('polls', id, {n: backend.inc(1)});
+        modal.querySelector('[data-at-donesub]').textContent = warn ||
+          ('Your instructor has you on the roster. A confirmation email follows shortly.');
+        formBox.hidden=true; doneBox.hidden=false;
+      }
+      function fail(msg){
+        sendBtn.disabled=false; sendBtn.textContent='Submit';
+        msgEl.className='at-msg err'; msgEl.textContent=msg;
+      }
+      // ---- preferred path: ingest through a Google Form -------------------
+      // Google's own infrastructure absorbs the burst, so there is no script
+      // lock and no ~10-writes/second ceiling: 350 submissions land in seconds
+      // instead of two minutes, and no row can be clobbered because Forms — not
+      // code of ours — does the writing.
+      //
+      // The catch, and it is a real one: Forms sends no CORS headers, so the
+      // POST has to go out `no-cors` and the reply is opaque. We can tell that
+      // the request left the browser; we can never tell what the server said.
+      // Two consequences, both deliberate:
+      //   * SPREAD the sends. Load-testing showed a tight burst from one IP
+      //     losing ~8% to per-IP rate limiting, while the same 350 spread over
+      //     ~20s lost none — and a lecture hall shares a few NATed campus IPs.
+      //   * The slide's counter therefore means "submitted", not "saved". Check
+      //     it against the sheet; the confirmation email is the real receipt.
+      if(FORM_OK){
+        const p=new URLSearchParams();
+        p.set(FORM.fields.first, fn);
+        p.set(FORM.fields.last,  ln);
+        p.set(FORM.fields.email, em);
+        // the human-readable label ("MWF 9:05 am"), not the internal key — this
+        // column is read by a person at the end of the semester. TA routing uses
+        // the key, which the instructor's finalize call carries separately.
+        if(FORM.fields.section) p.set(FORM.fields.section, String(st.secLabel||st.sec||''));
+        if(FORM.fields.session) p.set(FORM.fields.session, String(st.session||''));
+        if(FORM.fields.chapter) p.set(FORM.fields.chapter, CHAPTER);
+        setTimeout(function(){
+          fetch(FORM.url, {method:'POST', mode:'no-cors', body:p})
+            .then(function(){ finish(null); })
+            .catch(function(){
+              fail('Could not reach the attendance form — check your connection and press Submit again.');
+            });
+        }, Math.random()*(FORM.spreadMs||6000));
+        return;
+      }
+
+      if(!URL_){ finish('Recorded locally — your instructor has not finished setting up the attendance link yet.'); return; }
+
+      // A roll call is a thundering herd: 300 browsers POST at once and Apps
+      // Script only runs ~30 at a time. So spread the first attempt over a few
+      // seconds, then back off — and NEVER claim success we have not been told
+      // about: the count on the slide has to mean "a row was written".
+      const TRIES=5, WAITS=[1500, 3500, 7000, 12000];
+      function attempt(k){
+        sendBtn.textContent = k===1 ? 'Sending…' : 'Still trying… ('+k+' of '+TRIES+')';
+        fetch(URL_, {method:'POST', mode:'cors', redirect:'follow',
+                     headers:{'Content-Type':'text/plain;charset=utf-8'},
+                     body:JSON.stringify(payload)})
+          .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+          .then(function(j){
+            if(j && j.ok===true){ finish(null); return; }
+            // the server understood us and said no — retrying cannot help
+            const e=new Error((j&&j.error)||'rejected'); e.rejected=true; throw e;
+          })
+          .catch(function(err){
+            if(err && err.rejected){
+              fail('Not recorded — the attendance server said: '+err.message+'. Please tell your instructor.');
+              return;
+            }
+            if(k<TRIES){ setTimeout(function(){ attempt(k+1); }, WAITS[k-1]+Math.random()*800); return; }
+            fail('Could not reach the attendance server after several tries. Please press Submit again.');
+          });
+      }
+      sendBtn.textContent='Sending…';
+      setTimeout(function(){ attempt(1); }, Math.random()*4000);
+    }
+    sendBtn.addEventListener('click', send);
+
+    function render(){
+      const open=!!st.open, n=st.n||0;
+      const secTxt = st.secLabel ? String(st.secLabel) : '';
+      if(HOST){
+        bar.hidden=false; modal.hidden=true;
+        openBtn.hidden=open; finBtn.hidden=!open; cancelBtn.hidden=!open;
+        if(selEl){ selEl.disabled=open; selEl.title = open
+          ? 'Locked while this roll call is open — press Submit Attendance or Cancel to change section.'
+          : 'Which section this roll call is for'; }
+        openBtn.textContent = st.session ? 'Start attendance again' : 'Attendance';
+        if(!URL_ && !FORM_OK){
+          statusEl.className='an-att-status warn';
+          statusEl.textContent='No attendance link set — add window.ATTENDANCE_FORM (or window.ATTENDANCE_URL) to firebase-config.js (see ATTENDANCE-SETUP.md).';
+        } else if(FORM_OK && !URL_){
+          // collection works; only the end-of-class roster email is missing
+          statusEl.className='an-att-status warn';
+          statusEl.textContent='Collecting through the form. Add window.ATTENDANCE_URL too if you want the roster emailed when you press Submit Attendance.';
+        } else {
+          statusEl.className='an-att-status';
+          statusEl.innerHTML = open
+            ? (secTxt ? '<em>'+secTxt+'</em> &middot; ' : '')+'<strong>'+n+'</strong> submitted &middot; press <em>Submit Attendance</em> when everyone is in.'
+            : (st.session ? 'Last roll call'+(secTxt?' ('+secTxt+')':'')+': <strong>'+n+'</strong> student'+(n===1?'':'s')+'. The roster was emailed.'
+                          : 'Pick the section, then open a name &amp; email pop-up on every student screen.');
+        }
+      } else {
+        bar.hidden=true;
+        const show = open && !alreadyDone();
+        const secEl=modal.querySelector('[data-at-sec]');
+        secEl.textContent=secTxt; secEl.hidden=!secTxt;
+        if(show && modal.hidden){
+          formBox.hidden=false; doneBox.hidden=true;
+          sendBtn.disabled=false; sendBtn.textContent='Submit';
+          msgEl.textContent=''; msgEl.className='at-msg';
+          modal.hidden=false;
+          setTimeout(function(){ try{ firstEl.focus(); }catch(e){} }, 60);
+        } else if(!open && !doneBox.hidden===false){ /* leave a finished card up */ }
+        if(!open && formBox.hidden===false) modal.hidden=true;
+      }
+    }
+
+    if(HOST){
+      openBtn.addEventListener('click', function(){
+        // new session id + cleared shard counters
+        backend.setDoc('polls', id, {open:1, session:String(Date.now()), n:0,
+          sec: selEl ? selEl.value : '',
+          secLabel: selEl ? (selEl.options[selEl.selectedIndex]||{}).text||'' : ''});
+      });
+      cancelBtn.addEventListener('click', function(){
+        backend.mergeDoc('polls', id, {open:0});
+      });
+      // optional: wipe the last roll call so the slide is clean for the next class
+      const clearBtn=sec.querySelector('[data-at-clear]');
+      if(clearBtn){
+        clearBtn.hidden=false;
+        clearBtn.addEventListener('click', function(){
+          if(!confirm('Clear the last roll call from this slide?\n\n(The roster that was emailed is unaffected.)')) return;
+          backend.setDoc('polls', id, {open:0, session:'', n:0, sec:'', secLabel:''});
+          try{ Object.keys(localStorage).forEach(function(k){
+            if(k.indexOf('att-done:'+id+':')===0) localStorage.removeItem(k); }); }catch(e){}
+        });
+      }
+      finBtn.addEventListener('click', function(){
+        backend.mergeDoc('polls', id, {open:0});
+        if(!URL_){ alert('No attendance link is configured yet — see ATTENDANCE-SETUP.md.'); return; }
+        finBtn.disabled=true; finBtn.textContent='Sending roster…';
+        fetch(URL_, {method:'POST', mode:'cors', redirect:'follow',
+                     headers:{'Content-Type':'text/plain;charset=utf-8'},
+                     body:JSON.stringify({action:'finalize', session:String(st.session||''), chapter:CHAPTER,
+                       section:String(st.sec||''), sectionLabel:String(st.secLabel||'')})})
+          .catch(function(){
+            return fetch(URL_, {method:'POST', mode:'no-cors',
+                                headers:{'Content-Type':'text/plain;charset=utf-8'},
+                                body:JSON.stringify({action:'finalize', session:String(st.session||''), chapter:CHAPTER,
+                       section:String(st.sec||''), sectionLabel:String(st.secLabel||'')})});
+          })
+          .then(function(r){
+            finBtn.disabled=false; finBtn.textContent='Submit Attendance';
+            if(r && r.json) r.json().then(function(j){
+              if(j && typeof j.count==='number'){
+                statusEl.className='an-att-status';
+                statusEl.innerHTML='Roster emailed &mdash; <strong>'+j.count+'</strong> student'+(j.count===1?'':'s')+'.';
+              }
+            }).catch(function(){});
+          })
+          .catch(function(){ finBtn.disabled=false; finBtn.textContent='Submit Attendance';
+                             alert('Could not reach the attendance server to send the roster.'); });
+      });
+    }
+    backend.subscribeDoc('polls', id, function(d){ st=d||{}; render(); });
   });
 
   if(status!=='live') console.info('[interactive] backend =',status,'— add real values to firebase-config.js for cross-device sync.');

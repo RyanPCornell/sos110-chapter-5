@@ -404,6 +404,38 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .rg-stat-v{font-family:'Merriweather',serif; font-weight:900; color:var(--accent); line-height:1.1;
   font-size:clamp(1.05rem,2.1vw,1.5rem); margin:.15rem 0;}
 .rg-stat-s{font-size:clamp(.7rem,1.1vw,.84rem); color:#6b6350; line-height:1.2;}
+/* exit survey (mirrors the Evolve game's) */
+.rg-sv-host{background:#fff; border:1.5px solid #e4dcc9; border-radius:16px; text-align:center;
+  padding:clamp(.55rem,1.4vh,.95rem) clamp(.8rem,1.8vw,1.2rem); max-width:min(560px,90vw);}
+.rg-sv-h{font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+  color:#8a6a2f; font-size:clamp(.7rem,1.12vw,.84rem); margin-bottom:.25rem;}
+.rg-sv-n{font-family:'Merriweather',serif; color:#3b3222; font-size:clamp(.88rem,1.45vw,1.05rem);}
+.rg-sv-n strong{color:var(--accent); font-size:1.35em;}
+.rg-sv-btns{display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin:.45rem 0 .3rem;}
+.rg-sv-btns .rg-btn{padding:.48rem 1.05rem; font-size:clamp(.8rem,1.28vw,.93rem);}
+.rg-sv-msg{font-size:clamp(.7rem,1.1vw,.82rem); color:#6b6350; line-height:1.35;}
+.rg-sv-form{background:#fff; border:1.5px solid #e4dcc9; border-radius:16px; text-align:left;
+  padding:clamp(.65rem,1.6vh,1.05rem) clamp(.85rem,2vw,1.3rem); width:min(560px,92vw);
+  display:flex; flex-direction:column; gap:clamp(.35rem,1vh,.65rem);}
+.rg-sv-q{border:none; margin:0; padding:0; display:flex; align-items:baseline; gap:.9rem; flex-wrap:wrap;}
+.rg-sv-q.col{flex-direction:column; align-items:flex-start; gap:.22rem;}
+.rg-sv-q legend{font-family:'Merriweather',serif; font-weight:800; color:#3b3222; padding:0;
+  font-size:clamp(.85rem,1.38vw,1rem); margin-bottom:.18rem;}
+.rg-sv-q label{display:flex; align-items:center; gap:.4rem; color:#4a4436; cursor:pointer;
+  font-size:clamp(.8rem,1.28vw,.93rem);}
+.rg-sv-c{display:block; font-family:'Inter',sans-serif; font-weight:700; color:#3b3222;
+  font-size:clamp(.78rem,1.25vw,.9rem);}
+.rg-sv-c span{font-weight:400; color:#8a8069;}
+.rg-sv-c textarea{display:block; width:100%; margin-top:.22rem; font:inherit; font-weight:400;
+  font-size:clamp(.78rem,1.25vw,.9rem); color:#3b3222; background:#fffdf6; resize:vertical;
+  border:1.5px solid #e4dcc9; border-radius:10px; padding:.42rem .6rem;}
+.rg-sv-c textarea:focus{outline:none; border-color:var(--accent);}
+.rg-sv-form .rg-btn{align-self:center; margin-top:.15rem;}
+.rg-sv-done{background:#fff; border:1.5px solid #e4dcc9; border-radius:16px; text-align:center;
+  padding:clamp(.65rem,1.6vh,1.05rem) clamp(1rem,2.4vw,1.6rem);
+  font-family:'Merriweather',serif; font-weight:800; color:#3b3222; font-size:clamp(.98rem,1.75vw,1.22rem);}
+.rg-sv-sub{font-family:'Inter',sans-serif; font-weight:400; color:#6b6350; margin-top:.22rem;
+  font-size:clamp(.74rem,1.18vw,.86rem);}
 @media (max-width:900px){ .rg-qgrid{flex-direction:column;} .rg-qside{width:100%;} .rg-opts{grid-template-columns:1fr;} }
 
 .gcard-icon{width:52px;height:52px;color:var(--accent);margin:0 0 10px}
@@ -1337,6 +1369,92 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
             aced:aced, ar:ar, missed:missed, mr:mr};
   }
 
+  // ── exit survey (mirrors the Evolve game's) ────────────────────────────────
+  // Answers land in `survey` (sharded, stamped with the game id); the host only
+  // ever sees a COUNT — every answer and comment goes to the inbox, not the wall.
+  var SVFREQ=['Never again','Every Module','Right before each midterm'];
+  var svMsg='';
+  function svOpen(){ return !!state.surveyOpen; }
+  function svAll(){ var g=gid(), v=state.survey||{}, o={}; for(var k in v){ if(v[k]&&v[k].g===g) o[k]=v[k]; } return o; }
+  function svMine(){ return svAll()[PK]||null; }
+  function svSummary(){
+    var v=svAll(), ks=Object.keys(v), out={n:ks.length, yes:0, no:0, freq:[0,0,0], comments:[]};
+    ks.forEach(function(k){ var r=v[k]||{};
+      if(r.b===1) out.yes++; else if(r.b===0) out.no++;
+      if(r.f>=0 && r.f<=2) out.freq[r.f]++;
+      if(r.c && String(r.c).trim()) out.comments.push(String(r.c).trim());
+    });
+    return out;
+  }
+  function svPct(a,b){ var t=a+b; return t? Math.round(a/t*100)+'%' : '—'; }
+  function svText(){
+    var d=svSummary(), L=[];
+    L.push('SOS 110 — Module 1 & 2 Review Game — exit survey');
+    L.push('Responses: '+d.n); L.push('');
+    L.push('Did you find the Review beneficial?');
+    L.push('  Yes '+d.yes+'   No '+d.no+'   ('+svPct(d.yes,d.no)+' yes)');
+    L.push('How often should we do Reviews like this?');
+    SVFREQ.forEach(function(lab,i){ L.push('  '+d.freq[i]+'  '+lab); });
+    L.push(''); L.push('Comments ('+d.comments.length+')');
+    d.comments.forEach(function(c){ L.push('  - '+c); });
+    return L.join('\n');
+  }
+  function svSay(t){ svMsg=t; var e=SEC.querySelector('[data-sv-msg]'); if(e) e.textContent=t; }
+  function svSubmit(form){
+    if(!backend || HOST || !svOpen() || svMine()) return;
+    function pick(n){ var el=form.querySelector('input[name="'+n+'"]:checked'); return el?parseInt(el.value,10):null; }
+    var b=pick('rg-sv-b'), f=pick('rg-sv-f');
+    if(b===null||f===null) return;
+    var ta=form.querySelector('[data-sv-comment]');
+    var o={survey:{}}; o.survey[PK]={g:gid(), b:b, f:f, c:((ta&&ta.value)||'').slice(0,600)};
+    backend.mergeDocShard('polls', GID, o);
+  }
+  function svMail(){
+    // snapshot before closing, so the email is exactly the tally on screen
+    var summary=svSummary(), body=svText();
+    if(svOpen()) backend.mergeDoc('polls', GID, {surveyOpen:0});
+    var url=(window.SURVEY_MAIL_URL||'').trim();
+    if(!url){
+      try{ navigator.clipboard.writeText(body); }catch(e){}
+      window.open('mailto:?subject='+encodeURIComponent('SOS 110 — Review Game exit survey')
+        +'&body='+encodeURIComponent(body.slice(0,1500)), '_blank');
+      svSay('Survey closed. No mailer is set up yet, so the full summary was copied to your clipboard and a draft was opened.');
+      return;
+    }
+    svSay('Survey closed. Sending…');
+    fetch(url, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({kind:'review-survey', gameId:gid(), summary:summary, text:body})})
+      .then(function(){ svSay('Survey closed and the results sent. They should arrive in a minute.'); })
+      .catch(function(){ svSay('Survey closed, but the mailer could not be reached — the summary is in your clipboard.'); });
+  }
+  function svHostHTML(){
+    var d=svSummary();
+    if(!svOpen() && !d.n) return '<button class="rg-btn ghost" data-act="svopen">Survey</button>';
+    return '<div class="rg-sv-host"><div class="rg-sv-h">'+(svOpen()?'Survey — open':'Survey')+'</div>'
+      + '<div class="rg-sv-n"><strong>'+d.n+'</strong> '+(d.n===1?'response':'responses')+'</div>'
+      + '<div class="rg-sv-btns">'
+      + (svOpen() ? '<button class="rg-btn ghost" data-act="svclose">Close survey</button>'
+                  : '<button class="rg-btn ghost" data-act="svopen">Reopen survey</button>')
+      + '<button class="rg-btn" data-act="svmail"'+(d.n?'':' disabled')+'>Email me the results</button></div>'
+      + '<div class="rg-sv-msg" data-sv-msg>'+esc(svMsg || 'Nothing from the survey is shown on this screen. The answers and any comments go to your inbox.')+'</div></div>';
+  }
+  function svStudentHTML(){
+    if(!svOpen()) return '';
+    if(svMine()) return '<div class="rg-sv-done">Thank you — your answers are in.'
+      + '<div class="rg-sv-sub">They go straight to your instructor.</div></div>';
+    return '<form class="rg-sv-form" data-sv-form><div class="rg-sv-h">Quick survey</div>'
+      + '<fieldset class="rg-sv-q"><legend>Did you find the Review beneficial?</legend>'
+      + '<label><input type="radio" name="rg-sv-b" value="1" required> Yes</label>'
+      + '<label><input type="radio" name="rg-sv-b" value="0"> No</label></fieldset>'
+      + '<fieldset class="rg-sv-q col"><legend>How often should we do Reviews like this?</legend>'
+      + '<label><input type="radio" name="rg-sv-f" value="0" required> Never again</label>'
+      + '<label><input type="radio" name="rg-sv-f" value="1"> Every Module</label>'
+      + '<label><input type="radio" name="rg-sv-f" value="2"> Right before each midterm</label></fieldset>'
+      + '<label class="rg-sv-c">Anything else? <span>(optional)</span>'
+      + '<textarea data-sv-comment rows="2" maxlength="600" placeholder="Comments for your instructor"></textarea></label>'
+      + '<button class="rg-btn" type="submit">Send my answers</button></form>';
+  }
+
   function myAnswer(pos){
     var p=myPlayer(); if(p && p.ans && p.ans[pos]!==undefined) return p.ans[pos];
     var v=ls('rg-ans:'+GID+':'+gid()+':'+pos); return v===null?null:parseInt(v,10);
@@ -1508,8 +1626,16 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
           + card('Average score', (Math.round(st.avg*10)/10)+' / '+st.n, st.scoredN+' player'+(st.scoredN===1?'':'s')+(st.perfect?' · '+st.perfect+' perfect':''))
           + '</div>';
       }
+      // while a student is filling the survey in, leave the DOM alone — a rebuild
+      // would wipe whatever they've typed into the comment box
+      var surveyActive = !HOST && svOpen() && !svMine();
+      if(surveyActive && SEC.querySelector('[data-sv-form]')) return;
+      var body = surveyActive
+        ? (yours + svStudentHTML())
+        : (yours + boardHTML(lb, 5, 'Top 5 — Final') + statsHTML + (HOST ? '' : svStudentHTML()));
       el.ended.innerHTML = '<div class="rg-final"><div class="rg-big rg-center">🏆 Final Results</div>'
-        + yours + boardHTML(lb, 5, 'Top 5 — Final') + statsHTML
+        + body
+        + (HOST ? svHostHTML() : '')
         + (HOST ? '<button class="rg-btn ghost" data-act="new">New game</button>' : '')
         + '</div>';
       if(HOST && confettiGame!==gid()){ confettiGame=gid(); confetti(); }
@@ -1534,10 +1660,15 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     else if(act==='next') nextQ();
     else if(act==='new') newGame();
     else if(act==='backmodes'){ nameFormOpen=false; render(); }
+    else if(act==='svopen'){ svMsg=''; backend.mergeDoc('polls', GID, {surveyOpen:1}); }
+    else if(act==='svclose'){ backend.mergeDoc('polls', GID, {surveyOpen:0}); }
+    else if(act==='svmail'){ svMail(); }
   });
   SEC.addEventListener('submit', function(e){
-    var f=e.target.closest('[data-nf]'); if(!f) return; e.preventDefault();
-    var inp=f.querySelector('[data-nf-in]'); join('named', inp?inp.value.trim():'');
+    var f=e.target.closest('[data-nf]');
+    if(f){ e.preventDefault(); var inp=f.querySelector('[data-nf-in]'); join('named', inp?inp.value.trim():''); return; }
+    var sf=e.target.closest('[data-sv-form]');
+    if(sf){ e.preventDefault(); svSubmit(sf); }
   });
 
   window.__deckLiveReady.then(function(live){
@@ -1644,7 +1775,7 @@ const start = m ? (+m[1]-1) : 0;
 slides.forEach(s=>s.classList.remove('active'));
 show(start);
 </script>
-<script src="firebase-config.js?v=50bb80fa2c"></script>
+<script src="firebase-config.js?v=a203a3c316"></script>
 <script>if(new URLSearchParams(location.search).has("demo"))window.FIREBASE_CONFIG={apiKey:"YOUR_API_KEY"};</script>
 <script type="module">
 (async function(){

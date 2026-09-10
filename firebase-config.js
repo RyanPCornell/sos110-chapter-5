@@ -77,3 +77,22 @@ window.ATTENDANCE_FORM = {
     chapter: "entry.1270913812"
   }
 };
+
+// ─────────────────────────────────────────────────────────────────────────
+// Where the Evolve exit survey emails its summary.
+//
+// This has nothing to do with Firebase. Firebase only holds the answers while
+// the game is running; the email is sent by a Google Apps Script web app.
+//
+// One-time setup (the script itself is _deck-builder/survey-mail.gs):
+//   1. Go to https://script.new  →  paste survey-mail.gs  →  Save.
+//   2. Deploy → New deployment → Web app
+//        Execute as:     Me
+//        Who has access: Anyone      ← NOT "Anyone with a Google Account",
+//                                       which bounces callers to ASU SSO.
+//   3. Copy the /exec URL it gives you and paste it below, then uncomment.
+//
+// Leave it commented out and the "Email me the results" button still works —
+// it copies the full summary to your clipboard and opens a mail draft instead.
+// ─────────────────────────────────────────────────────────────────────────
+window.SURVEY_MAIL_URL = "https://script.google.com/macros/s/AKfycbyrRNrQjbAiYugFw131rfJMIt2E2fneUnx9ryatdU98DMdyC4NkZI2LP8dnqQK3E2LZ/exec";

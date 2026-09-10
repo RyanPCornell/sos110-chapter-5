@@ -257,6 +257,135 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 }
 
 
+/* ── Module 1 & 2 Review Game (live multiplayer quiz) ─────────────────────── */
+.slide.rg-slide{background:linear-gradient(158deg,#faf7f0,#f1ebdd);}
+.slide.rg-slide .heading{font-family:'Merriweather',serif; color:#3b3222;}
+.slide.rg-slide .eyebrow{color:#8a6a2f;}
+.slide.rg-slide .eyebrow::before{background:#8a6a2f;}
+.rg-root{position:absolute; inset:0; display:flex; flex-direction:column;
+  padding:clamp(1rem,2.6vh,1.8rem) clamp(1.6rem,4vw,3.4rem) clamp(.8rem,2vh,1.4rem);}
+.rg-head{margin-bottom:clamp(.4rem,1.2vh,.8rem);}
+.rg-head .heading{margin-bottom:.15rem;}
+.rg-sub{font-size:clamp(.85rem,1.35vw,1rem); color:#6b6350; max-width:74ch;}
+.rg-stage{flex:1; min-height:0; display:flex; flex-direction:column; justify-content:center;}
+.rg-stage[hidden]{display:none;}
+
+/* generic pieces */
+.rg-badge{display:inline-flex; align-items:center; gap:.4rem; align-self:center;
+  font-family:'Inter',sans-serif; font-weight:800; letter-spacing:.02em;
+  background:#fff; border:1.5px solid #e4dcc9; color:#8a6a2f; border-radius:999px;
+  padding:.35rem 1rem; font-size:clamp(.82rem,1.3vw,.98rem);}
+.rg-count{font-family:'Merriweather',serif; font-weight:900; color:var(--accent);
+  font-variant-numeric:tabular-nums;}
+.rg-center{text-align:center;}
+.rg-muted{color:#6b6350; font-size:clamp(.85rem,1.35vw,1rem);}
+.rg-big{font-family:'Merriweather',serif; font-weight:900; color:#3b3222; line-height:1.15;
+  font-size:clamp(1.4rem,3.4vw,2.4rem);}
+.rg-btn{font-family:'Inter',sans-serif; font-weight:800; border:none; cursor:pointer; color:#fff;
+  background:var(--accent); border-radius:12px; padding:.8rem 1.8rem;
+  font-size:clamp(.95rem,1.6vw,1.15rem); transition:filter .15s, transform .08s;}
+.rg-btn:hover{filter:brightness(1.08);} .rg-btn:active{transform:translateY(1px);}
+.rg-btn.ghost{background:#fff; color:var(--accent); border:2px solid var(--accent);}
+.rg-btn[hidden]{display:none;}
+.rg-btn:disabled{background:#c9c0ac; cursor:default; filter:none;}
+
+/* idle: host count selector */
+.rg-setup{display:flex; flex-direction:column; align-items:center; gap:clamp(.8rem,2vh,1.4rem);}
+.rg-countpick{display:flex; gap:.6rem;}
+.rg-cbtn{font-family:'Inter',sans-serif; font-weight:800; cursor:pointer; background:#fff;
+  border:2px solid #e4dcc9; color:#6b6350; border-radius:12px; padding:.7rem 1.5rem;
+  font-size:clamp(1rem,1.8vw,1.3rem); transition:.14s;}
+.rg-cbtn:hover{border-color:var(--accent); color:var(--accent);}
+.rg-cbtn.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+/* lobby */
+.rg-lobby-wrap{display:flex; flex-direction:column; align-items:center; gap:clamp(.7rem,1.8vh,1.2rem);}
+.rg-timer{font-family:'Merriweather',serif; font-weight:900; color:var(--accent);
+  font-size:clamp(2.4rem,7vw,4.6rem); line-height:1; font-variant-numeric:tabular-nums;}
+.rg-modes{display:flex; gap:clamp(.7rem,1.8vw,1.2rem); flex-wrap:wrap; justify-content:center; width:100%;}
+.rg-mode{flex:1 1 220px; max-width:300px; background:#fff; border:1.5px solid #e4dcc9;
+  border-radius:16px; padding:clamp(.9rem,2vh,1.3rem); cursor:pointer; text-align:left;
+  transition:.14s; display:flex; flex-direction:column; gap:.3rem;}
+.rg-mode:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:0 8px 22px rgba(60,50,30,.12);}
+.rg-mode-t{font-family:'Merriweather',serif; font-weight:800; color:#3b3222; font-size:clamp(1rem,1.7vw,1.2rem);}
+.rg-mode-d{font-size:clamp(.8rem,1.25vw,.92rem); color:#6b6350; line-height:1.35;}
+.rg-nameform{display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; justify-content:center;}
+.rg-name{border:2px solid #e4dcc9; border-radius:12px; padding:.6rem 1rem; font-family:inherit;
+  font-size:clamp(1rem,1.7vw,1.2rem); min-width:min(260px,70vw);}
+.rg-name:focus{outline:none; border-color:var(--accent);}
+.rg-joined{font-family:'Merriweather',serif; font-weight:800; color:#3b3222;
+  font-size:clamp(1.1rem,2.2vw,1.6rem); text-align:center;}
+.rg-joined em{font-style:normal; color:var(--accent);}
+
+/* question */
+.rg-qtop{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:.5rem;}
+.rg-prog{font-family:'Inter',sans-serif; font-weight:800; color:#8a6a2f; letter-spacing:.03em;
+  text-transform:uppercase; font-size:clamp(.75rem,1.2vw,.9rem);}
+.rg-score{font-family:'Inter',sans-serif; font-weight:800; color:#3b3222; font-size:clamp(.85rem,1.4vw,1rem);}
+.rg-score strong{font-family:'Merriweather',serif; color:var(--accent); font-size:1.2em;}
+.rg-qtext{font-family:'Merriweather',serif; font-weight:800; color:#2c2519; line-height:1.24;
+  font-size:clamp(1.15rem,2.5vw,1.9rem); margin:.2rem 0 clamp(.7rem,1.8vh,1.1rem);}
+.rg-opts{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.55rem,1.4vw,.95rem);}
+.rg-opt{display:flex; align-items:center; gap:.7rem; text-align:left; background:#fff;
+  border:2px solid #e4dcc9; border-radius:14px; padding:clamp(.7rem,1.6vh,1.05rem) clamp(.8rem,1.6vw,1.2rem);
+  font-family:'Inter',sans-serif; font-size:clamp(.9rem,1.5vw,1.12rem); color:#2c2519;
+  cursor:pointer; transition:.13s; width:100%;}
+.rg-opt:hover:not(:disabled){border-color:var(--accent); background:#fffdf7;}
+.rg-opt:disabled{cursor:default;}
+.rg-opt-k{flex:none; width:1.9em; height:1.9em; border-radius:50%; background:#f1ebdd; color:#8a6a2f;
+  font-family:'Merriweather',serif; font-weight:900; display:flex; align-items:center; justify-content:center;
+  font-size:.95em;}
+.rg-opt.mine{border-color:var(--accent); background:#fffaf0;}
+.rg-opt.mine .rg-opt-k{background:var(--accent); color:#fff;}
+.rg-opt.correct{border-color:#2e7d46; background:#eef7f0;}
+.rg-opt.correct .rg-opt-k{background:#2e7d46; color:#fff;}
+.rg-opt.wrong{border-color:#b0473f; background:#fbeeec;}
+.rg-opt.wrong .rg-opt-k{background:#b0473f; color:#fff;}
+.rg-qfoot{display:flex; align-items:center; gap:.8rem; margin-top:clamp(.6rem,1.6vh,1rem); flex-wrap:wrap;}
+.rg-qhint{color:#6b6350; font-style:italic; font-size:clamp(.8rem,1.3vw,.95rem);}
+.rg-qhint.ok{color:#2e7d46; font-style:normal; font-weight:700;}
+
+/* leaderboard */
+.rg-board{background:#fff; border:1.5px solid #e4dcc9; border-radius:16px;
+  padding:clamp(.6rem,1.4vh,1rem) clamp(.8rem,1.6vw,1.15rem); min-width:min(340px,42vw);}
+.rg-board-t{font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+  color:#8a6a2f; font-size:clamp(.72rem,1.15vw,.86rem); margin-bottom:.4rem;}
+.rg-row{display:flex; align-items:center; gap:.65rem; padding:.32rem 0; border-top:1px solid #f0e9d8;
+  font-family:'Inter',sans-serif; font-size:clamp(.85rem,1.4vw,1.05rem); color:#2c2519;}
+.rg-row:first-of-type{border-top:none;}
+.rg-row-r{flex:none; width:1.7em; text-align:center; font-family:'Merriweather',serif; font-weight:900; color:#8a6a2f;}
+.rg-row-n{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.rg-row-s{flex:none; font-family:'Merriweather',serif; font-weight:900; color:var(--accent);
+  font-variant-numeric:tabular-nums;}
+.rg-row.me{background:#fffaf0; border-radius:8px; padding-left:.4rem; padding-right:.4rem;}
+.rg-row.gold .rg-row-r{color:#be9a2e;}
+.rg-empty{color:#6b6350; font-style:italic; font-size:clamp(.82rem,1.3vw,.95rem); padding:.4rem 0;}
+
+/* question layout: options + host board side by side on host */
+.rg-qgrid{display:flex; gap:clamp(1rem,2.5vw,2rem); align-items:flex-start;}
+.rg-qmain{flex:1; min-width:0;}
+.rg-qside{flex:none; width:min(360px,34%);}
+.rg-qside[hidden]{display:none;}
+
+/* ended */
+.rg-final{display:flex; flex-direction:column; align-items:center; gap:clamp(.7rem,1.8vh,1.2rem);}
+.rg-final .rg-board{min-width:min(460px,70vw);}
+.rg-yours{font-family:'Merriweather',serif; font-weight:900; color:#3b3222; text-align:center;
+  font-size:clamp(1.2rem,2.6vw,1.9rem);}
+.rg-yours strong{color:var(--accent);}
+.rg-stats-t{font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+  color:#8a6a2f; font-size:clamp(.72rem,1.15vw,.86rem); margin:.3rem 0 .1rem; text-align:center;}
+.rg-stats{display:flex; gap:clamp(.55rem,1.4vw,.95rem); flex-wrap:wrap; justify-content:center; width:100%;
+  max-width:min(880px,92vw);}
+.rg-stat{flex:1 1 150px; max-width:220px; background:#fff; border:1.5px solid #e4dcc9; border-radius:14px;
+  padding:clamp(.5rem,1.3vh,.85rem) clamp(.55rem,1.3vw,.9rem); text-align:center;}
+.rg-stat-l{font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.03em;
+  color:#8a6a2f; font-size:clamp(.6rem,.98vw,.72rem); line-height:1.15;}
+.rg-stat-v{font-family:'Merriweather',serif; font-weight:900; color:var(--accent); line-height:1.1;
+  font-size:clamp(1.05rem,2.1vw,1.5rem); margin:.15rem 0;}
+.rg-stat-s{font-size:clamp(.7rem,1.1vw,.84rem); color:#6b6350; line-height:1.2;}
+@media (max-width:900px){ .rg-qgrid{flex-direction:column;} .rg-qside{width:100%;} .rg-opts{grid-template-columns:1fr;} }
+
 .gcard-icon{width:52px;height:52px;color:var(--accent);margin:0 0 10px}
 .gcard-icon svg{width:100%;height:100%;display:block}
 
@@ -1068,6 +1197,316 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
+<section class="slide rg-slide" data-type="game" data-game-id="ch5-review-game"
+  data-rg-counts="10,15,20" style="--accent:#2D6A4F">
+  <script type="application/json" data-rg-bank>[{"topic": "SDG 13", "q": "In the deck's Sustainable Development Goals, SDG 13 (“Climate Action”) represents which dimension of the Triple Bottom Line?", "options": ["Environmental", "Social", "Economic", "Technological"], "answer": 0}, {"topic": "Triple Bottom Line", "q": "The Triple Bottom Line frames sustainability as the overlap of which three dimensions?", "options": ["People, Planet, and Profit", "Land, Labor, and Capital", "Reduce, Reuse, and Recycle", "Air, Water, and Soil"], "answer": 0}, {"topic": "Wicked problems", "q": "Which best describes a “wicked problem”?", "options": ["Complex interactions among multiple stakeholders, with uncertainty and competing interests", "A problem with one clearly correct, testable solution", "A minor issue that resolves itself if ignored", "A problem that affects only a single stakeholder"], "answer": 0}, {"topic": "Planetary boundaries", "q": "The “planetary boundaries” framework defines what?", "options": ["A safe operating space for humanity across nine Earth-system processes", "The physical edge of Earth's atmosphere", "The nine largest national parks on Earth", "The limit of how many people a city can hold"], "answer": 0}, {"topic": "Planetary boundaries", "q": "Which is a clear example of a planetary boundary being pushed past its safe limit?", "options": ["Climate change from increasing CO₂ concentrations", "A single volcanic eruption", "Seasonal changes between summer and winter", "The daily rise and fall of ocean tides"], "answer": 0}, {"topic": "Emergent property", "q": "An emergent property of a system is best described as…", "options": ["A characteristic that results from interactions among the parts, not from any single component", "A property that only the largest component has", "A property measured before the system is assembled", "A property that disappears when parts interact"], "answer": 0}, {"topic": "System boundary", "q": "A system boundary is…", "options": ["The limit that separates a system from its surroundings, defining what is included and excluded", "The physical fence around a national park", "The point where a system stops using energy", "The largest feedback loop inside a system"], "answer": 0}, {"topic": "SETs", "q": "In this course, “SETs” refers to the interconnection and interaction of which three kinds of systems?", "options": ["Social, Ecological, and Technical", "Solar, Electrical, and Thermal", "Scientific, Economic, and Territorial", "Structural, Environmental, and Temporal"], "answer": 0}, {"topic": "Environmental ethics", "q": "Environmental ethics is primarily concerned with…", "options": ["The moral relationships between humans and the environment", "The market price of natural resources", "The engineering of pollution-control devices", "The physics of energy transfer in ecosystems"], "answer": 0}, {"topic": "Environmental justice", "q": "Environmental justice is centrally concerned with…", "options": ["The fair treatment of all people, so marginalized communities don't bear a disproportionate share of environmental harms", "Maximizing total economic output regardless of who benefits", "Protecting scenic landscapes for future tourism only", "Ensuring every species has an equal population size"], "answer": 0}, {"topic": "Intrinsic value", "q": "Something has intrinsic value when it is…", "options": ["Worthwhile in and of itself, independent of its usefulness to humans", "Valued only for the money it can earn", "Useful as a raw material for industry", "Important only because tourists will pay to see it"], "answer": 0}, {"topic": "Utilitarian value", "q": "Utilitarian (instrumental) value refers to something's value based on…", "options": ["Its usefulness to humans", "Its worth apart from any human use", "Its age or rarity alone", "Its beauty as judged by artists"], "answer": 0}, {"topic": "Externality", "q": "An externality is…", "options": ["A cost or benefit of economic activity not reflected in the market price of a good or service", "A tax charged at the point of sale", "The profit a company keeps after expenses", "The external packaging of a product"], "answer": 0}, {"topic": "Tragedy of the Commons", "q": "The tragedy of the commons describes how…", "options": ["Individuals acting in their own self-interest overuse a shared resource, depleting it for everyone", "Government ownership always improves a shared resource", "Private property inevitably collapses over time", "Resources grow faster the more heavily they are used"], "answer": 0}, {"topic": "Collective action", "q": "“Collective action” is best defined as…", "options": ["The coordinated efforts of groups to achieve common goals", "One person acting alone for personal gain", "A government seizing private property", "The random behavior of individuals in a market"], "answer": 0}, {"topic": "Matter and energy", "q": "Which statement correctly pairs the core rules for matter and energy?", "options": ["Matter is conserved; energy is transformed but never created or destroyed", "Matter can be destroyed; energy is always created anew", "Both matter and energy are routinely created from nothing", "Matter is transformed; energy simply disappears when used"], "answer": 0}, {"topic": "First Law of Thermodynamics", "q": "The First Law of Thermodynamics states that energy…", "options": ["Cannot be created or destroyed, only transformed from one form to another", "Is destroyed a little each time it is used", "Can be created whenever it is needed", "Always increases in a closed system"], "answer": 0}, {"topic": "Second Law of Thermodynamics", "q": "According to the Second Law of Thermodynamics, with each energy transfer…", "options": ["Some energy is degraded as heat and entropy (disorder) increases", "All energy is perfectly conserved as useful work", "Entropy decreases toward zero", "Energy becomes 100% efficient"], "answer": 0}, {"topic": "Photosynthesis", "q": "Photosynthesis is best described as…", "options": ["The link between radiant energy (sunlight) and chemical energy (food) at the base of most food chains", "The breakdown of food to release heat in animals", "The conversion of rock into soil", "The loss of energy as heat between trophic levels"], "answer": 0}, {"topic": "Primary producers", "q": "Primary producers (plants, algae, and some bacteria) are defined by their ability to…", "options": ["Convert sunlight into chemical energy via photosynthesis", "Eat herbivores for energy", "Decompose dead animals only", "Move energy up by hunting prey"], "answer": 0}, {"topic": "Trophic levels: energy transfer", "q": "About how much of the energy at one trophic level is passed up to the next, and where does the rest go?", "options": ["Only ~10% passes up; the rest is lost as heat (Second Law)", "About 90% passes up; the rest is stored as fat", "100% passes up; no energy is ever lost", "Roughly 50% passes up; the rest becomes new matter"], "answer": 0}, {"topic": "Trophic levels: biomass", "q": "In a typical biomass pyramid, which trophic level usually contains the largest amount of biomass?", "options": ["Primary producers", "Top predators", "Secondary consumers", "Tertiary consumers"], "answer": 0}, {"topic": "Earth's spheres", "q": "Earth's systems are grouped into four spheres that constantly exchange matter and energy. Which set names them?", "options": ["Biosphere, hydrosphere, atmosphere, geosphere", "Stratosphere, magnetosphere, ionosphere, exosphere", "Biosphere, technosphere, noosphere, cryosphere", "Ocean, forest, desert, tundra"], "answer": 0}, {"topic": "Emergent property", "q": "“Life runs through all of them” describes how Earth's four spheres are…", "options": ["Interconnected, constantly exchanging matter and energy", "Completely sealed off from one another", "Ranked from most to least important", "Identical copies of the same system"], "answer": 0}, {"topic": "Species richness", "q": "Species richness refers to…", "options": ["The number of different species in an area", "The total mass of all organisms in an area", "The wealth generated by an ecosystem", "The genetic variation within a single species"], "answer": 0}, {"topic": "Biodiversity supports stability", "q": "According to the deck, biodiversity benefits ecosystems mainly by…", "options": ["Supporting their adaptation and stability", "Guaranteeing they never change", "Reducing the number of interactions among species", "Making them depend on a single keystone species"], "answer": 0}, {"topic": "Predators", "q": "Why are top predators ecologically important?", "options": ["They can trigger trophic cascades that reshape entire ecosystems", "They produce most of an ecosystem's biomass", "They perform the majority of photosynthesis", "They have no measurable effect on other species"], "answer": 0}, {"topic": "Trophic cascade", "q": "A trophic cascade is…", "options": ["A change in one trophic level that ripples out to affect others (e.g., wolves → elk → vegetation)", "A waterfall that carries nutrients downstream", "The steady 10% loss of energy up a food chain", "The seasonal migration of a single species"], "answer": 0}, {"topic": "Trophic cascade: Yellowstone", "q": "Removing wolves from Yellowstone in 1926 caused a trophic cascade in which…", "options": ["The elk population increased and the aspen tree population dramatically decreased", "The elk population crashed and forests expanded", "Wolves were replaced by an equal number of bears", "Nothing measurable changed in the ecosystem"], "answer": 0}, {"topic": "Restoring wolves", "q": "After wolves were reintroduced to Yellowstone in 1995, one key effect was that…", "options": ["Elk numbers and behavior changed, letting vegetation like aspen recover", "Elk populations grew without limit", "All aspen trees were eliminated", "The park had to remove the wolves again immediately"], "answer": 0}, {"topic": "Rewilding", "q": "Rewilding restores damaged ecosystems by…", "options": ["Letting natural ecological processes recover, as with wolves in Yellowstone", "Paving habitat to prevent further disturbance", "Replacing wild species with farm animals", "Freezing an ecosystem in its current state permanently"], "answer": 0}, {"topic": "Biodiversity loss", "q": "A key sign of biodiversity loss today is…", "options": ["Rising extinction rates — a human-driven sixth mass extinction", "A steady rise in the number of species worldwide", "Falling global temperatures", "An increase in genetic diversity everywhere"], "answer": 0}, {"topic": "Endangered species", "q": "An endangered species is one that…", "options": ["Is at serious risk of extinction", "Has recently doubled its population", "Lives only in captivity by choice", "Is too common to need protection"], "answer": 0}, {"topic": "Ecosystem valuation", "q": "Why do economists assign monetary values to ecosystem services?", "options": ["To support and inform economic decision-making", "To make ecosystems illegal to protect", "To prove that nature has no value", "To replace all ecosystems with factories"], "answer": 0}, {"topic": "Ecosystem productivity", "q": "According to the 2005 Millennium Ecosystem Assessment, losing species diversity reduces an ecosystem's…", "options": ["Productivity and resilience", "Physical size only", "Distance from the nearest city", "Number of rock layers"], "answer": 0}, {"topic": "Provisioning service", "q": "Which is an example of a PROVISIONING ecosystem service?", "options": ["Goods humans consume or use, such as water, wood, and pharmaceutical products", "The recreational and spiritual value of a landscape", "Pollination of crops by insects", "Soil formation and nutrient cycling"], "answer": 0}, {"topic": "Regulating service", "q": "Pollination by insects is an example of which type of ecosystem service?", "options": ["Regulating", "Provisioning", "Cultural", "Supporting"], "answer": 0}, {"topic": "Supporting service", "q": "Nutrient cycling and soil formation — the fundamental conditions other services depend on — are examples of which ecosystem service?", "options": ["Supporting", "Provisioning", "Cultural", "Regulating"], "answer": 0}, {"topic": "Cultural service", "q": "Hiking, recreation, and tourism in a national park are examples of which ecosystem service?", "options": ["Cultural", "Provisioning", "Regulating", "Supporting"], "answer": 0}, {"topic": "Pollination", "q": "Roughly what share of our food depends on an animal pollinator?", "options": ["About one in three bites", "Essentially none of it", "All of it", "About one in a thousand bites"], "answer": 0}, {"topic": "Protected areas", "q": "Which is generally considered among the most effective strategies for conserving endangered species?", "options": ["Establishing protected areas", "Building more highways through habitat", "Introducing invasive species", "Removing all legal protections"], "answer": 0}, {"topic": "Deforestation", "q": "Beyond destroying habitat, deforestation harms ecosystems by removing…", "options": ["Primary producers (the base of the food web), and it also causes soil erosion", "Only the top predators", "Nothing of ecological importance", "Excess carbon that ecosystems don't need"], "answer": 0}, {"topic": "Biomimicry", "q": "Biomimicry is best described as…", "options": ["Solving human problems by imitating strategies and designs tested in nature", "Keeping humans completely separate from nature", "Copying other companies' products", "Replacing natural ecosystems with machines"], "answer": 0}, {"topic": "Velcro and biomimicry", "q": "Velcro was invented by imitating which feature found in nature?", "options": ["Burrs (plant seeds) that hook onto fur and clothing", "The suction cups of an octopus", "The slipperiness of a fish's scales", "The glow of a firefly"], "answer": 0}, {"topic": "Kingfisher / bullet train", "q": "The nose of Japan's Shinkansen bullet train was redesigned based on which animal to cut noise and drag?", "options": ["The kingfisher's beak", "The owl's wing", "The cheetah's legs", "The whale's tail"], "answer": 0}]</script>
+  <div class="rg-root">
+    <div class="rg-head">
+      <div class="eyebrow">Module 1 &amp; 2 · Review Game</div>
+      <h2 class="heading" data-rg-title>Module 1 &amp; 2 Review Game</h2>
+      <p class="rg-sub" data-rg-sub>A live, instructor-run review. Join on your own device when the lobby opens.</p>
+    </div>
+    <div class="rg-stage" data-rg-idle hidden></div>
+    <div class="rg-stage" data-rg-lobby hidden></div>
+    <div class="rg-stage" data-rg-question hidden></div>
+    <div class="rg-stage" data-rg-ended hidden></div>
+  </div>
+  <div class="footer"></div>
+  <script>
+(function(){
+  var SEC = document.currentScript.closest('.rg-slide');
+  if(!SEC || SEC.__rgWired) return; SEC.__rgWired = true;
+  if(!window.__deckLiveReady){ window.__deckLiveReady = new Promise(function(r){ window.__deckLiveResolve = r; }); }
+
+  var GID   = SEC.dataset.gameId;
+  var COUNTS = (SEC.dataset.rgCounts||'10,15,20').split(',').map(function(x){ return parseInt(x,10); });
+  var BANK  = JSON.parse(SEC.querySelector('[data-rg-bank]').textContent);
+  var LETTERS = ['A','B','C','D','E','F'];
+
+  function rnd(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} h^=h>>>15; h=Math.imul(h,2246822507); h^=h>>>13; h^=h>>>16; return (h>>>0)/4294967296; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function ls(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+  function pid(){ var k='rg-pid:'+GID, v=ls(k); if(!v){ v=Math.random().toString(36).slice(2,9); ls(k,v); } return v; }
+  var PK = pid();
+
+  var el = {
+    title: SEC.querySelector('[data-rg-title]'), sub: SEC.querySelector('[data-rg-sub]'),
+    idle: SEC.querySelector('[data-rg-idle]'), lobby: SEC.querySelector('[data-rg-lobby]'),
+    question: SEC.querySelector('[data-rg-question]'), ended: SEC.querySelector('[data-rg-ended]')
+  };
+  var NAV=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' ','PageUp','PageDown','Home','End'];
+  SEC.addEventListener('keydown', function(e){ if(NAV.indexOf(e.key)>-1) e.stopPropagation(); });
+
+  var backend=null, HOST=false, state={}, pickCount=COUNTS[0], ticker=null;
+  var lastLobbyKey=null, nameFormOpen=false;
+
+  function players(){ return state.players||{}; }
+  function gid(){ return state.gameId||0; }
+  function phase(){ return state.phase||'idle'; }
+  function myPlayer(){ var p=players()[PK]; return (p && p.g===gid()) ? p : null; }
+  function myModeLocal(){ return ls('rg-mode:'+GID+':'+gid()); }   // 'named'|'anon'|'watch'
+  function scored(){ return !!myPlayer(); }
+
+  function anonNum(pkey){
+    var g=gid(), ps=players(), arr=[];
+    for(var k in ps){ if(ps[k] && ps[k].g===g && ps[k].mode==='anon') arr.push([k, ps[k].t||0]); }
+    arr.sort(function(a,b){ return (a[1]-b[1]) || (a[0]<b[0]?-1:1); });
+    for(var i=0;i<arr.length;i++){ if(arr[i][0]===pkey) return i+1; }
+    return arr.length+1;
+  }
+  function nameOf(pkey){ var p=players()[pkey]; if(!p) return '—'; return p.mode==='named' ? (p.name||'(no name)') : ('Student '+anonNum(pkey)); }
+  function correctOf(pos){ var b=BANK[state.order[pos]]; return b?b.answer:-1; }
+  function scoreOf(pkey){
+    var p=players()[pkey]; if(!p||!p.ans||!state.order) return 0;
+    var s=0; for(var k in p.ans){ var oi=parseInt(k,10); if(state.order[oi]!==undefined && p.ans[k]===correctOf(oi)) s++; }
+    return s;
+  }
+  function board(){
+    var g=gid(), ps=players(), arr=[];
+    for(var k in ps){ if(ps[k] && ps[k].g===g && (ps[k].mode==='named'||ps[k].mode==='anon')) arr.push(k); }
+    arr.sort(function(a,b){ var d=scoreOf(b)-scoreOf(a); if(d) return d; return (ps[a].t||0)-(ps[b].t||0); });
+    return arr;
+  }
+  function playerCount(){ var g=gid(), ps=players(), n=0; for(var k in ps){ if(ps[k]&&ps[k].g===g) n++; } return n; }
+  function topicAt(pos){ return (pos>=0 && state.order && BANK[state.order[pos]]) ? BANK[state.order[pos]].topic : '—'; }
+  // aggregate class stats across scored players: per-question correct rates + overall
+  function qStats(){
+    var g=gid(), ps=players(), n=(state.order||[]).length;
+    var answered=[], correct=[]; for(var p=0;p<n;p++){ answered[p]=0; correct[p]=0; }
+    var totalAns=0, totalCor=0, scoredN=0, perfect=0, sumScore=0;
+    for(var k in ps){ var pl=ps[k]; if(!pl||pl.g!==g||!(pl.mode==='named'||pl.mode==='anon')) continue;
+      scoredN++; var sc=0;
+      for(var p=0;p<n;p++){ if(pl.ans && pl.ans[p]!==undefined){ answered[p]++; totalAns++;
+        if(pl.ans[p]===correctOf(p)){ correct[p]++; totalCor++; sc++; } } }
+      sumScore+=sc; if(n>0 && sc===n) perfect++;
+    }
+    var aced=-1, ar=-1, missed=-1, mr=2;
+    for(var p=0;p<n;p++){ if(!answered[p]) continue; var r=correct[p]/answered[p];
+      if(r>ar){ ar=r; aced=p; } if(r<mr){ mr=r; missed=p; } }
+    return {n:n, totalAns:totalAns, totalCor:totalCor, scoredN:scoredN, perfect:perfect,
+            avg:scoredN?sumScore/scoredN:0, accuracy:totalAns?totalCor/totalAns:0,
+            aced:aced, ar:ar, missed:missed, mr:mr};
+  }
+
+  function myAnswer(pos){
+    var p=myPlayer(); if(p && p.ans && p.ans[pos]!==undefined) return p.ans[pos];
+    var v=ls('rg-ans:'+GID+':'+gid()+':'+pos); return v===null?null:parseInt(v,10);
+  }
+
+  // ── host actions ──
+  function shuffle(n, seed){
+    var a=[]; for(var i=0;i<n;i++) a.push(i);
+    for(var i=n-1;i>0;i--){ var j=Math.floor(rnd(seed+':'+i)*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  // display order of a question's options: seeded so every client agrees, and it
+  // varies by game+position so the correct answer isn't always in the same slot.
+  function optPerm(pos){ return shuffle(BANK[state.order[pos]].options.length, GID+':'+gid()+':q'+pos); }
+  function startGame(){
+    var g=gid()+1, cnt=Math.min(pickCount, BANK.length);
+    var order=shuffle(BANK.length, GID+':'+g+':'+Date.now()).slice(0, cnt);
+    backend.setDoc('polls', GID, {gameId:g, phase:'lobby', count:cnt, order:order, idx:0, revealed:false, lobbyEnds:Date.now()+60000});
+  }
+  function beginQuestions(){ backend.mergeDoc('polls', GID, {phase:'question', idx:0, revealed:false}); }
+  function reveal(){ backend.mergeDoc('polls', GID, {revealed:true}); }
+  function nextQ(){
+    if(state.idx+1 >= state.count){ backend.mergeDoc('polls', GID, {phase:'ended', revealed:true}); }
+    else { backend.mergeDoc('polls', GID, {idx:state.idx+1, revealed:false}); }
+  }
+  function newGame(){ backend.mergeDoc('polls', GID, {phase:'idle'}); }
+
+  // ── student actions ──
+  function join(mode, name){
+    nameFormOpen=false;
+    ls('rg-mode:'+GID+':'+gid(), mode);
+    if(mode!=='watch'){
+      var rec={g:gid(), mode:mode, t:Date.now(), ans:{}};
+      if(mode==='named') rec.name=(name||'Anonymous').slice(0,24);
+      var o={}; o[PK]=rec; backend.mergeDocShard('polls', GID, {players:o});
+    }
+    render();
+  }
+  function answer(i){
+    if(phase()!=='question' || state.revealed) return;
+    var pos=state.idx; if(myAnswer(pos)!==null) return;
+    ls('rg-ans:'+GID+':'+gid()+':'+pos, String(i));
+    if(scored()){ var a={}; a[pos]=i; var o={}; o[PK]={g:gid(), ans:a}; backend.mergeDocShard('polls', GID, {players:o}); }
+    render();
+  }
+
+  // ── rendering ──
+  function boardHTML(list, topN, label){
+    var rows=''; var n=Math.min(topN, list.length);
+    if(!list.length){ rows='<div class="rg-empty">No scored players yet.</div>'; }
+    for(var i=0;i<n;i++){ var k=list[i];
+      rows += '<div class="rg-row'+(i===0?' gold':'')+(k===PK?' me':'')+'">'
+        + '<span class="rg-row-r">'+(i+1)+'</span>'
+        + '<span class="rg-row-n">'+esc(nameOf(k))+(k===PK?' (you)':'')+'</span>'
+        + '<span class="rg-row-s">'+scoreOf(k)+'</span></div>';
+    }
+    return '<div class="rg-board"><div class="rg-board-t">'+esc(label||'Top 5')+'</div>'+rows+'</div>';
+  }
+
+  function show(name){ ['idle','lobby','question','ended'].forEach(function(p){ el[p].hidden = (p!==name); }); }
+
+  function render(){
+    var ph=phase();
+    if(ph!=='lobby'){ lastLobbyKey=null; nameFormOpen=false; }
+    // ── IDLE ──
+    if(ph==='idle'){
+      show('idle');
+      if(HOST){
+        el.idle.innerHTML =
+          '<div class="rg-setup"><div class="rg-muted rg-center">Choose how many questions to pull from the bank of '+BANK.length+', then start the game.</div>'
+          + '<div class="rg-countpick">'+COUNTS.map(function(c){ return '<button class="rg-cbtn'+(c===pickCount?' on':'')+'" data-cnt="'+c+'">'+c+'</button>'; }).join('')+'</div>'
+          + '<button class="rg-btn" data-act="start">Start game ▸</button>'
+          + '<div class="rg-muted rg-center">A 60-second sign-up window opens when you start.</div></div>';
+      } else {
+        el.idle.innerHTML = '<div class="rg-center"><div class="rg-big">Get ready!</div><div class="rg-muted" style="margin-top:.5rem">Waiting for your instructor to start the review game…</div></div>';
+      }
+      return;
+    }
+    // ── LOBBY ──
+    if(ph==='lobby'){
+      show('lobby');
+      var secs=Math.ceil(Math.max(0,(state.lobbyEnds||0)-Date.now())/1000);
+      // only rebuild the lobby when its VIEW changes — otherwise the 2×/sec ticker
+      // would wipe a half-typed name. Timer + player count update in place.
+      var key = HOST ? 'host' : (myModeLocal() ? ('joined:'+myModeLocal()+':'+nameOf(PK)) : (nameFormOpen ? 'nameform' : 'modes'));
+      if(key!==lastLobbyKey){
+        lastLobbyKey=key;
+        var timer='<div class="rg-timer" data-rg-timer>'+secs+'</div><div class="rg-muted rg-center">seconds to join</div>';
+        if(HOST){
+          el.lobby.innerHTML='<div class="rg-lobby-wrap">'+timer
+            +'<div class="rg-badge">👥 <span class="rg-count" data-rg-pcount>'+playerCount()+'</span> players joined</div>'
+            +'<button class="rg-btn ghost" data-act="begin">Start now ▸</button></div>';
+        } else if(myModeLocal()){
+          var who = myModeLocal()==='watch' ? 'You’re playing along <em>without a score</em>.' : 'You’re in as <em>'+esc(nameOf(PK))+'</em>.';
+          el.lobby.innerHTML='<div class="rg-lobby-wrap">'+timer+'<div class="rg-joined">'+who+'</div><div class="rg-muted rg-center">Sit tight — the first question is coming up.</div></div>';
+        } else if(nameFormOpen){
+          el.lobby.innerHTML='<div class="rg-lobby-wrap">'+timer+'<form class="rg-nameform" data-nf><input class="rg-name" data-nf-in maxlength="24" placeholder="Type your name…" autocomplete="off"><button class="rg-btn" type="submit">Join ▸</button></form><button class="rg-btn ghost" data-act="backmodes">← other options</button></div>';
+          var inp=el.lobby.querySelector('[data-nf-in]'); if(inp) inp.focus();
+        } else {
+          el.lobby.innerHTML='<div class="rg-lobby-wrap">'+timer
+            +'<div class="rg-modes">'
+            +'<button class="rg-mode" data-mode="named"><span class="rg-mode-t">Play with my name</span><span class="rg-mode-d">You’re on the leaderboard, playing for a score.</span></button>'
+            +'<button class="rg-mode" data-mode="anon"><span class="rg-mode-t">Play anonymously</span><span class="rg-mode-d">You get an assigned name (Student 1, 2…) and a score on the board.</span></button>'
+            +'<button class="rg-mode" data-mode="watch"><span class="rg-mode-t">Play along, no score</span><span class="rg-mode-d">Answer privately — no score, never on the leaderboard.</span></button>'
+            +'</div></div>';
+        }
+      }
+      var tEl=el.lobby.querySelector('[data-rg-timer]'); if(tEl) tEl.textContent=secs;
+      var pEl=el.lobby.querySelector('[data-rg-pcount]'); if(pEl) pEl.textContent=playerCount();
+      return;
+    }
+    // ── QUESTION ──
+    if(ph==='question'){
+      show('question');
+      var pos=state.idx, b=BANK[state.order[pos]], my=myAnswer(pos), rev=!!state.revealed, cor=correctOf(pos);
+      var P=optPerm(pos);
+      var optsHTML = P.map(function(oi,k){
+        var cls='rg-opt'; var interactive = !HOST && !rev && my===null;
+        if(my===oi) cls+=' mine';
+        if(rev && oi===cor) cls+=' correct';
+        if(rev && my===oi && my!==cor) cls+=' wrong';
+        return '<button class="'+cls+'" data-opt="'+oi+'"'+(interactive?'':' disabled')+'>'
+          + '<span class="rg-opt-k">'+LETTERS[k]+'</span><span>'+esc(b.options[oi])+'</span></button>';
+      }).join('');
+      var scoreLine = (!HOST && scored()) ? '<span class="rg-score">Your score: <strong>'+scoreOf(PK)+'</strong></span>' : '';
+      var studentHint='';
+      if(!HOST){
+        if(myModeLocal()===null) studentHint='<span class="rg-qhint">You joined after sign-up — you can follow along here.</span>';
+        else if(my!==null && !rev) studentHint='<span class="rg-qhint ok">Locked in ✓ — waiting for the reveal…</span>';
+        else if(rev && my!==null) studentHint = (my===cor) ? '<span class="rg-qhint ok">Correct! ✓</span>' : '<span class="rg-qhint">The correct answer is highlighted.</span>';
+        else if(!rev) studentHint='<span class="rg-qhint">Tap your answer to lock it in.</span>';
+      }
+      var hostCtl='';
+      if(HOST){
+        hostCtl = '<div class="rg-qfoot">'
+          + (rev ? '' : '<button class="rg-btn" data-act="reveal">Reveal answer</button>')
+          + '<button class="rg-btn'+(rev?'':' ghost')+'" data-act="next">'+((state.idx+1>=state.count)?'Finish ▸':'Next question ▸')+'</button>'
+          + '<span class="rg-qhint">'+(rev?'Answer revealed — discuss, then continue.':'Reveal when the class has answered.')+'</span></div>';
+      } else {
+        hostCtl = '<div class="rg-qfoot">'+studentHint+'</div>';
+      }
+      el.question.innerHTML =
+        '<div class="rg-qgrid"><div class="rg-qmain">'
+        + '<div class="rg-qtop"><span class="rg-prog">Question '+(pos+1)+' of '+state.count+'</span>'+scoreLine+'</div>'
+        + '<div class="rg-qtext">'+esc(b.q)+'</div>'
+        + '<div class="rg-opts">'+optsHTML+'</div>'
+        + hostCtl
+        + '</div>'
+        + '<div class="rg-qside"'+(HOST?'':' hidden')+'>'+boardHTML(board(),5,'Top 5')+'</div></div>';
+      return;
+    }
+    // ── ENDED ──
+    if(ph==='ended'){
+      show('ended');
+      var lb=board();
+      var yours='';
+      if(!HOST && scored()){
+        var rank=lb.indexOf(PK); rank = rank<0 ? lb.length : rank+1;
+        yours = '<div class="rg-yours">You finished with <strong>'+scoreOf(PK)+'</strong> point'+(scoreOf(PK)===1?'':'s')+' — rank <strong>'+rank+'</strong> of '+lb.length+'.</div>';
+      } else if(!HOST){
+        yours = '<div class="rg-muted rg-center">Thanks for playing along!</div>';
+      }
+      var st=qStats(), statsHTML='';
+      if(st.totalAns>0){
+        var card=function(l,v,s){ return '<div class="rg-stat"><div class="rg-stat-l">'+l+'</div><div class="rg-stat-v">'+v+'</div><div class="rg-stat-s">'+esc(s)+'</div></div>'; };
+        statsHTML='<div class="rg-stats-t">Class stats</div><div class="rg-stats">'
+          + (st.aced>=0 ? card('Most aced question', Math.round(st.ar*100)+'% correct', topicAt(st.aced)) : '')
+          + (st.missed>=0 && st.missed!==st.aced ? card('Most missed question', Math.round(st.mr*100)+'% correct', topicAt(st.missed)) : '')
+          + card('Class accuracy', Math.round(st.accuracy*100)+'%', 'of all answers were correct')
+          + card('Average score', (Math.round(st.avg*10)/10)+' / '+st.n, st.scoredN+' player'+(st.scoredN===1?'':'s')+(st.perfect?' · '+st.perfect+' perfect':''))
+          + '</div>';
+      }
+      el.ended.innerHTML = '<div class="rg-final"><div class="rg-big rg-center">🏆 Final Results</div>'
+        + yours + boardHTML(lb, 5, 'Top 5 — Final') + statsHTML
+        + (HOST ? '<button class="rg-btn ghost" data-act="new">New game</button>' : '')
+        + '</div>';
+      return;
+    }
+  }
+
+  // ── event delegation ──
+  SEC.addEventListener('click', function(e){
+    var t=e.target.closest('[data-act],[data-cnt],[data-mode],[data-opt]'); if(!t) return;
+    if(t.dataset.cnt!==undefined){ pickCount=parseInt(t.dataset.cnt,10); render(); return; }
+    if(t.dataset.opt!==undefined){ answer(parseInt(t.dataset.opt,10)); return; }
+    if(t.dataset.mode!==undefined){
+      if(t.dataset.mode==='named'){ nameFormOpen=true; render(); }
+      else join(t.dataset.mode);
+      return;
+    }
+    var act=t.dataset.act;
+    if(act==='start') startGame();
+    else if(act==='begin') beginQuestions();
+    else if(act==='reveal') reveal();
+    else if(act==='next') nextQ();
+    else if(act==='new') newGame();
+    else if(act==='backmodes'){ nameFormOpen=false; render(); }
+  });
+  SEC.addEventListener('submit', function(e){
+    var f=e.target.closest('[data-nf]'); if(!f) return; e.preventDefault();
+    var inp=f.querySelector('[data-nf-in]'); join('named', inp?inp.value.trim():'');
+  });
+
+  window.__deckLiveReady.then(function(live){
+    backend=live.backend; HOST=live.HOST;
+    if(HOST) SEC.classList.add('host');
+    backend.subscribeDoc('polls', GID, function(d){ state=d||{}; render(); });
+    // host drives the lobby clock; everyone re-renders the countdown each second
+    ticker=setInterval(function(){
+      if(phase()==='lobby'){
+        if(HOST && state.lobbyEnds && Date.now()>=state.lobbyEnds){ beginQuestions(); }
+        else render();
+      }
+    }, 500);
+  });
+  render();  // paint an initial "get ready" frame before the backend resolves
+})();
+</script>
+</section>
 </div>
 
 <button class="nav-btn prev" onclick="prev()" aria-label="Previous slide">&#8249;</button>
@@ -1075,7 +1514,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 25</span>
+  <span class="counter" id="counter">1 / 26</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -1084,7 +1523,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 5 · Conservation &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.5 International Laws</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.7 Reintroduction</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.5 International Laws</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.7 Reintroduction</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>Key Concepts</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>▶ Review Game</button></div>
 </div>
 
 <script>
@@ -1157,6 +1596,7 @@ slides.forEach(s=>s.classList.remove('active'));
 show(start);
 </script>
 <script src="firebase-config.js?v=e1671c74ba"></script>
+<script>if(new URLSearchParams(location.search).has("demo"))window.FIREBASE_CONFIG={apiKey:"YOUR_API_KEY"};</script>
 <script type="module">
 (async function(){
   const HOST = new URLSearchParams(location.search).has('host');
@@ -1792,28 +2232,52 @@ show(start);
   //     health, gameId, collapsed, players:{pk:name}, choices:{rN:{pk:amt}},
   //     hist:{rN:{total,cap,sust,mult,zone,health,coopPer,coopEarn}} }
   const CM_SCEN={
-    fishing:{name:'The Fishing Village', icon:'🎣', res:'🐟', color:'#0077b6',
-      grad:'linear-gradient(180deg,#48cae4,#023e8a)',
+    fishing:{name:'The Fishing Village', res:'fish', color:'#4a7a8e',
+      grad:'linear-gradient(180deg,#c6dae5,#5e88a1)',
       desc:'You are a fisher in a coastal village. Each season you decide how many fish to harvest from the community lake. It supports a limited harvest — take too many and the population collapses for everyone.',
       prompt:'How many fish will you harvest this season?', resName:'Fish population', unit:'fish', unitValue:100, max:10},
-    pasture:{name:'The Shared Pasture', icon:'🐄', res:'🌿', color:'#2d6a4f',
-      grad:'linear-gradient(180deg,#74c69d,#1b4332)',
+    pasture:{name:'The Shared Pasture', res:'grass', color:'#4a7a5e',
+      grad:'linear-gradient(180deg,#cfe1d4,#63917a)',
       desc:'You are a farmer grazing cattle on shared common land. The pasture supports a limited herd — overgraze it and the grass never recovers, leaving every farmer with barren land.',
       prompt:'How many cattle will you graze on the commons?', resName:'Pasture health', unit:'cattle', unitValue:150, max:8},
-    emissions:{name:'The Climate Summit', icon:'🌍', res:'🌡️', color:'#7209b7',
-      grad:'linear-gradient(180deg,#c77dff,#240046)',
+    emissions:{name:'The Climate Summit', res:'heat', color:'#7a5f8a',
+      grad:'linear-gradient(180deg,#ded5e4,#7d6b8f)',
       desc:'You represent a nation at a climate summit. Emitting more carbon grows your economy — but if global emissions run too high, climate damage devastates every nation equally.',
       prompt:'How many carbon units will your nation emit this year?', resName:'Atmospheric stability', unit:'CO₂ units', unitValue:120, max:10},
-    bandwidth:{name:'The Office Network', icon:'📡', res:'💻', color:'#0f3460',
-      grad:'linear-gradient(180deg,#1e6091,#0d1b2a)',
+    bandwidth:{name:'The Office Network', res:'screen', color:'#4a6a86',
+      grad:'linear-gradient(180deg,#d0dae4,#5f7a8e)',
       desc:'Your office shares one internet connection. Streaming and downloads help you — but if everyone maxes out, the network slows to a crawl for the whole office.',
       prompt:'How many Mbps of bandwidth will you consume?', resName:'Network speed', unit:'Mbps', unitValue:80, max:12},
-    forest:{name:'The Amazon Rainforest', icon:'🌳', res:'🌲', color:'#1b4332',
-      grad:'linear-gradient(180deg,#40916c,#081c15)',
+    forest:{name:'The Amazon Rainforest', res:'pine', color:'#3f7a4f',
+      grad:'linear-gradient(180deg,#cee0cc,#5f8d5e)',
       desc:'You run a logging company in the Amazon. Clearing land generates revenue — but destroy too much forest and biodiversity collapse and climate feedbacks devastate the whole region.',
       prompt:'How many hectares (×1,000) will you clear this year?', resName:'Forest coverage', unit:'hectares ×1k', unitValue:200, max:8}
   };
+  // Flat cream-on-ink marks rather than emoji, so the pond is drawn in the same
+  // hand it draws its charts in. Cream fill + dark outline reads on both the pale
+  // top of the wash and the darker water below.
+  const CM_SPRITE={
+    fish:'<svg viewBox="0 0 26 14" aria-hidden="true">'
+      +'<path class="sp" d="M4.4 7 L0.8 3.4 L1.9 7 L0.8 10.6 Z"/>'
+      +'<path class="sp" d="M4 7 Q9 1.6 16.5 2.6 Q23 3.6 25 7 Q23 10.4 16.5 11.4 Q9 12.4 4 7 Z"/>'
+      +'<circle class="sp-d" cx="20.2" cy="6.1" r=".95"/></svg>',
+    grass:'<svg viewBox="0 0 20 17" aria-hidden="true">'
+      +'<path class="sp" d="M10 16.4 Q7.4 9.4 4.6 3.6 Q8 8.4 11 16.4 Z"/>'
+      +'<path class="sp" d="M10 16.4 Q9.4 9 9.8 2.2 Q11.6 9 11.4 16.4 Z"/>'
+      +'<path class="sp" d="M10 16.4 Q12.4 9.6 15.4 4.4 Q12.6 9.6 11.2 16.4 Z"/></svg>',
+    heat:'<svg viewBox="0 0 12 19" aria-hidden="true">'
+      +'<path class="sp" d="M6 1.6 A2.3 2.3 0 0 1 8.3 3.9 V10.6 A3.8 3.8 0 1 1 3.7 10.6 V3.9 A2.3 2.3 0 0 1 6 1.6 Z"/>'
+      +'<circle class="sp-d" cx="6" cy="14.1" r="1.7"/></svg>',
+    screen:'<svg viewBox="0 0 22 16" aria-hidden="true">'
+      +'<path class="sp" d="M7.6 15.2 H14.4 L13.4 12.6 H8.6 Z"/>'
+      +'<rect class="sp" x="1" y="1" width="20" height="11.8" rx="1.6"/></svg>',
+    pine:'<svg viewBox="0 0 16 20" aria-hidden="true">'
+      +'<rect class="sp" x="6.9" y="12.8" width="2.2" height="6" rx=".6"/>'
+      +'<path class="sp" d="M8 1.4 L12.6 8.2 H3.4 Z"/>'
+      +'<path class="sp" d="M8 6.4 L13.7 14 H2.3 Z"/></svg>'
+  };
   const CM_FMT = n => '$'+Math.round(n).toLocaleString('en-US');
+  const CMQ = new URLSearchParams(location.search);
 
   commons.forEach(function(sec){
     const id = sec.dataset.cmId;
@@ -1867,6 +2331,31 @@ show(start);
       const amt=roundChoices(r)[who]; return amt===undefined?0:amt*S().unitValue*e.mult; }
     function totalEarned(who){ let t=0; for(let r=1;r<=(state.round||0);r++) t+=earned(who,r); return t; }
 
+    /* The arithmetic that ends a round lives here rather than inside the host
+       button, so the self-running demo plays the real game instead of an
+       imitation of it. */
+    function roundVerdict(r){
+      const ch=roundChoices(r), n=nPlayers();
+      if(!n) return null;
+      let total=0; Object.keys(ch).forEach(k=>{ total+=ch[k]; });
+      const h=state.health===undefined?1:state.health;
+      const cap=n*S().max*h, sust=cap*0.4;
+      let mult, zone, h2;
+      if(total<=sust){ mult=1; zone='green'; h2=Math.min(1, h*1.08); }
+      else if(total<=cap){
+        const raw=(cap-total)/(cap-sust);
+        mult=Math.round(Math.max(0,Math.pow(raw,1.5))*1000)/1000;
+        zone= mult>0.4 ? 'yellow' : 'orange';
+        const overshoot=(total-sust)/Math.max(1e-9,cap-sust);
+        h2=Math.max(0.05, h*(1-overshoot*0.35));
+      } else { mult=0; zone='red'; h2=Math.max(0.05, h*0.35); }
+      h2=Math.round(h2*10000)/10000;
+      const coopPer=Math.floor(sust/n), coopEarn=Math.round(coopPer*S().unitValue*100)/100;
+      return {collapsed:h2<=0.05, health:h2,
+        entry:{total:total, cap:Math.round(cap*10)/10, sust:Math.round(sust*10)/10,
+               mult:mult, zone:zone, health:h2, coopPer:coopPer, coopEarn:coopEarn}};
+    }
+
     function theme(){
       sec.style.setProperty('--cm-color', S().color);
       water.style.background = S().grad;
@@ -1884,7 +2373,7 @@ show(start);
       const iconKey = S().res+':'+nIcons;
       if(fishBox.dataset.k!==iconKey){
         fishBox.dataset.k=iconKey; fishBox.innerHTML='';
-        for(let i=0;i<nIcons;i++){ const s=document.createElement('span'); s.textContent=S().res;
+        for(let i=0;i<nIcons;i++){ const s=document.createElement('span'); s.innerHTML=CM_SPRITE[S().res]||'';
           s.style.animationDelay=(-Math.random()*2.6).toFixed(2)+'s'; fishBox.appendChild(s); }
       }
       sec.classList.toggle('dead', !!state.collapsed);
@@ -2176,20 +2665,27 @@ show(start);
       const showRev = (ph==='reveal'||ph==='final') && e;
       revealBox.hidden = !(showRev || ph==='final');
       if(!revealBox.hidden && showRev){
-        const zoneTxt={green:'🟢 Sustainable — everyone sold at full price, and the '+S().resName.toLowerCase()+' recovered.',
-          yellow:'🟡 Strained — overharvest cut everyone’s payout to '+Math.round(e.mult*100)+'% of full price.',
-          orange:'🟠 Badly strained — the payout multiplier crashed to '+Math.round(e.mult*100)+'%.',
-          red:'🔴 Beyond capacity — the '+S().resName.toLowerCase()+' crashed. This round paid $0.'};
+        const zoneTxt={green:'Sustainable — everyone sold at full price, and the '+S().resName.toLowerCase()+' recovered.',
+          yellow:'Strained — overharvest cut everyone’s payout to '+Math.round(e.mult*100)+'% of full price.',
+          orange:'Badly strained — the payout multiplier crashed to '+Math.round(e.mult*100)+'%.',
+          red:'Beyond capacity — the '+S().resName.toLowerCase()+' crashed. This round paid $0.'};
         zoneEl.className='cm-zone '+e.zone; zoneEl.textContent=zoneTxt[e.zone]||'';
         let lines='Round '+r+': the class took <strong>'+e.total+' '+S().unit+'</strong> — sustainable threshold was <strong>'
           +Math.floor(e.sust)+'</strong>, capacity <strong>'+e.cap+'</strong>.';
         lines+='<span class="coop">If everyone had taken '+e.coopPer+' or less, each player would have earned '
-          +CM_FMT(e.coopEarn)+' this round — every round.</span>';
+          +CM_FMT(e.coopEarn)+' this round.</span>';
         if(ph==='final'){
           let classTot=0; Object.keys(players()).forEach(k=>{ classTot+=totalEarned(k); });
-          const coopTot=(e.coopEarn||0)*nPlayers()*(state.round||0);
+          /* The benchmark has to be the counterfactual, not this round's ceiling.
+             A class that cooperates from round one never damages the stock, so
+             its sustainable share stays at the undamaged level every round —
+             measuring against the wrecked resource the defectors produced makes
+             cooperation look worse than it was, which is the opposite lesson. */
+          const coopPerFull=Math.floor(S().max*0.4);
+          const coopTot=coopPerFull*S().unitValue*nPlayers()*(state.round||0);
           lines+='<span class="coop"><strong>Game over.</strong> The class earned '+CM_FMT(classTot)
-            +' in total — full cooperation would have earned about '+CM_FMT(coopTot)+'.</span>';
+            +' in total. Taking '+coopPerFull+' '+S().unit+' each from round one would have earned about '
+            +CM_FMT(coopTot)+' — and left the '+S().resName.toLowerCase()+' untouched.</span>';
         }
         revLines.innerHTML=lines;
       } else if(!revealBox.hidden){ zoneEl.className='cm-zone'; zoneEl.textContent='Game over.'; revLines.innerHTML=''; }
@@ -2198,7 +2694,7 @@ show(start);
       if(HOST || !joined() || !(state.hist&&Object.keys(state.hist).length)){ meEl.hidden=true; return; }
       meEl.hidden=false;
       const r=state.round||0, e=histEntry(r);
-      meEl.innerHTML='💰 Your earnings: '+(e?'<strong>'+CM_FMT(earned(pk,r))+'</strong> this round · ':'')
+      meEl.innerHTML='Your earnings: '+(e?'<strong>'+CM_FMT(earned(pk,r))+'</strong> this round · ':'')
         +'<strong>'+CM_FMT(totalEarned(pk))+'</strong> total';
     }
     function payoutMult(total, n, h){ // same payoff model the host uses at reveal
@@ -2220,13 +2716,13 @@ show(start);
       const oHigh=Math.max(mid+1, Math.round(S().max*0.8)); // others averaging unsustainably high
       const mA=payoutMult(hi+(n-1)*mid, n, h);            // you defect, others sustainable
       const mB=payoutMult(lo+(n-1)*oHigh, n, h);          // you hold back, others defect
-      const row=(color,emoji,txt)=>'<div class="cm-ex" style="border-left-color:'+color+'">'+emoji+' '+txt+'</div>';
+      const row=(color,txt)=>'<div class="cm-ex" style="border-left-color:'+color+'">'+txt+'</div>';
       examplesEl.innerHTML =
-        row('#BC8A2E','😈','If you take <b>'+hi+'</b> and the other '+(n-1)+' average '+mid+' each → <strong>you earn '
+        row('#b8860b','If you take <b>'+hi+'</b> and the other '+(n-1)+' average '+mid+' each → <strong>you earn '
           +CM_FMT(hi*uv*mA)+'</strong>, they get '+CM_FMT(mid*uv*mA)+' each.')
-        +row('#A4373A','😇','If you take <b>'+lo+'</b> and the others average '+oHigh+' each → <strong>you earn '
+        +row('#a4373a','If you take <b>'+lo+'</b> and the others average '+oHigh+' each → <strong>you earn '
           +CM_FMT(lo*uv*mB)+'</strong>'+(mB===0?' — the '+S().resName.toLowerCase()+' crashes.':'.'))
-        +row('#2D6A4F','🤝','If <b>everyone</b> takes '+mid+' → <strong>everyone earns '+CM_FMT(mid*uv)
+        +row('#2f6b4f','If <b>everyone</b> takes '+mid+' → <strong>everyone earns '+CM_FMT(mid*uv)
           +'</strong> at full price, every round — and the '+S().resName.toLowerCase()+' recovers.');
     }
     function render(){
@@ -2236,13 +2732,13 @@ show(start);
       theme(); renderMeter(); renderHist(); renderPicks(); renderSummary(); renderBoard(); renderReveal(); renderMe();
       // scenario story card
       scenCard.hidden = !(ph==='lobby' || (ph!=='idle' && !joined() && !HOST && ph!=='final'));
-      if(!scenCard.hidden){ scenName.textContent=S().icon+' '+S().name;
+      if(!scenCard.hidden){ scenName.textContent=S().name;
         scenDesc.textContent=S().desc; }
       // banner
       if(state.collapsed){ banner.hidden=false; banner.className='cm-banner bad';
-        banner.innerHTML='<span>💀 The commons collapsed!</span>'; }
+        banner.innerHTML='<span>The commons collapsed</span>'; }
       else if(ph==='final'){ banner.hidden=false; banner.className='cm-banner good';
-        banner.innerHTML='<span>🌊 The commons survived '+r+' round'+(r===1?'':'s')+'!</span>'; }
+        banner.innerHTML='<span>The commons survived '+r+' round'+(r===1?'':'s')+'</span>'; }
       else banner.hidden=true;
       // join + decide visibility (students only)
       joinForm.hidden = HOST || !(ph==='lobby'||ph==='open') || joined();
@@ -2308,27 +2804,10 @@ show(start);
       });
       endRoundBtn.addEventListener('click', function(){
         if(state.phase!=='open') return;
-        const r=state.round||0, ch=roundChoices(r), n=nPlayers();
-        if(!n) return;
-        let total=0; Object.keys(ch).forEach(k=>{ total+=ch[k]; });
-        const h=state.health===undefined?1:state.health;
-        const cap=n*S().max*h, sust=cap*0.4;
-        let mult, zone, h2;
-        if(total<=sust){ mult=1; zone='green'; h2=Math.min(1, h*1.08); }
-        else if(total<=cap){
-          const raw=(cap-total)/(cap-sust);
-          mult=Math.round(Math.max(0,Math.pow(raw,1.5))*1000)/1000;
-          zone= mult>0.4 ? 'yellow' : 'orange';
-          const overshoot=(total-sust)/Math.max(1e-9,cap-sust);
-          h2=Math.max(0.05, h*(1-overshoot*0.35));
-        } else { mult=0; zone='red'; h2=Math.max(0.05, h*0.35); }
-        h2=Math.round(h2*10000)/10000;
-        const collapsed = h2<=0.05;
-        const coopPer=Math.floor(sust/n), coopEarn=Math.round(coopPer*S().unitValue*100)/100;
-        const entry={total:total, cap:Math.round(cap*10)/10, sust:Math.round(sust*10)/10,
-          mult:mult, zone:zone, health:h2, coopPer:coopPer, coopEarn:coopEarn};
-        const upd={phase: collapsed?'final':'reveal', health:h2, collapsed:collapsed, hist:{}};
-        upd.hist['r'+r]=entry;
+        const r=state.round||0, v=roundVerdict(r);
+        if(!v) return;
+        const upd={phase: v.collapsed?'final':'reveal', health:v.health, collapsed:v.collapsed, hist:{}};
+        upd.hist['r'+r]=v.entry;
         backend.mergeDoc('polls', id, upd);
       });
       nextBtn.addEventListener('click', function(){
@@ -2359,6 +2838,116 @@ show(start);
       state=(d && d.v===2) ? d : {phase:'idle'};  // ignore stale v1 docs
       render();
     });
+
+    /* ══ DEMO MODE ═════════════════════════════════════════════════════════
+       ?demo drives the whole game from one browser: a class of 24 joins, plays
+       four rounds and walks the arc the game is built to produce — everyone
+       holds back and the stock grows, a few notice that taking more paid more,
+       the take runs past capacity and the round pays nothing, and the class
+       finally pulls back onto a resource whose ceiling is now a third of what
+       it was. Nothing is faked: the bots' choices go through the same
+       roundVerdict() the instructor's button uses.
+       ?freeze=N jumps straight to beat N and stops, for cover images.     ══ */
+    function cmDemo(){
+      const N=24, ROUNDS=4;
+      /* deterministic, so the same walkthrough plays every time */
+      const pick=(i,avg)=>Math.max(0,Math.min(S().max, Math.round(avg + ((i*13)%7) - 3)));
+      const bar=document.createElement('div');
+      bar.className='cm-demobar';
+      bar.innerHTML='<span class="cm-demotag">Demo</span><span class="cm-demotxt" data-cmdemo></span>'
+        +'<button class="cm-demobtn" type="button" data-cmreplay hidden>Replay</button>';
+      sec.querySelector('.cm-root').appendChild(bar);
+      const txt=bar.querySelector('[data-cmdemo]');
+      let step=0, tid=null;
+      bar.querySelector('[data-cmreplay]').addEventListener('click', function(){
+        this.hidden=true; step=0; play();
+      });
+      const doc=o=>backend.mergeDoc('polls', id, o);
+      function choices(r, avg){
+        const c={};
+        for(let i=0;i<N;i++) c['b'+i]=pick(i,avg);
+        c[pk]=pick(3,avg);              /* the viewer plays too */
+        const u={choices:{}}; u.choices['r'+r]=c; doc(u);
+      }
+      function endRound(r){
+        const v=roundVerdict(r); if(!v) return;
+        const u={phase: v.collapsed?'final':'reveal', health:v.health, collapsed:v.collapsed, hist:{}};
+        u.hist['r'+r]=v.entry; doc(u);
+      }
+      const AVG=[null,3.4,6.0,9.6,0.0];
+      const script=[
+        [200, ()=>backend.setDoc('polls', id, {v:2, phase:'lobby', scen:'fishing', rounds:ROUNDS,
+              round:0, health:1, gameId:Date.now(), collapsed:false, players:{}, choices:{}, hist:{}}),
+         'The instructor picks a scenario and opens the lobby.'],
+        [2400, ()=>{ const pl={}; for(let i=0;i<N;i++) pl['b'+i]=Date.now()+i;
+              pl[pk]=Date.now()+N; doc({players:pl}); },
+         (N+1)+' fishers join the village — you are one of them. Nobody types a name; everyone is Student N by join order.'],
+        [2600, ()=>doc({phase:'open', round:1}),
+         'Round one. Everyone secretly chooses a harvest; three payoff examples spell out the dilemma.'],
+        [2600, ()=>choices(1,AVG[1]),
+         'Choices are locked in and stay hidden. Most people take a modest share this first season.'],
+        [2400, ()=>endRound(1),
+         'Under the sustainable share, so everyone sells at full price and the fish population grows back.'],
+        [3400, ()=>doc({phase:'open', round:2}),
+         'Round two. The board is public now, and taking more is visibly what paid best.'],
+        [2200, ()=>choices(2,AVG[2]),
+         'Here the take climbs. Nobody has broken a rule.'],
+        [2400, ()=>endRound(2),
+         'Over the threshold. Everyone’s payout multiplier falls — including the people who held back.'],
+        [3600, ()=>doc({phase:'open', round:3}),
+         'Round three. Holding back now costs you and barely helps the stock.'],
+        [2200, ()=>choices(3,AVG[3]),
+         'In this run, nearly everyone fishes near the maximum.'],
+        [2400, ()=>endRound(3),
+         'Past capacity. The round pays nothing at all, and the fish population crashes.'],
+        [3800, ()=>doc({phase:'open', round:4}),
+         'Round four, on a wrecked resource. Capacity is a third of what it was in round one.'],
+        [2200, ()=>choices(4,AVG[4]),
+         'This class pulls right back. Another might not.'],
+        [2400, ()=>endRound(4),
+         'Sustainable again — but the ceiling they are living under is the one they broke.'],
+        [3200, ()=>doc({phase:'final'}),
+         'The closing summary: what the class took each round against the sustainable share, and what that cost.'],
+        [5200, ()=>{ const b=bar.querySelector('[data-cmreplay]'); if(b) b.hidden=false; },
+         'Nobody cheated. Each choice made sense on its own — which is the trap.']
+      ];
+      /* A caption has to stay up long enough to READ, and they run from seven to
+         twenty-one words while the beats are all about the same length — so
+         scaling the whole script never fixed it, it just made the short ones
+         idle. Each caption now holds for at least its own reading time at a
+         projector-friendly pace, and the scripted delay is the floor under
+         that. A caption that differs from the last one only in its numbers is
+         the same sentence ticking over, so it does not restart the clock. */
+      const PACE=1.15, WPM=190;
+      function readMs(t){
+        const w=String(t||'').trim().split(/\s+/).length;
+        return Math.round(750 + w*(60000/WPM));
+      }
+      function sameIdea(a,b){
+        return String(a).replace(/\d+/g,'#') === String(b).replace(/\d+/g,'#');
+      }
+      let lastCap='';
+      function play(){
+        if(step>=script.length) return;
+        const s=script[step++];
+        const floor = (lastCap && !sameIdea(lastCap, s[2])) ? readMs(lastCap) : 0;
+        tid=setTimeout(function(){
+          txt.textContent=s[2]; lastCap=s[2];
+          try{ s[1](); }catch(e){}
+          play();
+        }, Math.max(Math.round(s[0]*PACE), floor));
+      }
+      const FR=CMQ.has('freeze') ? parseInt(CMQ.get('freeze'),10) : -1;
+      if(FR>=0){
+        bar.hidden=true;
+        for(let i=0;i<=Math.min(FR,script.length-1);i++){ try{ script[i][1](); }catch(e){} }
+        return;
+      }
+      txt.textContent='Tragedy of the Commons — one hypothetical class, played out. A real one varies.';
+      lastCap=txt.textContent;   /* so the opening line gets read, not flashed */
+      play();
+    }
+    if(CMQ.has('demo') && !HOST) setTimeout(cmDemo, 400);
   });
 
   // ---- wire each guess-the-number slide ------------------------------------
@@ -3986,9 +4575,15 @@ show(start);
       const rounds=[]; for(let r=1;r<=R();r++){ const h=histFor(r); if(h) rounds.push({r:r,h:h}); }
       mixBox.hidden = rounds.length===0;
       if(!rounds.length) return;
-      const W=460, H=150, PADL=8, PADR=8, TOP=10, BASE=112;
+      const W=460, H=150, PADL=30, PADR=8, TOP=10, BASE=112;
       const n=rounds.length, slot=(W-PADL-PADR)/n, bw=Math.min(52, slot*0.62);
       let sv='';
+      // the columns are shares of the plants, so give them a real percentage axis
+      [0,0.25,0.5,0.75,1].forEach(function(f){
+        const y=(BASE-f*(BASE-TOP)).toFixed(1);
+        sv+='<path class="ins-grid" d="M'+PADL+' '+y+' H'+(W-PADR)+'"/>'
+          + '<text class="ins-axl" x="'+(PADL-5)+'" y="'+(+y+3.5).toFixed(1)+'" text-anchor="end">'+Math.round(f*100)+'%</text>';
+      });
       rounds.forEach(function(o,i){
         const h=o.h, m=h.mix||{}, tot=(m.comply||0)+(m.quiet||0)+(m.open||0);
         const x=PADL+i*slot+(slot-bw)/2;

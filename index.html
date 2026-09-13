@@ -436,7 +436,80 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   font-family:'Merriweather',serif; font-weight:800; color:#3b3222; font-size:clamp(.98rem,1.75vw,1.22rem);}
 .rg-sv-sub{font-family:'Inter',sans-serif; font-weight:400; color:#6b6350; margin-top:.22rem;
   font-size:clamp(.74rem,1.18vw,.86rem);}
-@media (max-width:900px){ .rg-qgrid{flex-direction:column;} .rg-qside{width:100%;} .rg-opts{grid-template-columns:1fr;} }
+/* ── mini-games: Word Puzzle + Connections ── */
+.rg-slide.rg-inplay .rg-sub{display:none;}
+.rg-gm-tag{color:#3b3222;}
+.rg-gm-right{display:flex; align-items:baseline; gap:1rem;}
+.rg-gm-timer{font-family:'Merriweather',serif; font-weight:900; color:var(--accent); font-variant-numeric:tabular-nums;
+  font-size:clamp(1.05rem,2vw,1.45rem); min-width:3.2ch; text-align:right;}
+.rg-gm-timer.low{color:#b0473f; animation:rg-pulse 1s ease-in-out infinite;}
+.rg-gm-timer.next{color:#8a6a2f; font-family:'Inter',sans-serif; font-weight:800; font-size:clamp(.85rem,1.4vw,1rem);}
+@keyframes rg-pulse{50%{opacity:.5;}}
+.rg-gm-host{display:flex; flex-direction:column; align-items:center; padding:clamp(.6rem,2vh,1.4rem) 0;}
+.rg-gm-lead{font-family:'Merriweather',serif; font-weight:800; color:#2c2519; text-align:center;
+  font-size:clamp(1rem,2vw,1.4rem); margin-top:.8rem;}
+.rg-gm-stat{font-family:'Inter',sans-serif; color:#6b6350; text-align:center; font-size:clamp(.85rem,1.4vw,1rem);
+  margin-top:clamp(.5rem,1.4vh,.9rem);}
+.rg-gm-stat strong{font-family:'Merriweather',serif; color:var(--accent); font-size:1.2em;}
+/* word puzzle */
+.rg-wd{display:flex; gap:clamp(1rem,3vw,2.4rem); align-items:center; justify-content:center; flex-wrap:wrap;}
+.rg-wclue{margin:0 auto .7rem; text-align:center; font-style:italic; color:#4a4337; font-size:clamp(.95rem,1.4vw,1.1rem);}
+.rg-wclue span{font-style:normal; font-weight:700; font-size:.72em; letter-spacing:.12em; text-transform:uppercase; color:#8a6d2f; margin-right:.5em;}
+.rg-gm-host .rg-wclue{margin-top:.6rem; font-size:clamp(1.05rem,1.8vw,1.35rem);}
+.rg-wboard{display:flex; flex-direction:column; gap:clamp(.22rem,.6vh,.34rem);}
+.rg-wrow{display:flex; gap:clamp(.22rem,.5vw,.34rem); justify-content:center;}
+.rg-wt{width:clamp(34px,5.6vh,50px); height:clamp(34px,5.6vh,50px); border:2px solid #dcd2bd; border-radius:6px;
+  background:#fffdf8; display:flex; align-items:center; justify-content:center; text-transform:uppercase;
+  font-family:'Merriweather',serif; font-weight:900; font-size:clamp(1rem,2.6vh,1.5rem); color:#2c2519;}
+.rg-wt.filled{border-color:#8a6a2f; animation:rg-tap .12s ease;}
+.rg-wt.g{background:#2e7d46; border-color:#2e7d46; color:#fff;}
+.rg-wt.y{background:#c9a227; border-color:#c9a227; color:#fff;}
+.rg-wt.x{background:#8d8676; border-color:#8d8676; color:#fff;}
+@keyframes rg-tap{50%{transform:scale(1.08);}}
+.rg-kb{display:flex; flex-direction:column; gap:.3rem; align-items:center;}
+.rg-krow{display:flex; gap:.26rem;}
+.rg-key{min-width:clamp(24px,2.9vw,38px); height:clamp(34px,5.2vh,46px); padding:0 .15rem; border:none; border-radius:6px;
+  cursor:pointer; background:#e7dfcc; color:#2c2519; font-family:'Inter',sans-serif; font-weight:800;
+  font-size:clamp(.72rem,1.2vw,.92rem);}
+.rg-key.wide{min-width:clamp(44px,5.2vw,66px);}
+.rg-key:hover:not(:disabled){filter:brightness(.95);}
+.rg-key.g{background:#2e7d46; color:#fff;} .rg-key.y{background:#c9a227; color:#fff;} .rg-key.x{background:#8d8676; color:#fff;}
+.rg-key:disabled{opacity:.6; cursor:default;}
+.rg-leg{display:inline-block; padding:.05rem .45rem; border-radius:5px; color:#fff; font-style:normal; font-weight:700;
+  font-size:.85em; margin-left:.25rem;}
+.rg-leg.g{background:#2e7d46;} .rg-leg.y{background:#c9a227;}
+.rg-wans{display:flex; flex-direction:column; align-items:center; gap:.6rem;}
+.rg-wans .rg-wt{animation:rg-pop .42s ease;}
+.rg-wdef{font-family:'Merriweather',serif; font-weight:700; color:#3b3222; text-align:center; max-width:40ch; line-height:1.35;
+  font-size:clamp(.95rem,1.8vw,1.25rem);}
+/* connections */
+.rg-cbands{display:flex; flex-direction:column; gap:.4rem; margin-bottom:.4rem;}
+.rg-cbands:empty{display:none;}
+.rg-cgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.3rem,.7vw,.5rem);}
+.rg-ctile{min-height:clamp(46px,7.6vh,64px); padding:.3rem .4rem; border:none; border-radius:10px; background:#e9e1cf;
+  color:#2c2519; font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.01em;
+  line-height:1.15; font-size:clamp(.66rem,1.18vw,.9rem); display:flex; align-items:center; justify-content:center;
+  text-align:center; cursor:pointer; transition:background .12s, transform .08s; overflow-wrap:anywhere;}
+.rg-ctile:hover:not(:disabled){background:#dfd4bc;}
+.rg-ctile.on{background:#5b5340; color:#fff;}
+.rg-ctile:active:not(:disabled){transform:scale(.97);}
+.rg-ctile:disabled{cursor:default;}
+.rg-cgrid.host .rg-ctile{cursor:default;}
+.rg-cband{border-radius:10px; padding:clamp(.4rem,1.1vh,.65rem) .8rem; text-align:center; color:#2c2519; animation:rg-pop .42s ease;}
+.rg-cband.c0{background:#ecd174;} .rg-cband.c1{background:#a9c77f;} .rg-cband.c2{background:#a5bfe3;} .rg-cband.c3{background:#c3a2d3;}
+.rg-cband-l{font-family:'Inter',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:.03em;
+  font-size:clamp(.72rem,1.25vw,.95rem);}
+.rg-cband-w{font-family:'Inter',sans-serif; font-size:clamp(.72rem,1.2vw,.92rem); margin-top:.1rem;}
+.rg-cfoot{display:flex; align-items:center; gap:.6rem; margin-top:clamp(.5rem,1.3vh,.8rem); flex-wrap:wrap;}
+.rg-cfoot .rg-qhint{flex:1; min-width:12ch;}
+.rg-qhint.warn{color:#b0473f; font-style:normal; font-weight:800;}
+.rg-cmist{font-family:'Inter',sans-serif; color:#6b6350; font-size:clamp(.78rem,1.25vw,.92rem);
+  display:flex; align-items:center; gap:.3rem;}
+.rg-cdot{width:.62rem; height:.62rem; border-radius:50%; background:#5b5340; display:inline-block;}
+.rg-cdot.used{background:#dcd2bd;}
+.rg-btn.sm{padding:.45rem 1rem; font-size:clamp(.8rem,1.3vw,.95rem); border-radius:10px;}
+.rg-btn.ghost:disabled{background:#fff; color:#c9c0ac; border-color:#dcd2bd;}
+@media (max-width:900px){ .rg-qgrid{flex-direction:column;} .rg-qside{width:100%;} .rg-opts{grid-template-columns:1fr;} .rg-wd{flex-direction:column;} }
 
 .gcard-icon{width:52px;height:52px;color:var(--accent);margin:0 0 10px}
 .gcard-icon svg{width:100%;height:100%;display:block}
@@ -1209,17 +1282,6 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide" data-type="content" style="--accent:#1C7293">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">5.5 · International Laws and Agreements</div>
-<h2 class="heading">Protecting Species Across Borders</h2>
-<ul class="bullets"><li>The <strong>Convention on International Trade in Endangered Species of Wild Fauna and Flora (CITES)</strong> is an international agreement banning the hunting, capturing, and selling of endangered and threatened species.</li><li>The <strong>1992 Convention on Biological Diversity</strong> is an international agreement committing countries to pass laws to expand protected areas, restore degraded ecosystems, and ensure the sustainable and equitable human use of ecosystem services.</li></ul>
-    </div>
-    <div class="bleed-media cover"><img src="media/image20.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
 <section class="slide" data-type="content" style="--accent:#40916C">
   <div class="bleed-grid">
     <div class="bleed-text">
@@ -1279,7 +1341,9 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 </section>
 <section class="slide rg-slide" data-type="game" data-game-id="ch5-review-game"
   data-rg-counts="10,15,20" style="--accent:#2D6A4F">
-  <script type="application/json" data-rg-bank>[{"topic": "SDG 13", "q": "In the deck's Sustainable Development Goals, SDG 13 (“Climate Action”) represents which dimension of the Triple Bottom Line?", "options": ["Environmental", "Social", "Economic", "Technological"], "answer": 0}, {"topic": "Triple Bottom Line", "q": "The Triple Bottom Line frames sustainability as the overlap of which three dimensions?", "options": ["People, Planet, and Profit", "Land, Labor, and Capital", "Reduce, Reuse, and Recycle", "Air, Water, and Soil"], "answer": 0}, {"topic": "Wicked problems", "q": "Which best describes a “wicked problem”?", "options": ["Complex interactions among multiple stakeholders, with uncertainty and competing interests", "A problem with one clearly correct, testable solution", "A minor issue that resolves itself if ignored", "A problem that affects only a single stakeholder"], "answer": 0}, {"topic": "Planetary boundaries", "q": "The “planetary boundaries” framework defines what?", "options": ["A safe operating space for humanity across nine Earth-system processes", "The physical edge of Earth's atmosphere", "The nine largest national parks on Earth", "The limit of how many people a city can hold"], "answer": 0}, {"topic": "Planetary boundaries", "q": "Which is a clear example of a planetary boundary being pushed past its safe limit?", "options": ["Climate change from increasing CO₂ concentrations", "A single volcanic eruption", "Seasonal changes between summer and winter", "The daily rise and fall of ocean tides"], "answer": 0}, {"topic": "Emergent property", "q": "An emergent property of a system is best described as…", "options": ["A characteristic that results from interactions among the parts, not from any single component", "A property that only the largest component has", "A property measured before the system is assembled", "A property that disappears when parts interact"], "answer": 0}, {"topic": "System boundary", "q": "A system boundary is…", "options": ["The limit that separates a system from its surroundings, defining what is included and excluded", "The physical fence around a national park", "The point where a system stops using energy", "The largest feedback loop inside a system"], "answer": 0}, {"topic": "SETs", "q": "In this course, “SETs” refers to the interconnection and interaction of which three kinds of systems?", "options": ["Social, Ecological, and Technical", "Solar, Electrical, and Thermal", "Scientific, Economic, and Territorial", "Structural, Environmental, and Temporal"], "answer": 0}, {"topic": "Environmental ethics", "q": "Environmental ethics is primarily concerned with…", "options": ["The moral relationships between humans and the environment", "The market price of natural resources", "The engineering of pollution-control devices", "The physics of energy transfer in ecosystems"], "answer": 0}, {"topic": "Environmental justice", "q": "Environmental justice is centrally concerned with…", "options": ["The fair treatment of all people, so marginalized communities don't bear a disproportionate share of environmental harms", "Maximizing total economic output regardless of who benefits", "Protecting scenic landscapes for future tourism only", "Ensuring every species has an equal population size"], "answer": 0}, {"topic": "Intrinsic value", "q": "Something has intrinsic value when it is…", "options": ["Worthwhile in and of itself, independent of its usefulness to humans", "Valued only for the money it can earn", "Useful as a raw material for industry", "Important only because tourists will pay to see it"], "answer": 0}, {"topic": "Utilitarian value", "q": "Utilitarian (instrumental) value refers to something's value based on…", "options": ["Its usefulness to humans", "Its worth apart from any human use", "Its age or rarity alone", "Its beauty as judged by artists"], "answer": 0}, {"topic": "Externality", "q": "An externality is…", "options": ["A cost or benefit of economic activity not reflected in the market price of a good or service", "A tax charged at the point of sale", "The profit a company keeps after expenses", "The external packaging of a product"], "answer": 0}, {"topic": "Tragedy of the Commons", "q": "The tragedy of the commons describes how…", "options": ["Individuals acting in their own self-interest overuse a shared resource, depleting it for everyone", "Government ownership always improves a shared resource", "Private property inevitably collapses over time", "Resources grow faster the more heavily they are used"], "answer": 0}, {"topic": "Collective action", "q": "“Collective action” is best defined as…", "options": ["The coordinated efforts of groups to achieve common goals", "One person acting alone for personal gain", "A government seizing private property", "The random behavior of individuals in a market"], "answer": 0}, {"topic": "Matter and energy", "q": "Which statement correctly pairs the core rules for matter and energy?", "options": ["Matter is conserved; energy is transformed but never created or destroyed", "Matter can be destroyed; energy is always created anew", "Both matter and energy are routinely created from nothing", "Matter is transformed; energy simply disappears when used"], "answer": 0}, {"topic": "First Law of Thermodynamics", "q": "The First Law of Thermodynamics states that energy…", "options": ["Cannot be created or destroyed, only transformed from one form to another", "Is destroyed a little each time it is used", "Can be created whenever it is needed", "Always increases in a closed system"], "answer": 0}, {"topic": "Second Law of Thermodynamics", "q": "According to the Second Law of Thermodynamics, with each energy transfer…", "options": ["Some energy is degraded as heat and entropy (disorder) increases", "All energy is perfectly conserved as useful work", "Entropy decreases toward zero", "Energy becomes 100% efficient"], "answer": 0}, {"topic": "Photosynthesis", "q": "Photosynthesis is best described as…", "options": ["The link between radiant energy (sunlight) and chemical energy (food) at the base of most food chains", "The breakdown of food to release heat in animals", "The conversion of rock into soil", "The loss of energy as heat between trophic levels"], "answer": 0}, {"topic": "Primary producers", "q": "Primary producers (plants, algae, and some bacteria) are defined by their ability to…", "options": ["Convert sunlight into chemical energy via photosynthesis", "Eat herbivores for energy", "Decompose dead animals only", "Move energy up by hunting prey"], "answer": 0}, {"topic": "Trophic levels: energy transfer", "q": "About how much of the energy at one trophic level is passed up to the next, and where does the rest go?", "options": ["Only ~10% passes up; the rest is lost as heat (Second Law)", "About 90% passes up; the rest is stored as fat", "100% passes up; no energy is ever lost", "Roughly 50% passes up; the rest becomes new matter"], "answer": 0}, {"topic": "Trophic levels: biomass", "q": "In a typical biomass pyramid, which trophic level usually contains the largest amount of biomass?", "options": ["Primary producers", "Top predators", "Secondary consumers", "Tertiary consumers"], "answer": 0}, {"topic": "Earth's spheres", "q": "Earth's systems are grouped into four spheres that constantly exchange matter and energy. Which set names them?", "options": ["Biosphere, hydrosphere, atmosphere, geosphere", "Stratosphere, magnetosphere, ionosphere, exosphere", "Biosphere, technosphere, noosphere, cryosphere", "Ocean, forest, desert, tundra"], "answer": 0}, {"topic": "Emergent property", "q": "“Life runs through all of them” describes how Earth's four spheres are…", "options": ["Interconnected, constantly exchanging matter and energy", "Completely sealed off from one another", "Ranked from most to least important", "Identical copies of the same system"], "answer": 0}, {"topic": "Species richness", "q": "Species richness refers to…", "options": ["The number of different species in an area", "The total mass of all organisms in an area", "The wealth generated by an ecosystem", "The genetic variation within a single species"], "answer": 0}, {"topic": "Biodiversity supports stability", "q": "According to the deck, biodiversity benefits ecosystems mainly by…", "options": ["Supporting their adaptation and stability", "Guaranteeing they never change", "Reducing the number of interactions among species", "Making them depend on a single keystone species"], "answer": 0}, {"topic": "Predators", "q": "Why are top predators ecologically important?", "options": ["They can trigger trophic cascades that reshape entire ecosystems", "They produce most of an ecosystem's biomass", "They perform the majority of photosynthesis", "They have no measurable effect on other species"], "answer": 0}, {"topic": "Trophic cascade", "q": "A trophic cascade is…", "options": ["A change in one trophic level that ripples out to affect others (e.g., wolves → elk → vegetation)", "A waterfall that carries nutrients downstream", "The steady 10% loss of energy up a food chain", "The seasonal migration of a single species"], "answer": 0}, {"topic": "Trophic cascade: Yellowstone", "q": "Removing wolves from Yellowstone in 1926 caused a trophic cascade in which…", "options": ["The elk population increased and the aspen tree population dramatically decreased", "The elk population crashed and forests expanded", "Wolves were replaced by an equal number of bears", "Nothing measurable changed in the ecosystem"], "answer": 0}, {"topic": "Restoring wolves", "q": "After wolves were reintroduced to Yellowstone in 1995, one key effect was that…", "options": ["Elk numbers and behavior changed, letting vegetation like aspen recover", "Elk populations grew without limit", "All aspen trees were eliminated", "The park had to remove the wolves again immediately"], "answer": 0}, {"topic": "Rewilding", "q": "Rewilding restores damaged ecosystems by…", "options": ["Letting natural ecological processes recover, as with wolves in Yellowstone", "Paving habitat to prevent further disturbance", "Replacing wild species with farm animals", "Freezing an ecosystem in its current state permanently"], "answer": 0}, {"topic": "Biodiversity loss", "q": "A key sign of biodiversity loss today is…", "options": ["Rising extinction rates — a human-driven sixth mass extinction", "A steady rise in the number of species worldwide", "Falling global temperatures", "An increase in genetic diversity everywhere"], "answer": 0}, {"topic": "Endangered species", "q": "An endangered species is one that…", "options": ["Is at serious risk of extinction", "Has recently doubled its population", "Lives only in captivity by choice", "Is too common to need protection"], "answer": 0}, {"topic": "Ecosystem valuation", "q": "Why do economists assign monetary values to ecosystem services?", "options": ["To support and inform economic decision-making", "To make ecosystems illegal to protect", "To prove that nature has no value", "To replace all ecosystems with factories"], "answer": 0}, {"topic": "Ecosystem productivity", "q": "According to the 2005 Millennium Ecosystem Assessment, losing species diversity reduces an ecosystem's…", "options": ["Productivity and resilience", "Physical size only", "Distance from the nearest city", "Number of rock layers"], "answer": 0}, {"topic": "Provisioning service", "q": "Which is an example of a PROVISIONING ecosystem service?", "options": ["Goods humans consume or use, such as water, wood, and pharmaceutical products", "The recreational and spiritual value of a landscape", "Pollination of crops by insects", "Soil formation and nutrient cycling"], "answer": 0}, {"topic": "Regulating service", "q": "Pollination by insects is an example of which type of ecosystem service?", "options": ["Regulating", "Provisioning", "Cultural", "Supporting"], "answer": 0}, {"topic": "Supporting service", "q": "Nutrient cycling and soil formation — the fundamental conditions other services depend on — are examples of which ecosystem service?", "options": ["Supporting", "Provisioning", "Cultural", "Regulating"], "answer": 0}, {"topic": "Cultural service", "q": "Hiking, recreation, and tourism in a national park are examples of which ecosystem service?", "options": ["Cultural", "Provisioning", "Regulating", "Supporting"], "answer": 0}, {"topic": "Pollination", "q": "Roughly what share of our food depends on an animal pollinator?", "options": ["About one in three bites", "Essentially none of it", "All of it", "About one in a thousand bites"], "answer": 0}, {"topic": "Protected areas", "q": "Which is generally considered among the most effective strategies for conserving endangered species?", "options": ["Establishing protected areas", "Building more highways through habitat", "Introducing invasive species", "Removing all legal protections"], "answer": 0}, {"topic": "Deforestation", "q": "Beyond destroying habitat, deforestation harms ecosystems by removing…", "options": ["Primary producers (the base of the food web), and it also causes soil erosion", "Only the top predators", "Nothing of ecological importance", "Excess carbon that ecosystems don't need"], "answer": 0}, {"topic": "2026 Tour de France", "q": "Who won the 2026 Tour de France?", "options": ["Tadej Pogačar", "Jonas Vingegaard", "Remco Evenepoel", "Primož Roglič"], "answer": 0}, {"topic": "Project Hail Mary", "q": "In Andy Weir's Project Hail Mary, how does Ryland Grace first work out that he is aboard a spacecraft?", "options": ["He rigs a makeshift pendulum and times its swing — the gravity he measures isn't Earth's ~9.8 m/s²", "He looks out a window and watches the Earth shrink behind him", "The ship's computer greets him by name and reads out the mission briefing", "He finds a mission patch sewn onto the sleeve of his flight suit"], "answer": 0}, {"topic": "Nobel Prizes", "q": "Who was the first person to win a Nobel Prize in both Chemistry and Physics?", "options": ["Marie Curie — Physics in 1903, Chemistry in 1911", "Linus Pauling", "Albert Einstein", "Niels Bohr"], "answer": 0}, {"topic": "Arizona geography", "q": "What is the highest point in Arizona?", "options": ["Humphreys Peak, near Flagstaff (12,633 ft)", "Mount Graham, near Safford (10,720 ft)", "Mount Lemmon, near Tucson (9,159 ft)", "The South Rim of the Grand Canyon (~7,000 ft)"], "answer": 0}]</script>
+  <script type="application/json" data-rg-bank>[{"topic": "SDG 13", "q": "In the deck's Sustainable Development Goals, SDG 13 (“Climate Action”) represents which dimension of the Triple Bottom Line?", "options": ["Environmental", "Social", "Economic", "Technological"], "answer": 0}, {"topic": "Triple Bottom Line", "q": "The Triple Bottom Line frames sustainability as the overlap of which three dimensions?", "options": ["People, Planet, and Profit", "Land, Labor, and Capital", "Reduce, Reuse, and Recycle", "Air, Water, and Soil"], "answer": 0}, {"topic": "Wicked problems", "q": "Which best describes a “wicked problem”?", "options": ["Complex interactions among multiple stakeholders, with uncertainty and competing interests", "A problem with one clearly correct, testable solution", "A minor issue that resolves itself if ignored", "A problem that affects only a single stakeholder"], "answer": 0}, {"topic": "Planetary boundaries", "q": "The “planetary boundaries” framework defines what?", "options": ["A safe operating space for humanity across nine Earth-system processes", "The physical edge of Earth's atmosphere", "The nine largest national parks on Earth", "The limit of how many people a city can hold"], "answer": 0}, {"topic": "Planetary boundaries", "q": "Which is a clear example of a planetary boundary being pushed past its safe limit?", "options": ["Climate change from increasing CO₂ concentrations", "A single volcanic eruption", "Seasonal changes between summer and winter", "The daily rise and fall of ocean tides"], "answer": 0}, {"topic": "Emergent property", "q": "An emergent property of a system is best described as…", "options": ["A characteristic that results from interactions among the parts, not from any single component", "A property that only the largest component has", "A property measured before the system is assembled", "A property that disappears when parts interact"], "answer": 0}, {"topic": "System boundary", "q": "A system boundary is…", "options": ["The limit that separates a system from its surroundings, defining what is included and excluded", "The physical fence around a national park", "The point where a system stops using energy", "The largest feedback loop inside a system"], "answer": 0}, {"topic": "SETs", "q": "In this course, “SETs” refers to the interconnection and interaction of which three kinds of systems?", "options": ["Social, Ecological, and Technical", "Solar, Electrical, and Thermal", "Scientific, Economic, and Territorial", "Structural, Environmental, and Temporal"], "answer": 0}, {"topic": "Environmental ethics", "q": "Environmental ethics is primarily concerned with…", "options": ["The moral relationships between humans and the environment", "The market price of natural resources", "The engineering of pollution-control devices", "The physics of energy transfer in ecosystems"], "answer": 0}, {"topic": "Environmental justice", "q": "Environmental justice is centrally concerned with…", "options": ["The fair treatment of all people, so marginalized communities don't bear a disproportionate share of environmental harms", "Maximizing total economic output regardless of who benefits", "Protecting scenic landscapes for future tourism only", "Ensuring every species has an equal population size"], "answer": 0}, {"topic": "Intrinsic value", "q": "Something has intrinsic value when it is…", "options": ["Worthwhile in and of itself, independent of its usefulness to humans", "Valued only for the money it can earn", "Useful as a raw material for industry", "Important only because tourists will pay to see it"], "answer": 0}, {"topic": "Utilitarian value", "q": "Utilitarian (instrumental) value refers to something's value based on…", "options": ["Its usefulness to humans", "Its worth apart from any human use", "Its age or rarity alone", "Its beauty as judged by artists"], "answer": 0}, {"topic": "Externality", "q": "An externality is…", "options": ["A cost or benefit of economic activity not reflected in the market price of a good or service", "A tax charged at the point of sale", "The profit a company keeps after expenses", "The external packaging of a product"], "answer": 0}, {"topic": "Tragedy of the Commons", "q": "The tragedy of the commons describes how…", "options": ["Individuals acting in their own self-interest overuse a shared resource, depleting it for everyone", "Government ownership always improves a shared resource", "Private property inevitably collapses over time", "Resources grow faster the more heavily they are used"], "answer": 0}, {"topic": "Collective action", "q": "“Collective action” is best defined as…", "options": ["The coordinated efforts of groups to achieve common goals", "One person acting alone for personal gain", "A government seizing private property", "The random behavior of individuals in a market"], "answer": 0}, {"topic": "Matter and energy", "q": "Which statement correctly pairs the core rules for matter and energy?", "options": ["Matter is conserved; energy is transformed but never created or destroyed", "Matter can be destroyed; energy is always created anew", "Both matter and energy are routinely created from nothing", "Matter is transformed; energy simply disappears when used"], "answer": 0}, {"topic": "First Law of Thermodynamics", "q": "The First Law of Thermodynamics states that energy…", "options": ["Cannot be created or destroyed, only transformed from one form to another", "Is destroyed a little each time it is used", "Can be created whenever it is needed", "Always increases in a closed system"], "answer": 0}, {"topic": "Second Law of Thermodynamics", "q": "According to the Second Law of Thermodynamics, with each energy transfer…", "options": ["Some energy is degraded as heat and entropy (disorder) increases", "All energy is perfectly conserved as useful work", "Entropy decreases toward zero", "Energy becomes 100% efficient"], "answer": 0}, {"topic": "Photosynthesis", "q": "Photosynthesis is best described as…", "options": ["The link between radiant energy (sunlight) and chemical energy (food) at the base of most food chains", "The breakdown of food to release heat in animals", "The conversion of rock into soil", "The loss of energy as heat between trophic levels"], "answer": 0}, {"topic": "Primary producers", "q": "Primary producers (plants, algae, and some bacteria) are defined by their ability to…", "options": ["Convert sunlight into chemical energy via photosynthesis", "Eat herbivores for energy", "Decompose dead animals only", "Move energy up by hunting prey"], "answer": 0}, {"topic": "Trophic levels: energy transfer", "q": "About how much of the energy at one trophic level is passed up to the next, and where does the rest go?", "options": ["Only ~10% passes up; the rest is lost as heat (Second Law)", "About 90% passes up; the rest is stored as fat", "100% passes up; no energy is ever lost", "Roughly 50% passes up; the rest becomes new matter"], "answer": 0}, {"topic": "Trophic levels: biomass", "q": "In a typical biomass pyramid, which trophic level usually contains the largest amount of biomass?", "options": ["Primary producers", "Top predators", "Secondary consumers", "Tertiary consumers"], "answer": 0}, {"topic": "Earth's spheres", "q": "Earth's systems are grouped into four spheres that constantly exchange matter and energy. Which set names them?", "options": ["Biosphere, hydrosphere, atmosphere, geosphere", "Stratosphere, magnetosphere, ionosphere, exosphere", "Biosphere, technosphere, noosphere, cryosphere", "Ocean, forest, desert, tundra"], "answer": 0}, {"topic": "Emergent property", "q": "“Life runs through all of them” describes how Earth's four spheres are…", "options": ["Interconnected, constantly exchanging matter and energy", "Completely sealed off from one another", "Ranked from most to least important", "Identical copies of the same system"], "answer": 0}, {"topic": "Species richness", "q": "Species richness refers to…", "options": ["The number of different species in an area", "The total mass of all organisms in an area", "The wealth generated by an ecosystem", "The genetic variation within a single species"], "answer": 0}, {"topic": "Biodiversity supports stability", "q": "According to the deck, biodiversity benefits ecosystems mainly by…", "options": ["Supporting their adaptation and stability", "Guaranteeing they never change", "Reducing the number of interactions among species", "Making them depend on a single keystone species"], "answer": 0}, {"topic": "Predators", "q": "Why are top predators ecologically important?", "options": ["They can trigger trophic cascades that reshape entire ecosystems", "They produce most of an ecosystem's biomass", "They perform the majority of photosynthesis", "They have no measurable effect on other species"], "answer": 0}, {"topic": "Trophic cascade", "q": "A trophic cascade is…", "options": ["A change in one trophic level that ripples out to affect others (e.g., wolves → elk → vegetation)", "A waterfall that carries nutrients downstream", "The steady 10% loss of energy up a food chain", "The seasonal migration of a single species"], "answer": 0}, {"topic": "Trophic cascade: Yellowstone", "q": "Removing wolves from Yellowstone in 1926 caused a trophic cascade in which…", "options": ["The elk population increased and the aspen tree population dramatically decreased", "The elk population crashed and forests expanded", "Wolves were replaced by an equal number of bears", "Nothing measurable changed in the ecosystem"], "answer": 0}, {"topic": "Restoring wolves", "q": "After wolves were reintroduced to Yellowstone in 1995, one key effect was that…", "options": ["Elk numbers and behavior changed, letting vegetation like aspen recover", "Elk populations grew without limit", "All aspen trees were eliminated", "The park had to remove the wolves again immediately"], "answer": 0}, {"topic": "Rewilding", "q": "Rewilding restores damaged ecosystems by…", "options": ["Letting natural ecological processes recover, as with wolves in Yellowstone", "Paving habitat to prevent further disturbance", "Replacing wild species with farm animals", "Freezing an ecosystem in its current state permanently"], "answer": 0}, {"topic": "Biodiversity loss", "q": "A key sign of biodiversity loss today is…", "options": ["Rising extinction rates — a human-driven sixth mass extinction", "A steady rise in the number of species worldwide", "Falling global temperatures", "An increase in genetic diversity everywhere"], "answer": 0}, {"topic": "Endangered species", "q": "An endangered species is one that…", "options": ["Is at serious risk of extinction", "Has recently doubled its population", "Lives only in captivity by choice", "Is too common to need protection"], "answer": 0}, {"topic": "Ecosystem valuation", "q": "Why do economists assign monetary values to ecosystem services?", "options": ["To support and inform economic decision-making", "To make ecosystems illegal to protect", "To prove that nature has no value", "To replace all ecosystems with factories"], "answer": 0}, {"topic": "Ecosystem productivity", "q": "According to the 2005 Millennium Ecosystem Assessment, losing species diversity reduces an ecosystem's…", "options": ["Productivity and resilience", "Physical size only", "Distance from the nearest city", "Number of rock layers"], "answer": 0}, {"topic": "Provisioning service", "q": "Which is an example of a PROVISIONING ecosystem service?", "options": ["Goods humans consume or use, such as water, wood, and pharmaceutical products", "The recreational and spiritual value of a landscape", "Pollination of crops by insects", "Soil formation and nutrient cycling"], "answer": 0}, {"topic": "Regulating service", "q": "Pollination by insects is an example of which type of ecosystem service?", "options": ["Regulating", "Provisioning", "Cultural", "Supporting"], "answer": 0}, {"topic": "Supporting service", "q": "Nutrient cycling and soil formation — the fundamental conditions other services depend on — are examples of which ecosystem service?", "options": ["Supporting", "Provisioning", "Cultural", "Regulating"], "answer": 0}, {"topic": "Cultural service", "q": "Hiking, recreation, and tourism in a national park are examples of which ecosystem service?", "options": ["Cultural", "Provisioning", "Regulating", "Supporting"], "answer": 0}, {"topic": "Pollination", "q": "Roughly what share of our food depends on an animal pollinator?", "options": ["About one in three bites", "Essentially none of it", "All of it", "About one in a thousand bites"], "answer": 0}, {"topic": "Protected areas", "q": "Which is generally considered among the most effective strategies for conserving endangered species?", "options": ["Establishing protected areas", "Building more highways through habitat", "Introducing invasive species", "Removing all legal protections"], "answer": 0}, {"topic": "Deforestation", "q": "Beyond destroying habitat, deforestation harms ecosystems by removing…", "options": ["Primary producers (the base of the food web), and it also causes soil erosion", "Only the top predators", "Nothing of ecological importance", "Excess carbon that ecosystems don't need"], "answer": 0}, {"topic": "2026 Tour de France", "q": "Who won the 2026 Tour de France?", "options": ["Tadej Pogačar", "Jonas Vingegaard", "Remco Evenepoel", "Primož Roglič"], "answer": 0, "fun": true}, {"topic": "Project Hail Mary", "q": "In Andy Weir's Project Hail Mary, how does Ryland Grace first work out that he is aboard a spacecraft?", "options": ["He times a makeshift pendulum and finds the gravity isn't Earth's", "He looks out a window and watches the Earth shrink behind him", "The ship's computer greets him by name and reads out the mission briefing", "He finds a mission patch sewn onto the sleeve of his flight suit"], "answer": 0, "fun": true}, {"topic": "Nobel Prizes", "q": "Who was the first person to win a Nobel Prize in both Chemistry and Physics?", "options": ["Marie Curie", "Linus Pauling", "Albert Einstein", "Niels Bohr"], "answer": 0, "fun": true}, {"topic": "2026 Tour de France Femmes", "q": "Who won the 2026 Tour de France Femmes?", "options": ["Demi Vollering", "Pauline Ferrand-Prévot", "Katarzyna Niewiadoma", "Annemiek van Vleuten"], "answer": 0, "fun": true}, {"topic": "Paris-Roubaix", "q": "How many times has Mathieu van der Poel won the Paris-Roubaix bike race?", "options": ["3", "1", "2", "4"], "answer": 0, "fun": true}, {"topic": "2026 Men's World Cup", "q": "Which team won the 2026 Men's World Cup?", "options": ["Spain", "Argentina", "France", "England"], "answer": 0, "fun": true}, {"topic": "Pokémon: Kanto's Legendary birds", "q": "What are the three Legendary birds of Kanto?", "options": ["Articuno, Zapdos, and Moltres", "Articuno, Fearow, and Moltres", "Beedrill, Fearow, and Moltres", "Articuno, Zapdos, and Beedrill"], "answer": 0, "fun": true}, {"topic": "Pokémon: Mega Evolution", "q": "How many Legendary Pokémon are known to Mega Evolve?", "options": ["4", "2", "3", "5"], "answer": 0, "fun": true}, {"topic": "Harry Potter: Hermione's Patronus", "q": "What is Hermione Granger's Patronus?", "options": ["An otter", "A cat", "A bunny", "A deer"], "answer": 0, "fun": true}, {"topic": "Harry Potter: Quidditch", "q": "What position did Harry Potter play for the Gryffindor Quidditch team?", "options": ["Seeker", "Chaser", "Beater", "Keeper"], "answer": 0, "fun": true}, {"topic": "Arizona geography", "q": "What is the highest point in Arizona?", "options": ["Humphreys Peak, near Flagstaff (12,633 ft)", "Mount Graham, near Safford (10,720 ft)", "Mount Lemmon, near Tucson (9,159 ft)", "The South Rim of the Grand Canyon (~7,000 ft)"], "answer": 0, "fun": true}]</script>
+  <script type="application/json" data-rg-words>[["OZONE", "The ozone layer absorbs harmful ultraviolet radiation.", "Way up high, quietly shielding us."], ["BIOME", "A large region defined by its climate and dominant vegetation.", "Think of nature's biggest neighborhoods."], ["OCEAN", "Part of the hydrosphere — it absorbs much of Earth's extra heat.", "Mostly salty, mostly everywhere."], ["SOLAR", "Energy from the Sun, which powers photosynthesis.", "It arrives from far above, every day."], ["PLANT", "A primary producer that captures the Sun's energy.", "It makes its own lunch."], ["LIGHT", "Photosynthesis turns light energy into chemical energy.", "You can't hold it, but it powers a lot."], ["SUGAR", "Photosynthesis stores the Sun's energy in sugar (glucose).", "Sweet storage."], ["FUELS", "Fossil fuels store ancient solar energy.", "Old energy, used up today."], ["VALUE", "Intrinsic value vs. instrumental (utilitarian) value.", "What is something worth — and to whom?"], ["PRICE", "Ecosystem valuation puts a price on nature's services.", "A number on a tag."], ["COSTS", "An externality is a cost borne by people outside a transaction.", "Someone always ends up paying them."], ["ALGAE", "Aquatic primary producers at the base of many food webs.", "Green, wet, and easy to overlook."], ["ATOMS", "Matter is made of atoms, which are neither created nor destroyed.", "Very, very small building blocks."], ["NICHE", "A species' role and way of life within its ecosystem.", "Everyone has their place."], ["CORAL", "Warming, acidifying oceans cause coral bleaching.", "Looks like rock, but it's alive."], ["BISON", "An icon of Yellowstone, the first U.S. national park.", "Big, shaggy, and very American."], ["PARKS", "National parks protect scenic, historical, and scientific areas.", "Places set aside."], ["FLOOD", "Flood control is a regulating ecosystem service.", "Too much of a good thing."], ["WATER", "Wetlands naturally purify water — an ecosystem service.", "You're mostly made of it."], ["CYCLE", "Matter moves through biogeochemical cycles, like the carbon cycle.", "Round and round it goes."], ["OTTER", "Sea otters keep urchins in check — a classic trophic cascade.", "Furry, playful, and more important than it looks."], ["EAGLE", "The bald eagle is protected by the Migratory Bird Treaty Act.", "A national symbol with wings."], ["KUDZU", "An invasive vine that spreads unchecked without natural predators.", "An unwelcome guest that won't leave."], ["SIXTH", "Scientists warn of a human-driven sixth mass extinction.", "The latest entry in a grim series."], ["GOALS", "The UN's 17 Sustainable Development Goals, like SDG 13.", "Things to aim for."], ["LOOPS", "Feedback loops can amplify or dampen change in a system.", "They always come back around."], ["CHAIN", "A food chain traces energy from producers to consumers.", "Links, one after another."], ["HUMAN", "Human activity is the leading driver of biodiversity loss today.", "Look in a mirror."], ["RIVER", "Damming rivers changes fish migrations and habitats.", "Always moving, yet it never leaves its bed."], ["EARTH", "Earth's four spheres: biosphere, atmosphere, hydrosphere, geosphere.", "Home."], ["CELLS", "Cells are the basic units of life.", "Tiny rooms."], ["STEAM", "Power plants boil water into steam to spin turbines.", "Hot air… sort of."], ["TREES", "Deforestation removes trees, which are primary producers.", "Tall, leafy, and rooted."], ["WASTE", "Every energy transfer loses some energy as waste heat.", "What's left over."]]</script>
+  <script type="application/json" data-rg-conns>[{"title": "Earth, Energy & Atoms", "groups": [{"label": "Earth's four spheres (Ch. 4)", "words": ["BIOSPHERE", "ATMOSPHERE", "HYDROSPHERE", "GEOSPHERE"]}, {"label": "Parts of an atom (Ch. 3)", "words": ["PROTON", "NEUTRON", "ELECTRON", "NUCLEUS"]}, {"label": "Forms of energy (Ch. 3)", "words": ["KINETIC", "POTENTIAL", "THERMAL", "RADIANT"]}, {"label": "Types of ecosystem services (Ch. 5)", "words": ["PROVISIONING", "REGULATING", "SUPPORTING", "CULTURAL"]}]}, {"title": "Life on Earth", "groups": [{"label": "Protected by the Marine Mammal Protection Act (Ch. 5)", "words": ["WHALES", "DOLPHINS", "SEALS", "MANATEES"]}, {"label": "Biomes (Ch. 1 & 4)", "words": ["DESERT", "TUNDRA", "SAVANNA", "RAINFOREST"]}, {"label": "Species interactions (Ch. 4)", "words": ["PREDATION", "COMPETITION", "MUTUALISM", "PARASITISM"]}, {"label": "Evolutionary processes (Ch. 4)", "words": ["NATURAL SELECTION", "GENETIC DRIFT", "GENE FLOW", "SPECIATION"]}]}, {"title": "Systems & Policy", "groups": [{"label": "Policy tools (Ch. 2)", "words": ["TAXES", "REGULATIONS", "CAP-AND-TRADE", "INCENTIVES"]}, {"label": "Systems-thinking building blocks (Ch. 1)", "words": ["STOCKS", "FLOWS", "FEEDBACK LOOPS", "TIPPING POINTS"]}, {"label": "Planetary boundaries (Ch. 1)", "words": ["NITROGEN", "PHOSPHORUS", "AEROSOLS", "NOVEL ENTITIES"]}, {"label": "Economic problems behind environmental harm (Ch. 2)", "words": ["EXTERNALITIES", "PUBLIC GOODS", "COMMONS", "COLLECTIVE ACTION"]}]}, {"title": "Conservation", "groups": [{"label": "Species in Chapter 5's conservation stories", "words": ["WOLVES", "BISON", "CONDORS", "BALD EAGLE"]}, {"label": "Types of U.S. protected lands (Ch. 5)", "words": ["NATIONAL PARKS", "MONUMENTS", "WILDLIFE REFUGES", "NATIONAL FORESTS"]}, {"label": "Drivers of biodiversity loss (Ch. 5)", "words": ["HABITAT DESTRUCTION", "OVEREXPLOITATION", "INVASIVE SPECIES", "CLIMATE & WATER"]}, {"label": "Forms of energy (Ch. 3)", "words": ["CHEMICAL", "ELECTRICAL", "NUCLEAR", "KINETIC"]}]}, {"title": "Big Ideas", "groups": [{"label": "Building blocks of matter (Ch. 3)", "words": ["ELEMENT", "ISOTOPE", "ION", "MOLECULE"]}, {"label": "Planetary boundaries (Ch. 1)", "words": ["CLIMATE CHANGE", "OZONE DEPLETION", "OCEAN ACIDIFICATION", "NITROGEN"]}, {"label": "Systems-thinking ideas (Ch. 1)", "words": ["RESILIENCE", "EMERGENT PROPERTY", "SYSTEM BOUNDARY", "TIPPING POINT"]}, {"label": "Ideas from environmental ethics (Ch. 2)", "words": ["UTILITARIANISM", "DEONTOLOGY", "INTRINSIC VALUE", "ENVIRONMENTAL JUSTICE"]}]}]</script>
   <div class="rg-root">
     <div class="rg-head">
       <div class="eyebrow">Module 1 &amp; 2 · Review Game</div>
@@ -1313,6 +1377,10 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   var COUNTS = (SEC.dataset.rgCounts||'10,15,20').split(',').map(function(x){ return parseInt(x,10); });
   var BANK  = JSON.parse(SEC.querySelector('[data-rg-bank]').textContent);
   var LETTERS = ['A','B','C','D','E','F'];
+  var WORDS = JSON.parse((SEC.querySelector('[data-rg-words]')||{}).textContent||'[]');   // [[WORD, meaning], …]
+  var CONNS = JSON.parse((SEC.querySelector('[data-rg-conns]')||{}).textContent||'[]');   // [{groups:[{label, words}×4]}, …]
+  // one Word Puzzle + one Connections per game; ~FUN_SHARE of questions are just-for-fun
+  var FUN_SHARE=0.15, WORDLE_MS=60000, CONN_MS=120000, REVEAL_MS=20000, WORDLE_MAX=3, CONN_MAX=4;
 
   function rnd(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} h^=h>>>15; h=Math.imul(h,2246822507); h^=h>>>13; h^=h>>>16; return (h>>>0)/4294967296; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -1364,10 +1432,19 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     return arr.length+1;
   }
   function nameOf(pkey){ var p=players()[pkey]; if(!p) return '—'; return p.mode==='named' ? (p.name||'(no name)') : ('Student '+anonNum(pkey)); }
-  function correctOf(pos){ var b=BANK[state.order[pos]]; return b?b.answer:-1; }
+  // ── mini-game slots ──
+  function gameAt(pos){ var g=state.games; return (g && g[pos]) ? g[pos] : null; }
+  function isGame(pos){ return !!gameAt(pos); }
+  function gameMax(pos){ var g=gameAt(pos); return !g ? 0 : (g.type==='w' ? WORDLE_MAX : CONN_MAX); }
+  function gameMs(pos){ var g=gameAt(pos); return (g && g.type==='w') ? WORDLE_MS : CONN_MS; }
+  function maxPoints(){ var n=(state.order||[]).length, m=0; for(var p=0;p<n;p++) m += isGame(p) ? gameMax(p) : 1; return m; }
+  function correctOf(pos){ if(isGame(pos)) return -1; var b=BANK[state.order[pos]]; return b?b.answer:-1; }
+  // 1 point per correct question + whatever each mini-game awarded (capped at its max)
   function scoreOf(pkey){
-    var p=players()[pkey]; if(!p||!p.ans||!state.order) return 0;
-    var s=0; for(var k in p.ans){ var oi=parseInt(k,10); if(state.order[oi]!==undefined && p.ans[k]===correctOf(oi)) s++; }
+    var p=players()[pkey]; if(!p||!state.order) return 0;
+    var s=0, n=state.order.length;
+    if(p.ans) for(var k in p.ans){ var oi=parseInt(k,10); if(oi<n && !isGame(oi) && p.ans[k]===correctOf(oi)) s++; }
+    if(p.gp) for(var k2 in p.gp){ var gi=parseInt(k2,10); if(gi<n && isGame(gi)) s += Math.max(0, Math.min(gameMax(gi), p.gp[k2]||0)); }
     return s;
   }
   function board(){
@@ -1377,22 +1454,26 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     return arr;
   }
   function playerCount(){ var g=gid(), ps=players(), n=0; for(var k in ps){ if(ps[k]&&ps[k].g===g) n++; } return n; }
-  function topicAt(pos){ return (pos>=0 && state.order && BANK[state.order[pos]]) ? BANK[state.order[pos]].topic : '—'; }
-  // aggregate class stats across scored players: per-question correct rates + overall
+  function topicAt(pos){
+    if(isGame(pos)) return gameAt(pos).type==='w' ? 'Word Puzzle' : 'Connections';
+    return (pos>=0 && state.order && BANK[state.order[pos]]) ? BANK[state.order[pos]].topic : '—';
+  }
+  // aggregate class stats: per-question rates (multiple-choice slots only) + overall
   function qStats(){
-    var g=gid(), ps=players(), n=(state.order||[]).length;
+    var g=gid(), ps=players(), n=(state.order||[]).length, mx=maxPoints();
     var answered=[], correct=[]; for(var p=0;p<n;p++){ answered[p]=0; correct[p]=0; }
     var totalAns=0, totalCor=0, scoredN=0, perfect=0, sumScore=0;
     for(var k in ps){ var pl=ps[k]; if(!pl||pl.g!==g||!(pl.mode==='named'||pl.mode==='anon')) continue;
-      scoredN++; var sc=0;
-      for(var p=0;p<n;p++){ if(pl.ans && pl.ans[p]!==undefined){ answered[p]++; totalAns++;
-        if(pl.ans[p]===correctOf(p)){ correct[p]++; totalCor++; sc++; } } }
-      sumScore+=sc; if(n>0 && sc===n) perfect++;
+      scoredN++;
+      for(var p=0;p<n;p++){ if(isGame(p)) continue;
+        if(pl.ans && pl.ans[p]!==undefined){ answered[p]++; totalAns++;
+          if(pl.ans[p]===correctOf(p)){ correct[p]++; totalCor++; } } }
+      var sc=scoreOf(k); sumScore+=sc; if(mx>0 && sc>=mx) perfect++;
     }
     var aced=-1, ar=-1, missed=-1, mr=2;
     for(var p=0;p<n;p++){ if(!answered[p]) continue; var r=correct[p]/answered[p];
       if(r>ar){ ar=r; aced=p; } if(r<mr){ mr=r; missed=p; } }
-    return {n:n, totalAns:totalAns, totalCor:totalCor, scoredN:scoredN, perfect:perfect,
+    return {n:n, max:mx, totalAns:totalAns, totalCor:totalCor, scoredN:scoredN, perfect:perfect,
             avg:scoredN?sumScore/scoredN:0, accuracy:totalAns?totalCor/totalAns:0,
             aced:aced, ar:ar, missed:missed, mr:mr};
   }
@@ -1497,16 +1578,60 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   // display order of a question's options: seeded so every client agrees, and it
   // varies by game+position so the correct answer isn't always in the same slot.
   function optPerm(pos){ return shuffle(BANK[state.order[pos]].options.length, GID+':'+gid()+':q'+pos); }
+  function range(n){ var a=[]; for(var i=0;i<n;i++) a.push(i); return a; }
+  function shuffleArr(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  // the Word Puzzle answer sits lightly scrambled in the shared document, so it
+  // isn't readable in plain sight while students are still guessing
+  function wkey(g,pos){ var k=GID+':'+g+':'+pos, a=[]; for(var i=0;i<5;i++) a.push(1+Math.floor(rnd(k+':'+i)*200)); return a; }
+  function wEnc(w,g,pos){ var kv=wkey(g,pos); return w.split('').map(function(c,i){ return c.charCodeAt(0)^kv[i]; }); }
+  function wordAt(pos){ var gm=gameAt(pos); if(!gm||gm.type!=='w'||!gm.wx) return ''; var kv=wkey(gid(),pos); return gm.wx.map(function(n,i){ return String.fromCharCode(n^kv[i]); }).join(''); }
+  function wordDef(w){ for(var i=0;i<WORDS.length;i++){ if(WORDS[i][0]===w) return WORDS[i][1]; } return ''; }
+  function wordClue(w){ for(var i=0;i<WORDS.length;i++){ if(WORDS[i][0]===w) return WORDS[i][2]||''; } return ''; }
+  function clueHTML(w){ var c=wordClue(w); return c ? '<div class="rg-wclue"><span>Clue</span>'+esc(c)+'</div>' : ''; }
+  function connWords(P){ var a=[]; P.groups.forEach(function(gr){ a=a.concat(gr.words); }); return a; }
   function startGame(){
-    var g=gid()+1, cnt=Math.min(pickCount, BANK.length);
-    var order=shuffle(BANK.length, GID+':'+g+':'+Date.now()).slice(0, cnt);
-    backend.setDoc('polls', GID, {gameId:g, phase:'lobby', count:cnt, order:order, idx:0, revealed:false, lobbyEnds:Date.now()+60000});
+    var g=gid()+1, cnt=pickCount;
+    var kinds=[]; if(WORDS.length) kinds.push('w'); if(CONNS.length) kinds.push('c');
+    // exactly one of each game kind, ~1/3 and ~2/3 of the way in (random which comes first)
+    var types=shuffleArr(kinds), slots=[];
+    types.forEach(function(t,i){ slots.push(Math.min(cnt-1, Math.floor(cnt*(i+1)/(types.length+1)))); });
+    // ~15% of ALL questions are just-for-fun; the rest are course questions
+    var funIdx=[], courseIdx=[];
+    BANK.forEach(function(b,i){ (b.fun ? funIdx : courseIdx).push(i); });
+    var mcN=Math.max(0, cnt-slots.length);
+    var funN=Math.min(Math.round(cnt*FUN_SHARE), funIdx.length, mcN);
+    var courseN=Math.min(mcN-funN, courseIdx.length);
+    var mc=shuffleArr(shuffleArr(funIdx).slice(0, funN).concat(shuffleArr(courseIdx).slice(0, courseN)));
+    cnt=mc.length+slots.length;
+    var wBag=shuffleArr(range(WORDS.length)), cBag=shuffleArr(range(CONNS.length)), wi=0, ci=0;
+    var order=[], games={}, m=0;
+    for(var q=0;q<cnt;q++){
+      var si=slots.indexOf(q);
+      if(si<0){ order.push(mc[m++]); continue; }
+      order.push(-1);
+      if(types[si]==='w'){ games[q]={type:'w', wx:wEnc(WORDS[wBag[wi++ % wBag.length]][0], g, q)}; }
+      else { var cIdx=cBag[ci++ % cBag.length]; games[q]={type:'c', ci:cIdx, tiles:shuffleArr(connWords(CONNS[cIdx]))}; }
+    }
+    backend.setDoc('polls', GID, {gameId:g, phase:'lobby', count:cnt, order:order, games:games, idx:0, revealed:false, lobbyEnds:Date.now()+60000});
   }
-  function beginQuestions(){ backend.mergeDoc('polls', GID, {phase:'question', idx:0, revealed:false}); }
-  function reveal(){ backend.mergeDoc('polls', GID, {revealed:true}); }
+  // guards: a button press and the auto-timer must never double-reveal or skip a slot
+  var advFrom=null, revFor=null;
+  function beginQuestions(){
+    var upd={phase:'question', idx:0, revealed:false, revealEnds:0};
+    if(isGame(0)) upd.gameEnds=Date.now()+gameMs(0);
+    backend.mergeDoc('polls', GID, upd);
+  }
+  function reveal(){
+    var k=gid()+':'+state.idx; if(revFor===k) return; revFor=k;
+    var upd={revealed:true}; if(isGame(state.idx)) upd.revealEnds=Date.now()+REVEAL_MS;
+    backend.mergeDoc('polls', GID, upd);
+  }
   function nextQ(){
-    if(state.idx+1 >= state.count){ backend.mergeDoc('polls', GID, {phase:'ended', revealed:true}); }
-    else { backend.mergeDoc('polls', GID, {idx:state.idx+1, revealed:false}); }
+    var k=gid()+':'+state.idx; if(advFrom===k) return; advFrom=k;
+    if(state.idx+1 >= state.count){ backend.mergeDoc('polls', GID, {phase:'ended', revealed:true}); return; }
+    var n=state.idx+1, upd={idx:n, revealed:false, revealEnds:0};
+    if(isGame(n)) upd.gameEnds=Date.now()+gameMs(n);
+    backend.mergeDoc('polls', GID, upd);
   }
   function newGame(){ backend.mergeDoc('polls', GID, {phase:'idle'}); }
 
@@ -1522,12 +1647,98 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     render();
   }
   function answer(i){
-    if(phase()!=='question' || state.revealed) return;
+    if(phase()!=='question' || state.revealed || isGame(state.idx)) return;
     var pos=state.idx; if(myAnswer(pos)!==null) return;
     ls('rg-ans:'+GID+':'+gid()+':'+pos, String(i));
     if(scored()){ var a={}; a[pos]=i; var o={}; o[PK]={g:gid(), ans:a}; backend.mergeDocShard('polls', GID, {players:o}); }
     render();
   }
+
+  // ── mini-games: each student plays locally (progress survives a refresh);
+  //    points (gp) and a done flag (gd) for that slot go to their shard ──
+  var gmMem={}, gmVer=0, gmLastKey=null;
+  function gmLSKey(pos){ return 'rg-g:'+GID+':'+gid()+':'+pos; }
+  function gmState(pos){
+    var k=gmLSKey(pos); if(gmMem[k]) return gmMem[k];
+    var s=null; try{ s=JSON.parse(ls(k)||'null'); }catch(e){ s=null; }
+    if(!s) s={guesses:[], cur:'', solved:[], sel:[], mistakes:0, tried:[], order:null, done:false, pts:0, msg:''};
+    gmMem[k]=s; return s;
+  }
+  function gmSave(pos){ var k=gmLSKey(pos); if(gmMem[k]) ls(k, JSON.stringify(gmMem[k])); }
+  function remainingMs(){ return Math.max(0,(state.gameEnds||0)-Date.now()); }
+  function gmLocked(pos,s){ return !!(s&&s.done) || !!state.revealed || (!!state.gameEnds && Date.now()>=state.gameEnds); }
+  function gmReport(pos, pts, done){
+    if(!scored()) return;
+    var rec={g:gid(), gp:{}}; rec.gp[pos]=pts; if(done){ rec.gd={}; rec.gd[pos]=1; }
+    var o={}; o[PK]=rec; backend.mergeDocShard('polls', GID, {players:o});
+  }
+  function gmBump(pos){ gmSave(pos); gmVer++; render(); }
+
+  // Word Puzzle: green = right letter, right spot; gold = in the word elsewhere
+  function wScore(guess, word){
+    var res=['x','x','x','x','x'], left={};
+    for(var i=0;i<5;i++){ if(guess[i]===word[i]) res[i]='g'; else left[word[i]]=(left[word[i]]||0)+1; }
+    for(var j=0;j<5;j++){ if(res[j]!=='g' && left[guess[j]]>0){ res[j]='y'; left[guess[j]]--; } }
+    return res;
+  }
+  function wKey(k){
+    var pos=state.idx, gm=gameAt(pos); if(HOST||phase()!=='question'||!gm||gm.type!=='w') return;
+    var s=gmState(pos); if(gmLocked(pos,s)) return;
+    if(k==='BACK'){ s.cur=s.cur.slice(0,-1); s.msg=''; return gmBump(pos); }
+    if(k==='ENTER'){
+      if(s.cur.length<5){ s.msg='Not enough letters'; return gmBump(pos); }
+      var w=wordAt(pos); s.guesses.push(s.cur); s.cur=''; s.msg='';
+      if(s.guesses[s.guesses.length-1]===w){ var n=s.guesses.length; s.pts=(n<=2?3:(n<=4?2:1)); s.done=true; gmReport(pos,s.pts,true); }
+      else if(s.guesses.length>=6){ s.done=true; s.pts=0; gmReport(pos,0,true); }
+      return gmBump(pos);
+    }
+    if(/^[A-Z]$/.test(k) && s.cur.length<5){ s.cur+=k; s.msg=''; gmBump(pos); }
+  }
+
+  // Connections
+  function cState(){ var pos=state.idx, gm=gameAt(pos); if(HOST||phase()!=='question'||!gm||gm.type!=='c') return null; return {pos:pos, gm:gm, P:CONNS[gm.ci], s:gmState(pos)}; }
+  function cToggle(i){
+    var c=cState(); if(!c||gmLocked(c.pos,c.s)) return;
+    var w=c.gm.tiles[i]; if(w===undefined) return;
+    var at=c.s.sel.indexOf(w);
+    if(at>-1) c.s.sel.splice(at,1); else if(c.s.sel.length<4) c.s.sel.push(w);
+    c.s.msg=''; gmBump(c.pos);
+  }
+  function cSubmit(){
+    var c=cState(); if(!c||gmLocked(c.pos,c.s)||c.s.sel.length!==4) return;
+    var s=c.s, key=s.sel.slice().sort().join('|');
+    if(s.tried.indexOf(key)>-1){ s.msg='Already guessed!'; return gmBump(c.pos); }
+    s.tried.push(key);
+    var hit=-1, oneAway=false;
+    c.P.groups.forEach(function(gr,gi){ if(s.solved.indexOf(gi)>-1) return;
+      var n=gr.words.filter(function(w){ return s.sel.indexOf(w)>-1; }).length;
+      if(n===4) hit=gi; else if(n===3) oneAway=true; });
+    if(hit>-1){
+      s.solved.push(hit); s.sel=[]; s.pts=s.solved.length; s.msg='';
+      if(s.solved.length===4) s.done=true;
+      gmReport(c.pos, s.pts, s.done);
+    } else {
+      s.mistakes++; s.msg=oneAway?'One away…':'Not a group';
+      if(s.mistakes>=4){ s.done=true; s.msg='Out of guesses'; gmReport(c.pos, s.pts, true); }
+    }
+    gmBump(c.pos);
+  }
+  function cShuffle(){ var c=cState(); if(!c||gmLocked(c.pos,c.s)) return; c.s.order=shuffleArr(c.gm.tiles); gmBump(c.pos); }
+  function cDeselect(){ var c=cState(); if(!c) return; c.s.sel=[]; gmBump(c.pos); }
+
+  // physical keyboard for the Word Puzzle — only while this slide is on screen
+  document.addEventListener('keydown', function(e){
+    if(HOST || phase()!=='question' || !SEC.classList.contains('active')) return;
+    var gm=gameAt(state.idx); if(!gm || gm.type!=='w' || state.revealed) return;
+    var t=e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return;
+    if(e.metaKey||e.ctrlKey||e.altKey) return;
+    var k=e.key;
+    if(/^[a-zA-Z]$/.test(k)) wKey(k.toUpperCase());
+    else if(k==='Enter') wKey('ENTER');
+    else if(k==='Backspace') wKey('BACK');
+    else return;
+    e.preventDefault(); e.stopPropagation();
+  }, true);
 
   // ── rendering ──
   function boardHTML(list, topN, label){
@@ -1544,9 +1755,127 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
   function show(name){ ['idle','lobby','question','ended'].forEach(function(p){ el[p].hidden = (p!==name); }); }
 
+  // ── mini-game rendering ──
+  function fmtClock(ms){ var s=Math.ceil(ms/1000); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+  function slotCounts(pos){
+    var g=gid(), ps=players(), n=0, d=0, pts=0, got=0;
+    for(var k in ps){ var p=ps[k]; if(!p||p.g!==g||!(p.mode==='named'||p.mode==='anon')) continue;
+      n++; if(p.gd&&p.gd[pos]) d++; var v=(p.gp&&p.gp[pos])||0; pts+=v; if(v>0) got++; }
+    return {n:n, done:d, pts:pts, got:got};
+  }
+  function allDone(pos){ var c=slotCounts(pos); return c.n>0 && c.done===c.n; }
+  var WTILE=function(ch,cls){ return '<div class="rg-wt'+(cls?' '+cls:'')+'">'+esc(ch||'')+'</div>'; };
+  function wordRevealHTML(w){
+    return '<div class="rg-wans"><div class="rg-wrow">'+w.split('').map(function(ch){ return WTILE(ch,'g'); }).join('')+'</div>'
+      + (wordDef(w) ? '<div class="rg-wdef">'+esc(wordDef(w))+'</div>' : '') + '</div>';
+  }
+  function bandHTML(P, gi, mark){
+    var gr=P.groups[gi];
+    return '<div class="rg-cband c'+gi+'"><div class="rg-cband-l">'+(mark?'✓ ':'')+esc(gr.label)+'</div>'
+      + '<div class="rg-cband-w">'+gr.words.map(esc).join(' · ')+'</div></div>';
+  }
+  function gameHTML(pos){
+    var gm=gameAt(pos), rev=!!state.revealed, isW=gm.type==='w';
+    var scoreLine=(!HOST && scored()) ? '<span class="rg-score">Your score: <strong data-gm-score>'+scoreOf(PK)+'</strong></span>' : '';
+    var top='<div class="rg-qtop"><span class="rg-prog">Question '+(pos+1)+' of '+state.count+' · <span class="rg-gm-tag">'+(isW?'Word Puzzle':'Connections')+'</span></span>'
+      + '<span class="rg-gm-right"><span class="rg-gm-timer" data-gm-timer></span>'+scoreLine+'</span></div>'
+      + '<div class="rg-pbar"><div class="rg-pfill" style="width:'+Math.round((pos+1)/state.count*100)+'%"></div></div>';
+    var body='', foot='';
+    if(HOST){
+      if(isW){
+        body = rev ? wordRevealHTML(wordAt(pos))
+          : '<div class="rg-gm-host"><div class="rg-wrow">'+[0,1,2,3,4].map(function(){ return WTILE('',''); }).join('')+'</div>'
+            + '<div class="rg-gm-lead">Guess the 5-letter word from Chapters 1–5 — six tries.</div>'+clueHTML(wordAt(pos))+'</div>';
+        body += '<div class="rg-gm-stat"><strong data-gm-got>0</strong> solved · <strong data-gm-done>0</strong> of <span data-gm-n>0</span> finished</div>';
+      } else {
+        var P=CONNS[gm.ci];
+        body = rev ? '<div class="rg-cbands">'+[0,1,2,3].map(function(gi){ return bandHTML(P,gi,false); }).join('')+'</div>'
+          : '<div class="rg-cgrid host">'+gm.tiles.map(function(w){ return '<div class="rg-ctile">'+esc(w)+'</div>'; }).join('')+'</div>';
+        body += '<div class="rg-gm-stat">Groups found: <strong data-gm-pts>0</strong> · <strong data-gm-done>0</strong> of <span data-gm-n>0</span> finished</div>';
+      }
+      foot='<div class="rg-qfoot">'+(rev?'':'<button class="rg-btn ghost" data-act="reveal">End game</button>')
+        + '<button class="rg-btn'+(rev?'':' ghost')+'" data-act="next">'+((pos+1>=state.count)?'Finish ▸':'Next question ▸')+'</button></div>';
+    } else {
+      var s=gmState(pos), locked=gmLocked(pos,s);
+      if(isW){
+        var w=wordAt(pos), rows='';
+        for(var r=0;r<6;r++){
+          var gs=s.guesses[r], sc=gs?wScore(gs,w):null, typing=(!gs && r===s.guesses.length && !locked), cells='';
+          for(var c=0;c<5;c++){ var ch=gs?gs[c]:(typing?(s.cur[c]||''):''); cells+=WTILE(ch, sc?sc[c]:(ch?'filled':'')); }
+          rows+='<div class="rg-wrow">'+cells+'</div>';
+        }
+        var best={}, rank={g:3,y:2,x:1};
+        s.guesses.forEach(function(gg){ var sc2=wScore(gg,w); for(var i=0;i<5;i++){ var L=gg[i]; if(!best[L]||rank[sc2[i]]>rank[best[L]]) best[L]=sc2[i]; } });
+        var kb=['QWERTYUIOP','ASDFGHJKL','+ZXCVBNM-'].map(function(row){
+          return '<div class="rg-krow">'+row.split('').map(function(k){
+            if(k==='+') return '<button class="rg-key wide" data-wk="ENTER"'+(locked?' disabled':'')+'>Enter</button>';
+            if(k==='-') return '<button class="rg-key wide" data-wk="BACK" aria-label="Backspace"'+(locked?' disabled':'')+'>⌫</button>';
+            return '<button class="rg-key'+(best[k]?' '+best[k]:'')+'" data-wk="'+k+'"'+(locked?' disabled':'')+'>'+k+'</button>';
+          }).join('')+'</div>'; }).join('');
+        var won=s.done && s.pts>0, msg;
+        if(rev) msg = won ? 'Solved in '+s.guesses.length+' — +'+s.pts+' point'+(s.pts===1?'':'s')+'!' : 'The word was <strong>'+esc(w)+'</strong>.';
+        else if(won) msg='Solved in '+s.guesses.length+'! +'+s.pts+' point'+(s.pts===1?'':'s');
+        else if(s.done) msg='Out of tries — the answer appears when time is up.';
+        else if(locked) msg='Time’s up!';
+        else msg = s.msg ? esc(s.msg) : 'Guess the 5-letter word from Chapters 1–5. <span class="rg-leg g">right spot</span><span class="rg-leg y">in the word</span>';
+        body='<div class="rg-wd"><div class="rg-wboard">'+rows+'</div>'+(rev ? wordRevealHTML(w) : '<div class="rg-kb">'+clueHTML(w)+kb+'</div>')+'</div>';
+        foot='<div class="rg-qfoot"><span class="rg-qhint'+(won?' ok':'')+'">'+msg+'</span></div>';
+      } else {
+        var P2=CONNS[gm.ci], solvedWords=[];
+        s.solved.forEach(function(gi){ solvedWords=solvedWords.concat(P2.groups[gi].words); });
+        var bands = rev ? [0,1,2,3].map(function(gi){ return bandHTML(P2,gi,s.solved.indexOf(gi)>-1); }).join('')
+                        : s.solved.map(function(gi){ return bandHTML(P2,gi,false); }).join('');
+        var grid='';
+        if(!rev){
+          var base=(s.order&&s.order.length===gm.tiles.length)?s.order:gm.tiles;
+          grid='<div class="rg-cgrid">'+base.filter(function(w){ return solvedWords.indexOf(w)<0; }).map(function(w){
+            return '<button class="rg-ctile'+(s.sel.indexOf(w)>-1?' on':'')+'" data-ct="'+gm.tiles.indexOf(w)+'"'+(locked?' disabled':'')+'>'+esc(w)+'</button>';
+          }).join('')+'</div>';
+        }
+        var dots=''; for(var i2=0;i2<4;i2++) dots+='<span class="rg-cdot'+(i2<4-s.mistakes?'':' used')+'"></span>';
+        var cmsg;
+        if(rev) cmsg='You found <strong>'+s.solved.length+'</strong> of 4 groups'+(s.solved.length?' — +'+s.solved.length+' point'+(s.solved.length===1?'':'s'):'')+'.';
+        else if(s.done && s.solved.length===4) cmsg='All four groups! +4 points';
+        else if(s.done) cmsg=esc(s.msg||'Out of guesses');
+        else if(locked) cmsg='Time’s up!';
+        else cmsg = s.msg ? esc(s.msg) : 'Find four groups of four. Pick four tiles, then Submit.';
+        body='<div class="rg-cbands">'+bands+'</div>'+grid;
+        foot = rev ? '<div class="rg-qfoot"><span class="rg-qhint ok">'+cmsg+'</span></div>'
+          : '<div class="rg-cfoot"><span class="rg-qhint'+(s.msg==='One away…'?' warn':'')+'">'+cmsg+'</span>'
+            + '<span class="rg-cmist">Mistakes left '+dots+'</span>'
+            + '<button class="rg-btn ghost sm" data-act="cshuf"'+(locked?' disabled':'')+'>Shuffle</button>'
+            + '<button class="rg-btn ghost sm" data-act="cdesel"'+(locked||!s.sel.length?' disabled':'')+'>Deselect</button>'
+            + '<button class="rg-btn sm" data-act="csub"'+(locked||s.sel.length!==4?' disabled':'')+'>Submit</button></div>';
+      }
+    }
+    return '<div class="rg-qgrid"><div class="rg-qmain rg-gm">'+top+body+foot+'</div>'
+      + '<div class="rg-qside" data-gm-board'+(HOST?'':' hidden')+'></div></div>';
+  }
+  function tickGame(){
+    var t=el.question.querySelector('[data-gm-timer]');
+    if(t){
+      if(state.revealed){ var r=Math.ceil(Math.max(0,(state.revealEnds||0)-Date.now())/1000); t.textContent = state.revealEnds ? 'Next in '+r+'s' : ''; t.className='rg-gm-timer next'; }
+      else { var ms=remainingMs(); t.textContent=fmtClock(ms); t.className='rg-gm-timer'+(ms<=10000?' low':''); }
+    }
+    var sc=el.question.querySelector('[data-gm-score]'); if(sc) sc.textContent=scoreOf(PK);
+    if(HOST){ var c=slotCounts(state.idx);
+      [['[data-gm-got]',c.got],['[data-gm-done]',c.done],['[data-gm-n]',c.n],['[data-gm-pts]',c.pts]].forEach(function(p){ var e=el.question.querySelector(p[0]); if(e) e.textContent=p[1]; }); }
+  }
+  // rebuild only when the VIEW changes; the clock, counts and board update in place
+  function renderGameSlot(fromTick){
+    show('question');
+    var pos=state.idx, s=HOST?null:gmState(pos);
+    var key=[gid(),pos,state.revealed?1:0,HOST?'h':'s',gmVer,(!HOST&&gmLocked(pos,s))?'L':'',scored()?1:0].join(':');
+    if(key!==gmLastKey){ gmLastKey=key; el.question.innerHTML=gameHTML(pos); fromTick=false; }
+    if(!fromTick && HOST){ var bd=el.question.querySelector('[data-gm-board]'); if(bd) bd.innerHTML=boardHTML(board(),5,'Top 5'); }
+    tickGame();
+  }
+
   function render(){
     var ph=phase();
+    SEC.classList.toggle('rg-inplay', ph==='question');
     if(ph!=='lobby'){ lastLobbyKey=null; nameFormOpen=false; }
+    if(ph!=='question') gmLastKey=null;
     // ── IDLE ──
     if(ph==='idle'){
       show('idle');
@@ -1595,6 +1924,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     }
     // ── QUESTION ──
     if(ph==='question'){
+      if(isGame(state.idx)){ renderGameSlot(false); return; }
+      gmLastKey=null;
       show('question');
       var pos=state.idx, b=BANK[state.order[pos]], my=myAnswer(pos), rev=!!state.revealed, cor=correctOf(pos);
       var P=optPerm(pos);
@@ -1651,7 +1982,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
           + (st.aced>=0 ? card('Most aced question', Math.round(st.ar*100)+'% correct', topicAt(st.aced)) : '')
           + (st.missed>=0 && st.missed!==st.aced ? card('Most missed question', Math.round(st.mr*100)+'% correct', topicAt(st.missed)) : '')
           + card('Class accuracy', Math.round(st.accuracy*100)+'%', 'of all answers were correct')
-          + card('Average score', (Math.round(st.avg*10)/10)+' / '+st.n, st.scoredN+' player'+(st.scoredN===1?'':'s')+(st.perfect?' · '+st.perfect+' perfect':''))
+          + card('Average score', (Math.round(st.avg*10)/10)+' / '+st.max, st.scoredN+' player'+(st.scoredN===1?'':'s')+(st.perfect?' · '+st.perfect+' perfect':''))
           + '</div>';
       }
       // while a student is filling the survey in, leave the DOM alone — a rebuild
@@ -1673,7 +2004,9 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
   // ── event delegation ──
   SEC.addEventListener('click', function(e){
-    var t=e.target.closest('[data-act],[data-cnt],[data-mode],[data-opt]'); if(!t) return;
+    var t=e.target.closest('[data-act],[data-cnt],[data-mode],[data-opt],[data-wk],[data-ct]'); if(!t) return;
+    if(t.dataset.wk!==undefined){ wKey(t.dataset.wk); return; }
+    if(t.dataset.ct!==undefined){ cToggle(parseInt(t.dataset.ct,10)); return; }
     if(t.dataset.cnt!==undefined){ pickCount=parseInt(t.dataset.cnt,10); render(); return; }
     if(t.dataset.opt!==undefined){ answer(parseInt(t.dataset.opt,10)); return; }
     if(t.dataset.mode!==undefined){
@@ -1691,7 +2024,12 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     else if(act==='svopen'){ svMsg=''; backend.mergeDoc('polls', GID, {surveyOpen:1}); }
     else if(act==='svclose'){ backend.mergeDoc('polls', GID, {surveyOpen:0}); }
     else if(act==='svmail'){ svMail(); }
+    else if(act==='csub') cSubmit();
+    else if(act==='cshuf') cShuffle();
+    else if(act==='cdesel') cDeselect();
   });
+  // on-screen keys and tiles shouldn't take focus (Enter would re-press them)
+  SEC.addEventListener('mousedown', function(e){ if(e.target.closest('[data-wk],[data-ct]')) e.preventDefault(); });
   SEC.addEventListener('submit', function(e){
     var f=e.target.closest('[data-nf]');
     if(f){ e.preventDefault(); var inp=f.querySelector('[data-nf-in]'); join('named', inp?inp.value.trim():''); return; }
@@ -1708,6 +2046,14 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       if(phase()==='lobby'){
         if(HOST && state.lobbyEnds && Date.now()>=state.lobbyEnds){ beginQuestions(); }
         else render();
+      } else if(phase()==='question' && isGame(state.idx)){
+        // the host's copy runs the game clock: reveal when time is up (or every
+        // scored player has finished), then move on after the 20-second reveal
+        if(HOST){
+          if(!state.revealed && ((state.gameEnds && Date.now()>=state.gameEnds) || allDone(state.idx))) reveal();
+          else if(state.revealed && state.revealEnds && Date.now()>=state.revealEnds) nextQ();
+        }
+        renderGameSlot(true);
       }
     }, 500);
   });
@@ -1722,7 +2068,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 26</span>
+  <span class="counter" id="counter">1 / 25</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -1731,7 +2077,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 5 · Conservation &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.5 International Laws</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.7 Reintroduction</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>Key Concepts</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>▶ Review Game</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.7 Reintroduction</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>Key Concepts</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>▶ Review Game</button></div>
 </div>
 
 <script>

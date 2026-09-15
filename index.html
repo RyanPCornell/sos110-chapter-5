@@ -524,7 +524,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   margin:0 clamp(1.8rem,2.4vw,2.4rem) clamp(2.9rem,6.2vh,3.4rem);
   background:var(--paper); border:1px solid rgba(120,100,60,.26); border-radius:12px;
   padding:clamp(.8rem,2vh,1.3rem) clamp(1rem,2.2vw,1.7rem);}
-.rg-frame > .rg-stage{flex:1; min-height:0;}
+.rg-frame > .rg-stage{flex:1 0 auto; min-height:0;}   /* never shrink under its content — the frame scrolls instead */
 .rg-ico{display:inline-block; width:1.05em; height:1.05em; flex:none; vertical-align:-.17em;}
 
 /* small-caps labels, as in "SCENARIO GUIDE" */
@@ -667,7 +667,67 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .rg-fun{max-width:min(640px,92vw);}
 .rg-fun .rg-stat{flex:1 1 220px; max-width:310px;}
 .rg-stat-s em{font-style:italic; color:var(--ink);}
-.rg-setup .rg-ico.cards{width:clamp(72px,12vh,110px); height:auto; color:var(--ink); margin-bottom:0;}
+/* quick breaks: Reaction Tap + Stop the Clock */
+.rg-gm-host .rg-ico.light,.rg-gm-host .rg-ico.stopwatch{width:clamp(64px,12vh,96px); height:auto; color:var(--ink); margin-bottom:.2rem;}
+.rg-rt{display:flex; flex-direction:column; align-items:center; gap:.8rem; padding:.3rem 0;}
+.rg-rt-pad{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45rem;
+  width:min(360px,80vw); height:clamp(170px,32vh,260px); border-radius:14px; border:1px solid var(--hair);
+  background:var(--paper2); color:var(--ink); font-family:'Merriweather',serif; font-weight:900;
+  font-size:clamp(1.1rem,2.6vw,1.6rem); cursor:pointer; touch-action:manipulation; user-select:none; -webkit-user-select:none;}
+.rg-rt-pad .rg-ico{width:clamp(70px,13vh,110px); height:auto; color:var(--ink);}
+.rg-rt-pad.wait{background:#f6e8e4; border-color:#c2594d;}
+.rg-rt-pad.go{background:#e5f1e8; border-color:#2D6A4F;}
+.rg-rt-pad:disabled{cursor:default; opacity:.85;}
+.rg-rt-tries{display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center;}
+.rg-rt-try{min-width:5.4rem; text-align:center; padding:.35rem .6rem; border:1px solid var(--hair); border-radius:8px;
+  background:var(--paper2); font-family:'Merriweather',serif; font-weight:700; color:var(--ink3); font-variant-numeric:tabular-nums;}
+.rg-rt-try.best{border-color:#2D6A4F; color:#2D6A4F;}
+.rg-sk{display:flex; flex-direction:column; align-items:center; gap:.6rem; padding:.3rem 0;}
+.rg-sk .rg-ico.stopwatch{width:clamp(70px,13vh,104px); height:auto; color:var(--ink);}
+.rg-sk-time{font-family:'Merriweather',serif; font-weight:900; font-size:clamp(2.4rem,7vh,3.6rem); color:var(--ink);
+  font-variant-numeric:tabular-nums; line-height:1;}
+.rg-sk-time.hid{color:#b9ae96; letter-spacing:.06em;}
+.rg-sk-time.done{color:#8a6a2f;}
+.rg-slide .rg-btn.rg-sk-btn{min-width:9rem; font-size:clamp(1rem,1.9vw,1.2rem); padding:.7rem 1.6rem;}
+.rg-bk-res{display:flex; flex-direction:column; align-items:center; gap:.35rem; margin-top:.7rem;}
+.rg-bk-big{font-family:'Merriweather',serif; font-weight:900; font-size:clamp(2rem,6vh,3.2rem); color:var(--ink); line-height:1;
+  font-variant-numeric:tabular-nums;}
+.rg-bk-sub{color:var(--ink2); font-size:clamp(.88rem,1.4vw,1.02rem); text-align:center;}
+.rg-bk-sub strong{color:var(--ink); font-family:'Merriweather',serif;}
+.rg-bk-sub .sep{margin:0 .55rem; color:var(--ink3);}
+.rg-hist{display:flex; align-items:flex-end; gap:6px; height:clamp(100px,20vh,160px); padding:0 .4rem;
+  border-bottom:1px solid var(--hair); margin-bottom:1.5rem;}
+.rg-hbar{display:flex; flex-direction:column; align-items:center; justify-content:flex-end; width:clamp(26px,4vw,40px); height:100%; position:relative;}
+.rg-hbar i{display:block; width:100%; background:#ddd3bf; border:1px solid rgba(120,100,60,.3); border-bottom:none;
+  border-radius:5px 5px 0 0; min-height:2px;}
+.rg-hbar.tgt i{background:#8a6a2f; border-color:#8a6a2f;}
+.rg-hbar .n{font-size:.75rem; color:var(--ink2); margin-bottom:2px; font-variant-numeric:tabular-nums;}
+.rg-hbar .l{position:absolute; bottom:-1.35rem; font-size:.7rem; color:var(--ink3); white-space:nowrap;}
+.rg-bonus{display:block; margin-top:.25rem; color:#8a6a2f; font-weight:800; font-style:normal;}
+/* mood row (student) — paper cards in the Biomimicry-deck register */
+.rg-feel{display:flex; flex-direction:column; align-items:center; gap:.35rem; flex:none;
+  margin-top:clamp(.4rem,1.2vh,.8rem); padding-top:clamp(.4rem,1.1vh,.7rem); border-top:1px solid var(--hair2);}
+.rg-feel[hidden]{display:none;}
+.rg-feel-row{display:flex; gap:clamp(.3rem,1vw,.6rem); flex-wrap:wrap; justify-content:center;}
+.rg-fbtn{display:inline-flex; flex-direction:column; align-items:center; gap:.15rem; min-width:clamp(62px,9.5vw,96px);
+  padding:.38rem .55rem .32rem; background:#fffdf6; border:1.2px solid rgba(120,100,60,.45); border-radius:12px; cursor:pointer;
+  font-family:'Merriweather',Georgia,serif; font-weight:700; font-size:clamp(.7rem,1.15vw,.86rem); color:var(--ink);
+  transition:background .2s, border-color .2s, box-shadow .2s;}
+.rg-fbtn:hover{background:#f6efdf;}
+.rg-fbtn:focus{outline:none;} .rg-fbtn:focus-visible{border-color:#8a6a2f;}
+.rg-fbtn .rg-ico.face{width:clamp(22px,3.4vh,30px); height:auto; color:var(--ink2); transition:color .2s;}
+.rg-fbtn.on{background:#f3ead6; border-color:var(--fc); box-shadow:inset 0 0 0 1.2px var(--fc);}
+.rg-fbtn.on .rg-ico.face{color:var(--fc);}
+/* class mood donut (host) — Chapter 8 emission-wheel styling */
+.rg-feelpie{margin-top:.9rem; padding-top:.65rem; border-top:1px solid var(--hair2);}
+.rg-feelpie-row{display:flex; align-items:center; gap:.7rem;}
+.rg-feelpie svg{width:clamp(92px,15vh,128px); height:auto; flex:none;}
+.rg-feelhub{font-family:'Merriweather',Georgia,serif; font-weight:900; font-size:26px; fill:#3b3222;}
+.rg-feelhubs{font-family:'Inter',sans-serif; font-weight:700; font-size:10px; letter-spacing:.1em; text-transform:uppercase; fill:#8a8069;}
+.rg-feelkey{flex:1; min-width:0; display:flex; flex-direction:column; gap:.18rem; font-size:clamp(.72rem,1.1vw,.86rem); color:var(--ink2);}
+.rg-feelkey span{display:flex; align-items:center; gap:.4rem;}
+.rg-feelkey i{width:.72rem; height:.72rem; border-radius:3px; background:var(--sc); flex:none;}
+.rg-feelkey b{margin-left:auto; font-family:'Merriweather',Georgia,serif; color:var(--ink); font-variant-numeric:tabular-nums;}.rg-setup .rg-ico.cards{width:clamp(72px,12vh,110px); height:auto; color:var(--ink); margin-bottom:0;}
 .rg-setup .rg-tag{margin-top:.15rem;}
 .rg-cbtn.rg-pbtn{font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(.82rem,1.35vw,.98rem); padding:.5rem 1.1rem;}
 .rg-setup .rg-cap{max-width:52ch; line-height:1.45;}
@@ -1508,7 +1568,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
 <section class="slide rg-slide" data-type="game" data-game-id="ch5-review-game"
-  data-rg-counts="10,15,20" style="--accent:#2D6A4F">
+  data-rg-counts="10,15,20,25" style="--accent:#2D6A4F">
   <script type="application/json" data-rg-bank>[{"topic": "SDG 13", "q": "In the deck's Sustainable Development Goals, SDG 13 (“Climate Action”) represents which dimension of the Triple Bottom Line?", "options": ["Environmental", "Social", "Economic", "Technological"], "answer": 0}, {"topic": "Triple Bottom Line", "q": "The Triple Bottom Line frames sustainability as the overlap of which three dimensions?", "options": ["People, Planet, and Profit", "Land, Labor, and Capital", "Reduce, Reuse, and Recycle", "Air, Water, and Soil"], "answer": 0}, {"topic": "Wicked problems", "q": "Which best describes a “wicked problem”?", "options": ["Complex interactions among multiple stakeholders, with uncertainty and competing interests", "A problem with one clearly correct, testable solution", "A minor issue that resolves itself if ignored", "A problem that affects only a single stakeholder"], "answer": 0}, {"topic": "Planetary boundaries", "q": "The “planetary boundaries” framework defines what?", "options": ["A safe operating space for humanity across nine Earth-system processes", "The physical edge of Earth's atmosphere", "The nine largest national parks on Earth", "The limit of how many people a city can hold"], "answer": 0}, {"topic": "Planetary boundaries", "q": "Which is a clear example of a planetary boundary being pushed past its safe limit?", "options": ["Climate change from increasing CO₂ concentrations", "A single volcanic eruption", "Seasonal changes between summer and winter", "The daily rise and fall of ocean tides"], "answer": 0}, {"topic": "Emergent property", "q": "An emergent property of a system is best described as…", "img": "media/review-murmuration.jpg", "alt": "A huge flock of starlings swirling together into one shape against a sunset sky.", "options": ["A characteristic that results from interactions among the parts, not from any single component", "A property that only the largest component has", "A property measured before the system is assembled", "A property that disappears when parts interact"], "answer": 0}, {"topic": "System boundary", "q": "A system boundary is…", "options": ["The limit that separates a system from its surroundings, defining what is included and excluded", "The physical fence around a national park", "The point where a system stops using energy", "The largest feedback loop inside a system"], "answer": 0}, {"topic": "SETs", "q": "In this course, “SETs” refers to the interconnection and interaction of which three kinds of systems?", "options": ["Social, Ecological, and Technical", "Solar, Electrical, and Thermal", "Scientific, Economic, and Territorial", "Structural, Environmental, and Temporal"], "answer": 0}, {"topic": "Environmental ethics", "q": "Environmental ethics is primarily concerned with…", "options": ["The moral relationships between humans and the environment", "The market price of natural resources", "The engineering of pollution-control devices", "The physics of energy transfer in ecosystems"], "answer": 0}, {"topic": "Environmental justice", "q": "Environmental justice is centrally concerned with…", "options": ["The fair treatment of all people, so marginalized communities don't bear a disproportionate share of environmental harms", "Maximizing total economic output regardless of who benefits", "Protecting scenic landscapes for future tourism only", "Ensuring every species has an equal population size"], "answer": 0}, {"topic": "Intrinsic value", "q": "Something has intrinsic value when it is…", "options": ["Worthwhile in and of itself, independent of its usefulness to humans", "Valued only for the money it can earn", "Useful as a raw material for industry", "Important only because tourists will pay to see it"], "answer": 0}, {"topic": "Utilitarian value", "q": "Utilitarian (instrumental) value refers to something's value based on…", "options": ["Its usefulness to humans", "Its worth apart from any human use", "Its age or rarity alone", "Its beauty as judged by artists"], "answer": 0}, {"topic": "Externality", "q": "An externality is…", "img": "media/review-externality-coal.jpg", "alt": "Smokestacks of a coal-fired power plant releasing plumes beside a river.", "options": ["A cost or benefit of economic activity not reflected in the market price of a good or service", "A tax charged at the point of sale", "The profit a company keeps after expenses", "The external packaging of a product"], "answer": 0}, {"topic": "Tragedy of the Commons", "q": "The tragedy of the commons describes how…", "img": "media/review-commons-fridge.jpg", "alt": "A crowded shared office refrigerator full of labeled lunches and notes like “Do Not Eat” and “Please Eat.”", "options": ["Individuals acting in their own self-interest overuse a shared resource, depleting it for everyone", "Government ownership always improves a shared resource", "Private property inevitably collapses over time", "Resources grow faster the more heavily they are used"], "answer": 0}, {"topic": "Collective action", "q": "“Collective action” is best defined as…", "options": ["The coordinated efforts of groups to achieve common goals", "One person acting alone for personal gain", "A government seizing private property", "The random behavior of individuals in a market"], "answer": 0}, {"topic": "Matter and energy", "q": "Which statement correctly pairs the core rules for matter and energy?", "img": "media/review-matter-scale.jpg", "alt": "Illustration of burning logs on one side of a balance scale and the resulting charcoal, ash and gases on the other.", "options": ["Matter is conserved; energy is transformed but never created or destroyed", "Matter can be destroyed; energy is always created anew", "Both matter and energy are routinely created from nothing", "Matter is transformed; energy simply disappears when used"], "answer": 0}, {"topic": "First Law of Thermodynamics", "q": "The First Law of Thermodynamics states that energy…", "options": ["Cannot be created or destroyed, only transformed from one form to another", "Is destroyed a little each time it is used", "Can be created whenever it is needed", "Always increases in a closed system"], "answer": 0}, {"topic": "Second Law of Thermodynamics", "q": "According to the Second Law of Thermodynamics, with each energy transfer…", "options": ["Some energy is degraded as heat and entropy (disorder) increases", "All energy is perfectly conserved as useful work", "Entropy decreases toward zero", "Energy becomes 100% efficient"], "answer": 0}, {"topic": "Photosynthesis", "q": "Photosynthesis is best described as…", "options": ["The link between radiant energy (sunlight) and chemical energy (food) at the base of most food chains", "The breakdown of food to release heat in animals", "The conversion of rock into soil", "The loss of energy as heat between trophic levels"], "answer": 0}, {"topic": "Primary producers", "q": "Primary producers (plants, algae, and some bacteria) are defined by their ability to…", "options": ["Convert sunlight into chemical energy via photosynthesis", "Eat herbivores for energy", "Decompose dead animals only", "Move energy up by hunting prey"], "answer": 0}, {"topic": "Trophic levels: energy transfer", "q": "About how much of the energy at one trophic level is passed up to the next, and where does the rest go?", "options": ["Only ~10% passes up; the rest is lost as heat (Second Law)", "About 90% passes up; the rest is stored as fat", "100% passes up; no energy is ever lost", "Roughly 50% passes up; the rest becomes new matter"], "answer": 0}, {"topic": "Trophic levels: biomass", "q": "In a typical biomass pyramid, which trophic level usually contains the largest amount of biomass?", "options": ["Primary producers", "Top predators", "Secondary consumers", "Tertiary consumers"], "answer": 0}, {"topic": "Earth's spheres", "q": "Earth's systems are grouped into four spheres that constantly exchange matter and energy. Which set names them?", "options": ["Biosphere, hydrosphere, atmosphere, geosphere", "Stratosphere, magnetosphere, ionosphere, exosphere", "Biosphere, technosphere, noosphere, cryosphere", "Ocean, forest, desert, tundra"], "answer": 0}, {"topic": "Emergent property", "q": "“Life runs through all of them” describes how Earth's four spheres are…", "options": ["Interconnected, constantly exchanging matter and energy", "Completely sealed off from one another", "Ranked from most to least important", "Identical copies of the same system"], "answer": 0}, {"topic": "Species richness", "q": "Species richness refers to…", "options": ["The number of different species in an area", "The total mass of all organisms in an area", "The wealth generated by an ecosystem", "The genetic variation within a single species"], "answer": 0}, {"topic": "Biodiversity supports stability", "q": "According to the deck, biodiversity benefits ecosystems mainly by…", "options": ["Supporting their adaptation and stability", "Guaranteeing they never change", "Reducing the number of interactions among species", "Making them depend on a single keystone species"], "answer": 0}, {"topic": "Predators", "q": "Why are top predators ecologically important?", "options": ["They can trigger trophic cascades that reshape entire ecosystems", "They produce most of an ecosystem's biomass", "They perform the majority of photosynthesis", "They have no measurable effect on other species"], "answer": 0}, {"topic": "Trophic cascade", "q": "A trophic cascade is…", "options": ["A change in one trophic level that ripples out to affect others (e.g., wolves → elk → vegetation)", "A waterfall that carries nutrients downstream", "The steady 10% loss of energy up a food chain", "The seasonal migration of a single species"], "answer": 0}, {"topic": "Trophic cascade: Yellowstone", "q": "Removing wolves from Yellowstone in 1926 caused a trophic cascade in which…", "img": "media/review-yellowstone-trio.jpg", "alt": "Three photos: two gray wolves in snow, a bull elk on a hillside, and a stand of golden aspen trees.", "options": ["The elk population increased and the aspen tree population dramatically decreased", "The elk population crashed and forests expanded", "Wolves were replaced by an equal number of bears", "Nothing measurable changed in the ecosystem"], "answer": 0}, {"topic": "Restoring wolves", "q": "After wolves were reintroduced to Yellowstone in 1995, one key effect was that…", "img": "media/review-wolf.jpg", "alt": "A gray wolf walking through snow in Yellowstone.", "options": ["Elk numbers and behavior changed, letting vegetation like aspen recover", "Elk populations grew without limit", "All aspen trees were eliminated", "The park had to remove the wolves again immediately"], "answer": 0}, {"topic": "Rewilding", "q": "Rewilding restores damaged ecosystems by…", "options": ["Letting natural ecological processes recover, as with wolves in Yellowstone", "Paving habitat to prevent further disturbance", "Replacing wild species with farm animals", "Freezing an ecosystem in its current state permanently"], "answer": 0}, {"topic": "Biodiversity loss", "q": "A key sign of biodiversity loss today is…", "options": ["Rising extinction rates — a human-driven sixth mass extinction", "A steady rise in the number of species worldwide", "Falling global temperatures", "An increase in genetic diversity everywhere"], "answer": 0}, {"topic": "Endangered species", "q": "An endangered species is one that…", "options": ["Is at serious risk of extinction", "Has recently doubled its population", "Lives only in captivity by choice", "Is too common to need protection"], "answer": 0}, {"topic": "Ecosystem valuation", "q": "Why do economists assign monetary values to ecosystem services?", "options": ["To support and inform economic decision-making", "To make ecosystems illegal to protect", "To prove that nature has no value", "To replace all ecosystems with factories"], "answer": 0}, {"topic": "Ecosystem productivity", "q": "According to the 2005 Millennium Ecosystem Assessment, losing species diversity reduces an ecosystem's…", "options": ["Productivity and resilience", "Physical size only", "Distance from the nearest city", "Number of rock layers"], "answer": 0}, {"topic": "Provisioning service", "q": "Which is an example of a PROVISIONING ecosystem service?", "options": ["Goods humans consume or use, such as water, wood, and pharmaceutical products", "The recreational and spiritual value of a landscape", "Pollination of crops by insects", "Soil formation and nutrient cycling"], "answer": 0}, {"topic": "Regulating service", "q": "Pollination by insects is an example of which type of ecosystem service?", "options": ["Regulating", "Provisioning", "Cultural", "Supporting"], "answer": 0}, {"topic": "Supporting service", "q": "Nutrient cycling and soil formation — the fundamental conditions other services depend on — are examples of which ecosystem service?", "options": ["Supporting", "Provisioning", "Cultural", "Regulating"], "answer": 0}, {"topic": "Cultural service", "q": "Hiking, recreation, and tourism in a national park are examples of which ecosystem service?", "img": "media/review-cultural-canyon.jpg", "alt": "Sunset light over the Grand Canyon from the South Rim.", "options": ["Cultural", "Provisioning", "Regulating", "Supporting"], "answer": 0}, {"topic": "Pollination", "q": "Roughly what share of our food depends on an animal pollinator?", "options": ["About one in three bites", "Essentially none of it", "All of it", "About one in a thousand bites"], "answer": 0}, {"topic": "Protected areas", "q": "Which is generally considered among the most effective strategies for conserving endangered species?", "options": ["Establishing protected areas", "Building more highways through habitat", "Introducing invasive species", "Removing all legal protections"], "answer": 0}, {"topic": "Deforestation", "q": "Beyond destroying habitat, deforestation harms ecosystems by removing…", "options": ["Primary producers (the base of the food web), and it also causes soil erosion", "Only the top predators", "Nothing of ecological importance", "Excess carbon that ecosystems don't need"], "answer": 0}, {"topic": "2026 Tour de France", "q": "Who won the 2026 Tour de France?", "options": ["Tadej Pogačar", "Jonas Vingegaard", "Remco Evenepoel", "Primož Roglič"], "answer": 0, "fun": true}, {"topic": "Project Hail Mary", "q": "In Andy Weir's Project Hail Mary, how does Ryland Grace first work out that he is aboard a spacecraft?", "options": ["He times a makeshift pendulum and finds the gravity isn't Earth's", "He looks out a window and watches the Earth shrink behind him", "The ship's computer greets him by name and reads out the mission briefing", "He finds a mission patch sewn onto the sleeve of his flight suit"], "answer": 0, "fun": true}, {"topic": "Nobel Prizes", "q": "Who was the first person to win a Nobel Prize in both Chemistry and Physics?", "options": ["Marie Curie", "Linus Pauling", "Albert Einstein", "Niels Bohr"], "answer": 0, "fun": true}, {"topic": "2026 Tour de France Femmes", "q": "Who won the 2026 Tour de France Femmes?", "options": ["Demi Vollering", "Pauline Ferrand-Prévot", "Katarzyna Niewiadoma", "Annemiek van Vleuten"], "answer": 0, "fun": true}, {"topic": "Paris-Roubaix", "q": "How many times has Mathieu van der Poel won the Paris-Roubaix bike race?", "options": ["3", "1", "2", "4"], "answer": 0, "fun": true}, {"topic": "2026 Men's World Cup", "q": "Which team won the 2026 Men's World Cup?", "options": ["Spain", "Argentina", "France", "England"], "answer": 0, "fun": true}, {"topic": "Pokémon: Kanto's Legendary birds", "q": "What are the three Legendary birds of Kanto?", "options": ["Articuno, Zapdos, and Moltres", "Articuno, Fearow, and Moltres", "Beedrill, Fearow, and Moltres", "Articuno, Zapdos, and Beedrill"], "answer": 0, "fun": true}, {"topic": "Pokémon: Mega Evolution", "q": "How many Legendary Pokémon are known to Mega Evolve?", "options": ["4", "2", "3", "5"], "answer": 0, "fun": true}, {"topic": "Harry Potter: Hermione's Patronus", "q": "What is Hermione Granger's Patronus?", "options": ["An otter", "A cat", "A bunny", "A deer"], "answer": 0, "fun": true}, {"topic": "Harry Potter: Quidditch", "q": "What position did Harry Potter play for the Gryffindor Quidditch team?", "options": ["Seeker", "Chaser", "Beater", "Keeper"], "answer": 0, "fun": true}, {"topic": "The Office: The Dundies", "q": "In Season 2 of The Office, at what restaurant did the Dundies take place?", "options": ["Chili's", "Poor Richard's Pub", "Cooper's Seafood House", "Benihana"], "answer": 0, "fun": true}, {"topic": "Where in the world?", "q": "Where was this picture taken?", "img": "media/review-amsterdam.jpg", "alt": "The instructor and his family on the deck of a boat on a city canal.", "options": ["Amsterdam", "New York", "Copenhagen", "Bruges"], "answer": 0, "fun": true}, {"topic": "Arizona geography", "q": "What is the highest point in Arizona?", "options": ["Humphreys Peak", "Mount Graham", "Mount Lemmon", "The South Rim of the Grand Canyon"], "answer": 0, "fun": true}]</script>
   <script type="application/json" data-rg-words>[["OZONE", "The ozone layer absorbs harmful ultraviolet radiation.", "Way up high, quietly shielding us."], ["BIOME", "A large region defined by its climate and dominant vegetation.", "Think of nature's biggest neighborhoods."], ["OCEAN", "Part of the hydrosphere — it absorbs much of Earth's extra heat.", "Mostly salty, mostly everywhere."], ["SOLAR", "Energy from the Sun, which powers photosynthesis.", "It arrives from far above, every day."], ["PLANT", "A primary producer that captures the Sun's energy.", "It makes its own lunch."], ["LIGHT", "Photosynthesis turns light energy into chemical energy.", "You can't hold it, but it powers a lot."], ["FUELS", "Fossil fuels store ancient solar energy.", "Old energy, used up today."], ["VALUE", "Intrinsic value vs. instrumental (utilitarian) value.", "What is something worth — and to whom?"], ["PRICE", "Ecosystem valuation puts a price on nature's services.", "A number on a tag."], ["COSTS", "An externality is a cost borne by people outside a transaction.", "Someone always ends up paying them."], ["ALGAE", "Aquatic primary producers at the base of many food webs.", "Green, wet, and easy to overlook."], ["ATOMS", "Matter is made of atoms, which are neither created nor destroyed.", "Very, very small building blocks."], ["NICHE", "A species' role and way of life within its ecosystem.", "Everyone has their place."], ["BISON", "An icon of Yellowstone, the first U.S. national park.", "Big, shaggy, and very American."], ["PARKS", "National parks protect scenic, historical, and scientific areas.", "Places set aside."], ["WATER", "Wetlands naturally purify water — an ecosystem service.", "You're mostly made of it."], ["CYCLE", "Matter moves through biogeochemical cycles, like the carbon cycle.", "Round and round it goes."], ["OTTER", "Sea otters keep urchins in check — a classic trophic cascade.", "Furry, playful, and more important than it looks."], ["SIXTH", "Scientists warn of a human-driven sixth mass extinction.", "The latest entry in a grim series."], ["LOOPS", "Feedback loops can amplify or dampen change in a system.", "They always come back around."], ["CHAIN", "A food chain traces energy from producers to consumers.", "Links, one after another."], ["HUMAN", "Human activity is the leading driver of biodiversity loss today.", "Look in a mirror."], ["RIVER", "Damming rivers changes fish migrations and habitats.", "Always moving, yet it never leaves its bed."], ["EARTH", "Earth's four spheres: biosphere, atmosphere, hydrosphere, geosphere.", "Home."], ["CELLS", "Cells are the basic units of life.", "We are made of them."], ["STEAM", "Power plants boil water into steam to spin turbines.", "Hot air… sort of."], ["TREES", "Deforestation removes trees, which are primary producers.", "Tall, leafy, and rooted."], ["WASTE", "Every energy transfer loses some energy as waste heat.", "What's left over."]]</script>
   <script type="application/json" data-rg-conns>[{"title": "Earth, Energy & Atoms", "groups": [{"label": "Earth's four spheres (Ch. 4)", "words": ["BIOSPHERE", "ATMOSPHERE", "HYDROSPHERE", "GEOSPHERE"]}, {"label": "Parts of an atom (Ch. 3)", "words": ["PROTON", "NEUTRON", "ELECTRON", "NUCLEUS"]}, {"label": "Forms of energy (Ch. 3)", "words": ["KINETIC", "POTENTIAL", "THERMAL", "RADIANT"]}, {"label": "Types of ecosystem services (Ch. 5)", "words": ["PROVISIONING", "REGULATING", "SUPPORTING", "CULTURAL"]}]}, {"title": "Life on Earth", "groups": [{"label": "Protected by the Marine Mammal Protection Act (Ch. 5)", "words": ["WHALES", "DOLPHINS", "SEALS", "MANATEES"]}, {"label": "Biomes (Ch. 1 & 4)", "words": ["DESERT", "TUNDRA", "SAVANNA", "RAINFOREST"]}, {"label": "Species interactions (Ch. 4)", "words": ["PREDATION", "COMPETITION", "MUTUALISM", "PARASITISM"]}, {"label": "Evolutionary processes (Ch. 4)", "words": ["NATURAL SELECTION", "GENETIC DRIFT", "GENE FLOW", "SPECIATION"]}]}, {"title": "Systems & Policy", "groups": [{"label": "Policy tools (Ch. 2)", "words": ["TAXES", "REGULATIONS", "CAP-AND-TRADE", "INCENTIVES"]}, {"label": "Systems-thinking building blocks (Ch. 1)", "words": ["STOCKS", "FLOWS", "FEEDBACK LOOPS", "TIPPING POINTS"]}, {"label": "Planetary boundaries (Ch. 1)", "words": ["NITROGEN", "PHOSPHORUS", "AEROSOLS", "NOVEL ENTITIES"]}, {"label": "Related to Environmental Economics (Ch. 2)", "words": ["EXTERNALITIES", "PUBLIC GOODS", "COMMONS", "COLLECTIVE ACTION"]}]}, {"title": "Conservation", "groups": [{"label": "Species in Chapter 5's conservation stories", "words": ["WOLVES", "BISON", "CONDORS", "BALD EAGLE"]}, {"label": "Types of U.S. protected lands (Ch. 5)", "words": ["NATIONAL PARKS", "MONUMENTS", "WILDLIFE REFUGES", "NATIONAL FORESTS"]}, {"label": "Drivers of biodiversity loss (Ch. 5)", "words": ["HABITAT DESTRUCTION", "OVEREXPLOITATION", "INVASIVE SPECIES", "CLIMATE CHANGE"]}, {"label": "Forms of energy (Ch. 3)", "words": ["CHEMICAL", "ELECTRICAL", "NUCLEAR", "KINETIC"]}]}, {"title": "Big Ideas", "groups": [{"label": "Building blocks of matter (Ch. 3)", "words": ["ELEMENT", "ISOTOPE", "ION", "MOLECULE"]}, {"label": "Planetary boundaries (Ch. 1)", "words": ["CLIMATE CHANGE", "OZONE DEPLETION", "OCEAN ACIDIFICATION", "NITROGEN"]}, {"label": "Systems-thinking ideas (Ch. 1)", "words": ["RESILIENCE", "EMERGENT PROPERTY", "SYSTEM BOUNDARY", "TIPPING POINT"]}, {"label": "Ideas from environmental ethics (Ch. 2)", "words": ["UTILITARIANISM", "DEONTOLOGY", "INTRINSIC VALUE", "ENVIRONMENTAL JUSTICE"]}]}]</script>
@@ -1534,6 +1594,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       <div class="rg-stage" data-rg-lobby hidden></div>
       <div class="rg-stage" data-rg-question hidden></div>
       <div class="rg-stage" data-rg-ended hidden></div>
+      <div class="rg-feel" data-rg-feel hidden></div>
     </div>
   </div>
   <div class="footer"></div>
@@ -1544,13 +1605,13 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   if(!window.__deckLiveReady){ window.__deckLiveReady = new Promise(function(r){ window.__deckLiveResolve = r; }); }
 
   var GID   = SEC.dataset.gameId;
-  var COUNTS = (SEC.dataset.rgCounts||'10,15,20').split(',').map(function(x){ return parseInt(x,10); });
+  var COUNTS = (SEC.dataset.rgCounts||'10,15,20,25').split(',').map(function(x){ return parseInt(x,10); });
   var BANK  = JSON.parse(SEC.querySelector('[data-rg-bank]').textContent);
   var LETTERS = ['A','B','C','D','E','F'];
   var WORDS = JSON.parse((SEC.querySelector('[data-rg-words]')||{}).textContent||'[]');   // [[WORD, meaning], …]
   var CONNS = JSON.parse((SEC.querySelector('[data-rg-conns]')||{}).textContent||'[]');   // [{groups:[{label, words}×4]}, …]
   // one Word Puzzle + one Connections per game; ~FUN_SHARE of questions are just-for-fun
-  var FUN_SHARE=0.15, WORDLE_MS=60000, CONN_MS=120000, REVEAL_MS=20000, WORDLE_MAX=3, CONN_MAX=4;
+  var BREAK_MS=30000, BREAK_MAX=1, BREAKS=['r','k'], FUN_SHARE=0.15, WORDLE_MS=120000, CONN_MS=120000, REVEAL_MS=20000, WORDLE_MAX=3, CONN_MAX=4;
 
   function rnd(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} h^=h>>>15; h=Math.imul(h,2246822507); h^=h>>>13; h^=h>>>16; return (h>>>0)/4294967296; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -1561,7 +1622,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   var el = {
     title: SEC.querySelector('[data-rg-title]'), sub: SEC.querySelector('[data-rg-sub]'),
     idle: SEC.querySelector('[data-rg-idle]'), lobby: SEC.querySelector('[data-rg-lobby]'),
-    question: SEC.querySelector('[data-rg-question]'), ended: SEC.querySelector('[data-rg-ended]')
+    question: SEC.querySelector('[data-rg-question]'), ended: SEC.querySelector('[data-rg-ended]'),
+    feel: SEC.querySelector('[data-rg-feel]')
   };
   var NAV=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' ','PageUp','PageDown','Home','End'];
   SEC.addEventListener('keydown', function(e){ if(NAV.indexOf(e.key)>-1) e.stopPropagation(); });
@@ -1607,8 +1669,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   // ── mini-game slots ──
   function gameAt(pos){ var g=state.games; return (g && g[pos]) ? g[pos] : null; }
   function isGame(pos){ return !!gameAt(pos); }
-  function gameMax(pos){ var g=gameAt(pos); return !g ? 0 : (g.type==='w' ? WORDLE_MAX : CONN_MAX); }
-  function gameMs(pos){ var g=gameAt(pos); return (g && g.type==='w') ? WORDLE_MS : CONN_MS; }
+  function gameMax(pos){ var g=gameAt(pos); return !g ? 0 : (g.type==='w' ? WORDLE_MAX : g.type==='c' ? CONN_MAX : BREAK_MAX + BREAK_BONUS); }
+  function gameMs(pos){ var g=gameAt(pos); return !g ? 0 : (g.type==='w' ? WORDLE_MS : g.type==='c' ? CONN_MS : BREAK_MS); }
   function maxPoints(){ var n=(state.order||[]).length, m=0; for(var p=0;p<n;p++) m += isGame(p) ? gameMax(p) : 1; return m; }
   function correctOf(pos){ if(isGame(pos)) return -1; var b=BANK[state.order[pos]]; return b?b.answer:-1; }
   // 1 point per correct question + whatever each mini-game awarded (capped at its max)
@@ -1619,7 +1681,9 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     // leaderboard (and "Your score") would give away who picked the right answer
     var hide = (phase()==='question' && !state.revealed) ? state.idx : -1;
     if(p.ans) for(var k in p.ans){ var oi=parseInt(k,10); if(oi<n && oi!==hide && !isGame(oi) && p.ans[k]===correctOf(oi)) s++; }
-    if(p.gp) for(var k2 in p.gp){ var gi=parseInt(k2,10); if(gi<n && gi!==hide && isGame(gi)) s += Math.max(0, Math.min(gameMax(gi), p.gp[k2]||0)); }
+    if(p.gp) for(var k2 in p.gp){ var gi=parseInt(k2,10); if(gi<n && gi!==hide && isGame(gi)){
+      if(isBreak(gi)) s += Math.max(0, Math.min(BREAK_MAX, p.gp[k2]||0)) + (breakBonus(gi)[pkey] ? BREAK_BONUS : 0);
+      else s += Math.max(0, Math.min(gameMax(gi), p.gp[k2]||0)); } }
     return s;
   }
   // ── feel-good finish stats: celebrate the class and each student's best moment;
@@ -1658,7 +1722,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   }
   function classFunHTML(){
     var f=classFun(), cards='';
-    if(f.correct>0) cards+=funCard('Brainpower', f.correct.toLocaleString(),
+    if(f.correct>0) cards+=funCard('Class Knowledge',f.correct.toLocaleString(),
       'Together you answered '+f.correct.toLocaleString()+' question'+(f.correct===1?'':'s')+' correctly!', 'b');
     if(f.hasConn && f.groups>0) cards+=funCard('Connections found', f.groups.toLocaleString(),
       f.bestLabel ? 'Most spotted group: <em>'+esc(f.bestLabel)+'</em>' : 'groups found by the class', 'g');
@@ -1666,13 +1730,19 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   }
   function myFunHTML(){
     var f=myFun(), cards='';
-    if(f.quick!==null) cards+=funCard('Personal best moment', (f.quick/1000).toFixed(1)+' s',
+    if(f.quick!==null) cards+=funCard('Fastest Answer',(f.quick/1000).toFixed(1)+' s',
       'Your quickest correct answer, on <em>'+esc(topicAt(f.quickPos))+'</em>', 'a');
     if(f.streak>0) cards+=funCard('Streak', String(f.streak),
       'correct answer'+(f.streak===1?'':'s')+' in a row — your longest run', 'g');
     return cards ? '<div class="rg-stats rg-fun">'+cards+'</div>' : '';
   }
 
+  // the leaderboard shows the top 5 — or the top 10 once more than 50 students play for a score
+  function topN(){
+    var g=gid(), ps=players(), n=0;
+    for(var k in ps){ var p=ps[k]; if(p && p.g===g && (p.mode==='named'||p.mode==='anon')) n++; }
+    return n>50 ? 10 : 5;
+  }
   function board(){
     var g=gid(), ps=players(), arr=[];
     for(var k in ps){ if(ps[k] && ps[k].g===g && (ps[k].mode==='named'||ps[k].mode==='anon')) arr.push(k); }
@@ -1681,7 +1751,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   }
   function playerCount(){ var g=gid(), ps=players(), n=0; for(var k in ps){ if(ps[k]&&ps[k].g===g) n++; } return n; }
   function topicAt(pos){
-    if(isGame(pos)) return gameAt(pos).type==='w' ? 'Word Puzzle' : 'Connections';
+    if(isGame(pos)) return GAME_NAMES[gameAt(pos).type] || 'Game';
     return (pos>=0 && state.order && BANK[state.order[pos]]) ? BANK[state.order[pos]].topic : '—';
   }
   // aggregate class stats: per-question rates (multiple-choice slots only) + overall
@@ -1707,15 +1777,16 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   // ── exit survey (mirrors the Evolve game's) ────────────────────────────────
   // Answers land in `survey` (sharded, stamped with the game id); the host only
   // ever sees a COUNT — every answer and comment goes to the inbox, not the wall.
-  var SVFREQ=['Never again','Every Module','Right before each midterm'];
+  var SVFREQ=['Never again','Every Module','Right before each Midterm'];
   var svMsg='';
   function svOpen(){ return !!state.surveyOpen; }
   function svAll(){ var g=gid(), v=state.survey||{}, o={}; for(var k in v){ if(v[k]&&v[k].g===g) o[k]=v[k]; } return o; }
   function svMine(){ return svAll()[PK]||null; }
   function svSummary(){
-    var v=svAll(), ks=Object.keys(v), out={n:ks.length, yes:0, no:0, freq:[0,0,0], comments:[]};
+    var v=svAll(), ks=Object.keys(v), out={n:ks.length, yes:0, no:0, gamesYes:0, gamesNo:0, freq:[0,0,0], comments:[]};
     ks.forEach(function(k){ var r=v[k]||{};
       if(r.b===1) out.yes++; else if(r.b===0) out.no++;
+      if(r.l===1) out.gamesYes++; else if(r.l===0) out.gamesNo++;
       if(r.f>=0 && r.f<=2) out.freq[r.f]++;
       if(r.c && String(r.c).trim()) out.comments.push(String(r.c).trim());
     });
@@ -1728,6 +1799,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     L.push('Responses: '+d.n); L.push('');
     L.push('Did you find the Review beneficial?');
     L.push('  Yes '+d.yes+'   No '+d.no+'   ('+svPct(d.yes,d.no)+' yes)');
+    L.push('Did you like the games?');
+    L.push('  Yes '+d.gamesYes+'   No '+d.gamesNo+'   ('+svPct(d.gamesYes,d.gamesNo)+' yes)');
     L.push('How often should we do Reviews like this?');
     SVFREQ.forEach(function(lab,i){ L.push('  '+d.freq[i]+'  '+lab); });
     L.push(''); L.push('Comments ('+d.comments.length+')');
@@ -1738,10 +1811,10 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   function svSubmit(form){
     if(!backend || HOST || !svOpen() || svMine()) return;
     function pick(n){ var el=form.querySelector('input[name="'+n+'"]:checked'); return el?parseInt(el.value,10):null; }
-    var b=pick('rg-sv-b'), f=pick('rg-sv-f');
-    if(b===null||f===null) return;
+    var b=pick('rg-sv-b'), l=pick('rg-sv-g'), f=pick('rg-sv-f');
+    if(b===null||l===null||f===null) return;
     var ta=form.querySelector('[data-sv-comment]');
-    var o={survey:{}}; o.survey[PK]={g:gid(), b:b, f:f, c:((ta&&ta.value)||'').slice(0,600)};
+    var o={survey:{}}; o.survey[PK]={g:gid(), b:b, l:l, f:f, c:((ta&&ta.value)||'').slice(0,600)};
     backend.mergeDocShard('polls', GID, o);
   }
   function svMail(){
@@ -1781,10 +1854,13 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       + '<fieldset class="rg-sv-q"><legend>Did you find the Review beneficial?</legend>'
       + '<label><input type="radio" name="rg-sv-b" value="1" required> Yes</label>'
       + '<label><input type="radio" name="rg-sv-b" value="0"> No</label></fieldset>'
+      + '<fieldset class="rg-sv-q"><legend>Did you like the games?</legend>'
+      + '<label><input type="radio" name="rg-sv-g" value="1" required> Yes</label>'
+      + '<label><input type="radio" name="rg-sv-g" value="0"> No</label></fieldset>'
       + '<fieldset class="rg-sv-q col"><legend>How often should we do Reviews like this?</legend>'
       + '<label><input type="radio" name="rg-sv-f" value="0" required> Never again</label>'
       + '<label><input type="radio" name="rg-sv-f" value="1"> Every Module</label>'
-      + '<label><input type="radio" name="rg-sv-f" value="2"> Right before each midterm</label></fieldset>'
+      + '<label><input type="radio" name="rg-sv-f" value="2"> Right before each Midterm</label></fieldset>'
       + '<label class="rg-sv-c">Anything else? <span>(optional)</span>'
       + '<textarea data-sv-comment rows="2" maxlength="600" placeholder="Comments for your instructor"></textarea></label>'
       + '<button class="rg-btn" type="submit">Send my answers</button></form>';
@@ -1838,6 +1914,11 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     // alternating, with a random kind first
     var first=shuffleArr(kinds), per=(cnt>=20 && kinds.length===2) ? 2 : 1, types=[], slots=[];
     for(var r=0;r<per;r++) types=types.concat(first);
+    // plus a quick just-for-fun break between the puzzles (both kinds in a 20-question game)
+    var breaks=shuffleArr(BREAKS).slice(0, cnt>=20 ? 2 : 1), mixed=[];
+    types.forEach(function(t,i){ mixed.push(t); if(i%2===0 && breaks.length) mixed.push(breaks.shift()); });
+    while(breaks.length) mixed.push(breaks.shift());
+    types=mixed;
     types.forEach(function(t,i){ slots.push(Math.min(cnt-1, Math.floor(cnt*(i+1)/(types.length+1)))); });
     // ~15% of ALL questions are just-for-fun; the rest are course questions
     var funIdx=[], courseIdx=[];
@@ -1856,6 +1937,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       if(si<0){ order.push(mc[m++]); continue; }
       order.push(-1);
       if(types[si]==='w'){ games[q]={type:'w', wx:wEnc(WORDS[wBag[wi++ % wBag.length]][0], g, q)}; }
+      else if(types[si]==='r' || types[si]==='k'){ games[q]={type:types[si]}; }
       else { var cIdx=cBag[ci++ % cBag.length]; games[q]={type:'c', ci:cIdx, tiles:shuffleArr(connWords(CONNS[cIdx]))}; }
     }
     backend.setDoc('polls', GID, {gameId:g, phase:'lobby', count:cnt, order:order, games:games, idx:0, revealed:false, pace:pickPace, lobbyEnds:Date.now()+60000});
@@ -1928,14 +2010,17 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     var k=gmLSKey(pos); if(gmMem[k]) return gmMem[k];
     var s=null; try{ s=JSON.parse(ls(k)||'null'); }catch(e){ s=null; }
     if(!s) s={guesses:[], cur:'', solved:[], sel:[], mistakes:0, tried:[], order:null, done:false, pts:0, msg:''};
+    if(!s.tries) s.tries=[];
+    if(s.ph && s.ph!=='idle') s.ph='idle';   // a refresh mid-tap or mid-count simply starts that try over
     gmMem[k]=s; return s;
   }
   function gmSave(pos){ var k=gmLSKey(pos); if(gmMem[k]) ls(k, JSON.stringify(gmMem[k])); }
   function remainingMs(){ return Math.max(0,(state.gameEnds||0)-Date.now()); }
   function gmLocked(pos,s){ return !!(s&&s.done) || !!state.revealed || (!!state.gameEnds && Date.now()>=state.gameEnds); }
-  function gmReport(pos, pts, done, groups){
+  function gmReport(pos, pts, done, groups, ms){
     if(!scored()) return;
     var rec={g:gid(), gp:{}}; rec.gp[pos]=pts; if(done){ rec.gd={}; rec.gd[pos]=1; }
+    if(ms!=null){ rec.gt={}; rec.gt[pos]=Math.round(ms); }   // quick-break time (for the class results)
     if(groups){ rec.gs={}; rec.gs[pos]=groups.slice(); }   // which Connections groups (for "most spotted")
     var o={}; o[PK]=rec; backend.mergeDocShard('polls', GID, {players:o});
   }
@@ -2056,6 +2141,33 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       + '<path d="M101.6 30.4l11.6 30.8-5.4 2-11.4-30.8z" fill="#e2c982" stroke-width="2"/>'
       + '<path d="M107.8 63.2l-.6 8.4-4.8-6.6" stroke-width="2"/><path d="M96.4 32.4c1.6-2.4 3.8-3.2 5.2-2" stroke-width="2"/>'
       + '<path d="M14 30v6.4M10.8 33.2h6.4M20.6 74.4v5M18.1 76.9h5M118 16v5.4M115.3 18.7h5.4" stroke="#b8922a" stroke-width="1.8"/>','cards'); },
+    face: function(kind){
+      var eyes='', mouth='';
+      if(kind==='awesome'){ eyes='<path d="M10.2 13.2c.6-1.6 2.6-1.6 3.2 0M18.6 13.2c.6-1.6 2.6-1.6 3.2 0" stroke-width="2"/>';
+        mouth='<path d="M9.6 17.4c3.6 5.6 9.2 5.6 12.8 0-4.2 1-8.6 1-12.8 0z" fill="currentColor" stroke-width="1.6"/>'; }
+      else if(kind==='fun'){ eyes='<path d="M12.2 12.2v1.4M19.8 12.2v1.4" stroke-width="2.6"/>';
+        mouth='<path d="M10.6 18.2c2.8 3.2 8 3.2 10.8 0" stroke-width="2.2"/>'; }
+      else if(kind==='ugh'){ eyes='<path d="M10.2 11.4l3.4 1.6M21.8 11.4l-3.4 1.6" stroke-width="2"/>';
+        mouth='<path d="M10.8 20.6c1.2-1 2.4-1 3.6 0 1.2 1 2.4 1 3.6 0 1.2-1 2.4-1 3.6 0" stroke-width="2"/>'; }
+      else if(kind==='bored'){ eyes='<path d="M10.2 13.2h3.8M18 13.2h3.8" stroke-width="2.2"/>';
+        mouth='<path d="M12 20.2c2.6-.3 5.4-.3 8 .1" stroke-width="2.2"/>'; }
+      else { eyes='<path d="M10.4 10.2c1-1.2 2.4-1.4 3.6-.6M18 9.6c1.2-.8 2.6-.6 3.6.6" stroke-width="1.8"/><path d="M12.2 13.4v.8M19.8 13.4v.8" stroke-width="2.8"/>';
+        mouth='<path d="M16 17.6c1.5 0 2.5 1.2 2.4 2.6-.1 1.4-1.1 2.4-2.4 2.4-1.4 0-2.4-1-2.4-2.4 0-1.4 1-2.6 2.4-2.6z" stroke-width="2"/>'; }
+      return svgWrap('0 0 32 32', '<path d="M16 3.4c7.2-.2 12.8 5.4 12.6 12.6-.1 7-5.6 12.6-12.6 12.6-7.1.1-12.7-5.5-12.6-12.6.1-7 5.6-12.5 12.6-12.6z" stroke-width="2.2"/>'+eyes+mouth, 'face');
+    },
+    light: function(st){
+      var fill = (st==='go'||st==='on') ? '#5b9e6f' : st==='wait' ? '#c2594d' : '#ddd3bf';
+      return svgWrap('0 0 80 80',
+          '<path d="M40 8.6c17.6-.4 31.4 13.4 31.4 31 .2 17.6-13.6 31.6-31.2 31.8C22.6 71.6 8.4 57.8 8.6 40.2 8.6 22.6 22.4 9 40 8.6z" fill="'+fill+'" stroke-width="3"/>'
+        + '<path d="M25.4 28c3.6-5.2 9.2-7.8 15.4-7.6" stroke="#fffdf6" stroke-width="3" opacity=".75"/>'
+        + '<path d="M40 1.6v3.6M40 74.8v3.6M1.6 40h3.6M74.8 40h3.6" stroke="#b8922a" stroke-width="2" opacity="'+((st==='go'||st==='on')?'1':'0')+'"/>','light'); },
+    stopwatch: function(){ return svgWrap('0 0 80 90',
+          '<path d="M33 6.4c4.6-.3 9.4-.3 14 .1M40 6.6v8.6" stroke-width="3"/>'
+        + '<path d="M62.4 22.6l5-5" stroke-width="3"/>'
+        + '<path d="M40 15.4c20-.4 34.6 15 34.4 34.6-.2 19.6-15.4 34.2-34.8 34.2C20.2 84.2 5.4 69 5.6 49.6 5.8 30.4 20.4 15.8 40 15.4z" fill="#fffdf6" stroke-width="3"/>'
+        + '<path d="M40 24.6v5M40 70v5M14.6 49.8h5M60.4 49.8h5" stroke-width="2.2" opacity=".7"/>'
+        + '<path d="M40 50.2l.2-16.6M40.2 50.4l10.4 6.8" stroke="#8a6a2f" stroke-width="3"/>'
+        + '<path d="M40 47.6c1.6 0 2.8 1.2 2.8 2.8 0 1.6-1.2 2.8-2.8 2.8-1.6 0-2.8-1.2-2.8-2.8 0-1.6 1.2-2.8 2.8-2.8z" fill="#3b3222" stroke="none"/>','stopwatch'); },
     medal: function(i){ return svgWrap('0 0 28 36',
         '<path d="M8 1.6 12.6 13.4h3L20 1.6" fill="#a5bfe3" stroke-width="1.4"/>'
       + '<path d="M11 1.8l2.8 7.4M17 1.8l-2.8 7.4" stroke-width="1" opacity=".45"/>'
@@ -2083,6 +2195,196 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
   // ── mini-game rendering ──
   function fmtClock(ms){ var s=Math.ceil(ms/1000); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+  // ── quick breaks: Reaction Tap + Stop the Clock. Everyone who plays gets the point;
+  //    the class sees only averages and anonymous bests, never who was slow ──
+  var GAME_NAMES={w:'Word Puzzle', c:'Connections', r:'Reaction Tap', k:'Stop the Clock'};
+  var SK_TARGET=10000, SK_SHOW=3000, RT_TRIES=3, rtTimer=null, skLoop=null;
+  // bonus: the top 10% of a quick break (fastest best tap / closest to 10 s) earn +1.
+  // At least one student qualifies, and everyone tied at the cutoff counts.
+  var BREAK_BONUS=1, BONUS_SHARE=0.10, bonusCache={st:null, m:{}};
+  function isBreak(pos){ var g=gameAt(pos); return !!g && (g.type==='r' || g.type==='k'); }
+  function breakBonus(pos){
+    if(bonusCache.st!==state) bonusCache={st:state, m:{}};   // recomputed once per shared-state update
+    if(bonusCache.m[pos]) return bonusCache.m[pos];
+    var gm=gameAt(pos), g=gid(), ps=players(), arr=[], set={};
+    for(var k in ps){ var p=ps[k]; if(!p||p.g!==g||!(p.mode==='named'||p.mode==='anon')) continue;
+      if(p.gt && p.gt[pos]>0) arr.push([k, gm.type==='k' ? Math.abs(p.gt[pos]-SK_TARGET) : p.gt[pos]]); }
+    if(arr.length){
+      arr.sort(function(a,b){ return a[1]-b[1]; });
+      var cut=arr[Math.max(1, Math.ceil(arr.length*BONUS_SHARE))-1][1];
+      arr.forEach(function(e){ if(e[1]<=cut) set[e[0]]=1; });
+    }
+    bonusCache.m[pos]=set; return set;
+  }
+  function secs(ms, d){ return (ms/1000).toFixed(d==null?2:d); }
+  function bState(){
+    var pos=state.idx, gm=gameAt(pos);
+    if(HOST || phase()!=='question' || !gm || (gm.type!=='r' && gm.type!=='k')) return null;
+    var s=gmState(pos); return {pos:pos, gm:gm, s:s, locked:gmLocked(pos,s)};
+  }
+  function rtPress(){
+    var b=bState(); if(!b || b.gm.type!=='r' || b.locked || b.s.done) return;
+    var s=b.s, pos=b.pos;
+    if(s.ph==='go'){
+      var t=Date.now()-s.goAt; s.ph='idle';
+      // under 100 ms is a lucky guess, not a reaction — treat it like an early tap
+      if(t<100){ s.msg='Too soon! Wait for green.'; return gmBump(pos); }
+      s.msg=''; s.tries.push(t);
+      var best=Math.min.apply(null, s.tries), fin=s.tries.length>=RT_TRIES;
+      s.pts=BREAK_MAX; if(fin) s.done=true;
+      gmReport(pos, BREAK_MAX, fin, null, best);
+      return gmBump(pos);
+    }
+    if(s.ph==='wait'){ clearTimeout(rtTimer); s.ph='idle'; s.msg='Too soon! Wait for green.'; return gmBump(pos); }
+    s.ph='wait'; s.msg='';
+    clearTimeout(rtTimer);
+    rtTimer=setTimeout(function(){
+      var b2=bState(); if(!b2 || b2.pos!==pos || b2.s.ph!=='wait' || b2.locked) return;
+      b2.s.ph='go'; b2.s.goAt=Date.now(); gmBump(pos);
+    }, 1200+Math.random()*2600);
+    gmBump(pos);
+  }
+  function skPress(){
+    var b=bState(); if(!b || b.gm.type!=='k' || b.locked || b.s.done) return;
+    var s=b.s;
+    if(s.ph!=='run'){ s.ph='run'; s.startAt=Date.now(); s.msg=''; gmBump(b.pos); skTick(); return; }
+    clearInterval(skLoop);
+    s.stopMs=Date.now()-s.startAt; s.ph='idle'; s.done=true; s.pts=BREAK_MAX;
+    gmReport(b.pos, BREAK_MAX, true, null, s.stopMs);
+    gmBump(b.pos);
+  }
+  function skTick(){
+    clearInterval(skLoop);
+    skLoop=setInterval(function(){
+      var b=bState(); if(!b || b.gm.type!=='k' || b.s.ph!=='run'){ clearInterval(skLoop); return; }
+      if(b.locked){ b.s.ph='idle'; clearInterval(skLoop); return gmBump(b.pos); }
+      var e=Date.now()-b.s.startAt, d=el.question.querySelector('[data-sk-time]');
+      if(d){ d.textContent = e<SK_SHOW ? secs(e) : '?.??'; d.classList.toggle('hid', e>=SK_SHOW); }
+    }, 40);
+  }
+  function breakTimes(pos){
+    var g=gid(), ps=players(), v=[];
+    for(var k in ps){ var p=ps[k]; if(!p||p.g!==g||!(p.mode==='named'||p.mode==='anon')) continue;
+      if(p.gt && p.gt[pos]>0) v.push(p.gt[pos]); }
+    return v;
+  }
+  function breakRevealHTML(pos){
+    var gm=gameAt(pos), v=breakTimes(pos);
+    if(!v.length) return '<div class="rg-bk-res"><div class="rg-bk-sub">No times were recorded this round.</div></div>';
+    if(gm.type==='r'){
+      return '<div class="rg-bk-res"><div class="rg-bk-big">'+secs(Math.min.apply(null,v),3)+' s</div><div class="rg-tag">Quickest reflex in the room</div></div>';
+    }
+    // Stop the Clock: where the class stopped, in whole seconds (≤6 … ≥14)
+    var lo=6, hi=14, bins=[]; for(var i=lo;i<=hi;i++) bins.push(0);
+    v.forEach(function(ms){ var sec=Math.max(lo, Math.min(hi, Math.round(ms/1000))); bins[sec-lo]++; });
+    var mx=Math.max.apply(null,bins)||1;
+    var close=v.reduce(function(a,b){ return Math.abs(b-SK_TARGET)<Math.abs(a-SK_TARGET) ? b : a; });
+    var bars=bins.map(function(n,i){ var sec=lo+i;
+      return '<div class="rg-hbar'+(sec===10?' tgt':'')+'"><span class="n">'+(n||'')+'</span><i style="height:'+Math.round(n/mx*100)+'%"></i>'
+        + '<span class="l">'+(i===0?'≤':'')+(i===bins.length-1?'≥':'')+sec+'s</span></div>'; }).join('');
+    return '<div class="rg-bk-res"><div class="rg-hist">'+bars+'</div>'
+      + '<div class="rg-bk-sub">Closest to 10 <strong>'+secs(close)+' s</strong></div></div>';
+  }
+  function breakHostHTML(pos, rev){
+    var isR=gameAt(pos).type==='r';
+    var body = rev ? breakRevealHTML(pos)
+      : '<div class="rg-gm-host">'+(isR ? ICONS.light('on') : ICONS.stopwatch())
+        + '<div class="rg-gm-lead">'+(isR ? 'Tap the moment the light turns green — best of three tries.'
+                                          : 'Stop the stopwatch at exactly 10 seconds. The numbers vanish after 3!')+'</div>'
+        + '<div class="rg-cap">A quick break — everyone who plays gets a point, and the top 10% earn a bonus point.</div></div>';
+    return body + '<div class="rg-gm-stat">Finished <strong data-gm-done>0</strong> of <span data-gm-n>0</span></div>';
+  }
+  function breakStudentHTML(pos, s, locked, rev){
+    var gm=gameAt(pos), body='', msg='';
+    if(gm.type==='r'){
+      var best=s.tries.length ? Math.min.apply(null, s.tries) : null;
+      var st = s.ph==='go' ? 'go' : s.ph==='wait' ? 'wait' : 'idle';
+      var label = s.done ? 'Done!' : locked ? 'Time’s up' : st==='go' ? 'TAP!' : st==='wait' ? 'Wait for green…' : (s.tries.length ? 'Tap to try again' : 'Tap to start');
+      body = '<div class="rg-rt"><button class="rg-rt-pad '+st+'" data-rt'+((locked||s.done)?' disabled':'')+'>'+ICONS.light(st)+'<span>'+label+'</span></button>'
+        + '<div class="rg-rt-tries">'+[0,1,2].map(function(i){ var t=s.tries[i];
+            return '<span class="rg-rt-try'+(t!=null && t===best ? ' best' : '')+'">'+(t!=null ? secs(t,3)+' s' : 'Try '+(i+1))+'</span>'; }).join('')+'</div></div>';
+      msg = s.msg ? esc(s.msg)
+        : best!=null ? 'Your best: '+secs(best,3)+' s'+(s.done ? ' — +1 point!' : '')
+        : locked ? 'Time’s up!' : 'Tap the pad, wait for green, then tap as fast as you can. Three tries — the fastest 10% earn a bonus point.';
+    } else {
+      body = '<div class="rg-sk">'+ICONS.stopwatch()
+        + '<div class="rg-sk-time'+(s.stopMs!=null ? ' done' : '')+'" data-sk-time>'+(s.stopMs!=null ? secs(s.stopMs) : '0.00')+'</div>'
+        + '<button class="rg-btn rg-sk-btn" data-act="sk"'+((locked||s.done)?' disabled':'')+'>'+(s.done ? 'Done' : s.ph==='run' ? 'Stop' : 'Start')+'</button></div>';
+      if(s.stopMs!=null){ var off=Math.abs(s.stopMs-SK_TARGET);
+        msg='You stopped at '+secs(s.stopMs)+' s — '+(off<50 ? 'spot on!' : secs(off)+' s '+(s.stopMs<SK_TARGET ? 'early.' : 'late.'))+' +1 point!'; }
+      else msg = locked ? 'Time’s up!' : 'Press Start, count to 10 in your head, then press Stop. The numbers vanish after 3 seconds — the most accurate 10% earn a bonus point.';
+    }
+    if(rev && scored() && breakBonus(pos)[PK]){
+      msg += '<span class="rg-bonus">'+(gm.type==='r' ? 'You were one of the fastest taps in the class!' : 'You were one of the most accurate in the class!')+' +1 bonus point!</span>';
+    }
+    if(rev) body += breakRevealHTML(pos);
+    return {body:body, foot:'<div class="rg-qfoot"><span class="rg-qhint'+(s.done ? ' ok' : '')+'">'+msg+'</span></div>'};
+  }
+  // ── how students are feeling: a mood row under every question for students (their pick
+  //    stays until they change it) and a hand-drawn donut under the leaderboard on the host ──
+  var FEELS=[['awesome','Awesome!','#52796F'], ['fun','Having Fun','#BC8A2E'], ['ugh','Ugh.','#A4373A'],
+             ['bored','Bored.','#6D597A'], ['what','What!?','#2f6690']];
+  function feelAll(){
+    var g=gid(), v=state.feel||{}, o={};
+    for(var k in v){ if(v[k] && v[k].g===g && v[k].f>=0 && v[k].f<FEELS.length) o[k]=v[k].f; }
+    return o;
+  }
+  function myFeel(){
+    var f=feelAll()[PK]; if(f!=null) return f;
+    var l=ls('rg-feel:'+GID+':'+gid()); return l===null ? null : parseInt(l,10);
+  }
+  function setFeel(i){
+    if(HOST || !backend || phase()!=='question') return;
+    ls('rg-feel:'+GID+':'+gid(), String(i));
+    var o={}; o[PK]={g:gid(), f:i, t:Date.now()};
+    backend.mergeDocShard('polls', GID, {feel:o});
+    paintFeel();
+  }
+  // the row lives outside the question stage, so re-renders never reset it
+  function paintFeel(){
+    var box=el.feel; if(!box) return;
+    var show = !HOST && phase()==='question';
+    box.hidden=!show; if(!show) return;
+    if(!box.firstChild){
+      box.innerHTML='<div class="rg-tag">How is it going?</div><div class="rg-feel-row">'
+        + FEELS.map(function(f,i){ return '<button type="button" class="rg-fbtn" data-feel="'+i+'" aria-pressed="false" style="--fc:'+f[2]+'">'
+            + ICONS.face(f[0])+'<span>'+f[1]+'</span></button>'; }).join('')+'</div>';
+    }
+    var mine=myFeel();
+    box.querySelectorAll('[data-feel]').forEach(function(b){
+      var on=parseInt(b.dataset.feel,10)===mine; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on?'true':'false'); });
+  }
+  // hand-drawn roughness without a filter: every edge wobbles on smooth sine waves of the
+  // absolute angle, so neighbouring wedges share an edge and nothing is clipped flat
+  function wobR(base, k, s, amp){ return base + amp*(0.8*Math.sin(3*k+s) + 0.7*Math.sin(7*k+2.3*s) + 0.5*Math.sin(13*k+0.7*s)); }
+  function ringWedge(a0, a1, fill){
+    var pts=[], steps=Math.max(2, Math.ceil((a1-a0)/2)), i, k, rr, full=(a1-a0)>=359.9;
+    for(i=0;i<=steps;i++){ k=(a0+(a1-a0)*i/steps)*Math.PI/180; rr=wobR(88,k,1.1,.6);
+      pts.push((100+rr*Math.sin(k)).toFixed(2)+' '+(100-rr*Math.cos(k)).toFixed(2)); }
+    for(i=steps;i>=0;i--){ k=(a0+(a1-a0)*i/steps)*Math.PI/180; rr=wobR(54,k,2.7,.5);
+      pts.push((100+rr*Math.sin(k)).toFixed(2)+' '+(100-rr*Math.cos(k)).toFixed(2)); }
+    // a single mood fills the whole ring: no white seam across the top
+    return '<path d="M'+pts.join(' L')+' Z" fill="'+fill+'"'+(full ? '' : ' stroke="#fffdf6" stroke-width="1.4" stroke-linejoin="round"')+'/>';
+  }
+  function roughDisc(r){
+    var pts=[], i, k, rr;
+    for(i=0;i<180;i++){ k=i*2*Math.PI/180; rr=wobR(r,k,4.2,.35); pts.push((100+rr*Math.sin(k)).toFixed(2)+' '+(100-rr*Math.cos(k)).toFixed(2)); }
+    return '<path d="M'+pts.join(' L')+' Z" fill="#fffdf6" stroke="rgba(120,100,60,.3)" stroke-width="1"/>';
+  }
+  function feelPieHTML(){
+    var v=feelAll(), counts=FEELS.map(function(){ return 0; }), n=0, rings='', start=0;
+    for(var k in v){ counts[v[k]]++; n++; }
+    if(!n) rings=ringWedge(0, 360, 'rgba(120,100,60,.16)');
+    counts.forEach(function(c,i){ if(!c) return; var sweep=c/n*360;
+      rings+=ringWedge(start, start+sweep, FEELS[i][2]); start+=sweep; });
+    var key=FEELS.map(function(f,i){ return '<span style="--sc:'+f[2]+'"><i></i>'+f[1]+'<b>'+(n ? Math.round(counts[i]/n*100) : 0)+'%</b></span>'; }).join('');
+    return '<div class="rg-feelpie"><div class="rg-board-t">How the class is feeling</div><div class="rg-feelpie-row">'
+      + '<svg viewBox="0 0 200 200" role="img" aria-label="Donut chart of how students are feeling">'
+      + '<g>'+rings+'</g>'+roughDisc(48)
+      + '<text class="rg-feelhub" x="100" y="106" text-anchor="middle">'+n+'</text>'
+      + '<text class="rg-feelhubs" x="100" y="124" text-anchor="middle">'+(n===1 ? 'student' : 'students')+'</text></svg>'
+      + '<div class="rg-feelkey">'+key+'</div></div></div>';
+  }
   function slotCounts(pos){
     var g=gid(), ps=players(), n=0, d=0, pts=0, got=0;
     for(var k in ps){ var p=ps[k]; if(!p||p.g!==g||!(p.mode==='named'||p.mode==='anon')) continue;
@@ -2103,7 +2405,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
   function gameHTML(pos){
     var gm=gameAt(pos), rev=!!state.revealed, isW=gm.type==='w';
     var scoreLine=(!HOST && scored()) ? '<span class="rg-score">Your score: <strong data-gm-score>'+scoreOf(PK)+'</strong></span>' : '';
-    var top='<div class="rg-qtop"><span class="rg-prog">Question '+(pos+1)+' of '+state.count+' · <span class="rg-gm-tag">'+(isW?'Word Puzzle':'Connections')+'</span></span>'
+    var top='<div class="rg-qtop"><span class="rg-prog">Question '+(pos+1)+' of '+state.count+' · <span class="rg-gm-tag">'+GAME_NAMES[gm.type]+'</span></span>'
       + '<span class="rg-gm-right"><span class="rg-gm-timer" data-gm-timer></span>'+scoreLine+'</span></div>'
       + '<div class="rg-pbar"><div class="rg-pfill" style="width:'+Math.round((pos+1)/state.count*100)+'%"></div></div>';
     var body='', foot='';
@@ -2113,6 +2415,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
           : '<div class="rg-gm-host"><div class="rg-wrow">'+[0,1,2,3,4].map(function(){ return WTILE('',''); }).join('')+'</div>'
             + '<div class="rg-gm-lead">Guess the 5-letter word from Chapters 1–5 — six tries.</div>'+clueHTML(wordAt(pos))+'</div>';
         body += '<div class="rg-gm-stat">Solved <strong data-gm-got>0</strong><span class="sep">·</span>Finished <strong data-gm-done>0</strong> of <span data-gm-n>0</span></div>';
+      } else if(gm.type==='r' || gm.type==='k'){
+        body = breakHostHTML(pos, rev);
       } else {
         var P=CONNS[gm.ci];
         body = rev ? '<div class="rg-cbands">'+[0,1,2,3].map(function(gi){ return bandHTML(P,gi,false); }).join('')+'</div>'
@@ -2146,6 +2450,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
         else msg = s.msg ? esc(s.msg) : 'Guess the 5-letter word from Chapters 1–5. <span class="rg-leg g">right spot</span><span class="rg-leg y">in the word</span>';
         body='<div class="rg-wd"><div class="rg-wboard">'+rows+'</div>'+(rev ? wordRevealHTML(w) : '<div class="rg-kb">'+clueHTML(w)+kb+'</div>')+'</div>';
         foot='<div class="rg-qfoot"><span class="rg-qhint'+(won?' ok':'')+'">'+msg+'</span></div>';
+      } else if(gm.type==='r' || gm.type==='k'){
+        var bk=breakStudentHTML(pos, s, locked, rev); body=bk.body; foot=bk.foot;
       } else {
         var P2=CONNS[gm.ci], solvedWords=[];
         s.solved.forEach(function(gi){ solvedWords=solvedWords.concat(P2.groups[gi].words); });
@@ -2193,12 +2499,13 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     var pos=state.idx, s=HOST?null:gmState(pos);
     var key=[gid(),pos,state.revealed?1:0,HOST?'h':'s',gmVer,(!HOST&&gmLocked(pos,s))?'L':'',scored()?1:0].join(':');
     if(key!==gmLastKey){ gmLastKey=key; el.question.innerHTML=gameHTML(pos); fromTick=false; }
-    if(!fromTick && HOST){ var bd=el.question.querySelector('[data-gm-board]'); if(bd) bd.innerHTML=boardHTML(board(),5,'Top 5'); }
+    if(!fromTick && HOST){ var bd=el.question.querySelector('[data-gm-board]'); if(bd) bd.innerHTML=boardHTML(board(),topN(),'Top '+topN())+feelPieHTML(); }
     tickGame();
   }
 
   function render(){
     var ph=phase();
+    paintFeel();
     SEC.classList.toggle('rg-inplay', ph==='question');
     if(ph!=='lobby'){ lastLobbyKey=null; nameFormOpen=false; }
     if(ph!=='question') gmLastKey=null;
@@ -2299,7 +2606,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
                  : '<div class="rg-opts">'+optsHTML+'</div>')
         + hostCtl
         + '</div>'
-        + '<div class="rg-qside"'+(HOST?'':' hidden')+'>'+boardHTML(board(),5,'Top 5')+'</div></div>';
+        + '<div class="rg-qside"'+(HOST?'':' hidden')+'>'+boardHTML(board(),topN(),'Top '+topN())+(HOST ? feelPieHTML() : '')+'</div></div>';
       return;
     }
     // ── ENDED ──
@@ -2319,7 +2626,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       if(surveyActive && SEC.querySelector('[data-sv-form]')) return;
       var body = surveyActive
         ? (yours + svStudentHTML())
-        : (yours + (HOST ? '' : myFunHTML()) + boardHTML(lb, 5, 'Top 5 — Final') + (HOST ? classFunHTML() : svStudentHTML()));
+        : (yours + (HOST ? '' : myFunHTML()) + boardHTML(lb, topN(), 'Top '+topN()+' — Final') + (HOST ? classFunHTML() : svStudentHTML()));
       el.ended.innerHTML = '<div class="rg-final"><div class="rg-final-h">'+ICONS.laurel('')+ICONS.trophy('rg-trophy')+ICONS.laurel('r')+'</div>'
         + '<div class="rg-final-t">Final Results</div>'
         + body
@@ -2332,7 +2639,8 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
   // ── event delegation ──
   SEC.addEventListener('click', function(e){
-    var t=e.target.closest('[data-act],[data-cnt],[data-pace],[data-mode],[data-opt],[data-wk],[data-ct]'); if(!t) return;
+    var t=e.target.closest('[data-act],[data-cnt],[data-pace],[data-mode],[data-opt],[data-wk],[data-ct],[data-feel]'); if(!t) return;
+    if(t.dataset.feel!==undefined){ setFeel(parseInt(t.dataset.feel,10)); return; }
     if(t.dataset.pace!==undefined){ pickPace=t.dataset.pace; render(); return; }
     if(t.dataset.wk!==undefined){ wKey(t.dataset.wk); return; }
     if(t.dataset.ct!==undefined){ cToggle(parseInt(t.dataset.ct,10)); return; }
@@ -2356,9 +2664,12 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     else if(act==='csub') cSubmit();
     else if(act==='cshuf') cShuffle();
     else if(act==='cdesel') cDeselect();
+    else if(act==='sk') skPress();
   });
   // on-screen keys and tiles shouldn't take focus (Enter would re-press them)
   SEC.addEventListener('mousedown', function(e){ if(e.target.closest('[data-wk],[data-ct]')) e.preventDefault(); });
+  // Reaction Tap reacts on press, not release, so the measured time is the real reflex
+  SEC.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-rt]')){ e.preventDefault(); rtPress(); } });
   SEC.addEventListener('submit', function(e){
     var f=e.target.closest('[data-nf]');
     if(f){ e.preventDefault(); var inp=f.querySelector('[data-nf-in]'); join('named', inp?inp.value.trim():''); return; }

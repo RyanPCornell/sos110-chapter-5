@@ -897,6 +897,44 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 .at-close:hover{border-color:var(--accent); color:var(--accent);}
 
 
+/* media step-through: one slide, several videos/stills, clicker-advanced */
+.slide[data-type="msteps"]{background:linear-gradient(160deg,#f7f9fb,#eceff3);}
+.ms-root{position:absolute; inset:0; display:flex; flex-direction:column;
+  padding:clamp(.9rem,2.3vh,1.5rem) clamp(1.4rem,3.2vw,3rem) clamp(.7rem,1.8vh,1.2rem);}
+.ms-head{margin-bottom:clamp(.35rem,1vh,.7rem);}
+.ms-head .heading{margin-bottom:.25rem;}
+.ms-sub{font-size:clamp(.8rem,1.28vw,.97rem); color:var(--muted); max-width:92ch; line-height:1.45;}
+.ms-stage{flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; position:relative;}
+.ms-item{width:100%; height:100%; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:.5rem; min-height:0;}
+.ms-item[hidden]{display:none;}
+.ms-media{max-width:100%; max-height:100%; min-height:0; width:auto; height:auto;
+  border-radius:12px; border:1px solid var(--line); background:#fff;
+  box-shadow:0 8px 26px rgba(20,40,30,.16); animation:ms-in .32s ease;}
+@keyframes ms-in{from{opacity:0; transform:translateY(6px) scale(.995);}}
+.ms-cap{flex:none; font-size:clamp(.82rem,1.32vw,1.02rem); color:#33453d; text-align:center;
+  max-width:80ch; line-height:1.4;}
+.ms-cap strong{color:var(--forest);}
+.ms-foot{flex:none; display:flex; align-items:center; gap:.9rem;
+  margin-top:clamp(.4rem,1.1vh,.7rem);}
+.ms-dots{display:flex; gap:.4rem;}
+.ms-dot{width:1.75rem; height:1.75rem; border-radius:50%; cursor:pointer;
+  border:1.5px solid var(--line); background:#fff; color:var(--muted);
+  font-family:inherit; font-weight:800; font-size:.78rem; line-height:1;
+  display:flex; align-items:center; justify-content:center; padding:0;
+  transition:background .18s, color .18s, border-color .18s, transform .18s;}
+.ms-dot:hover{border-color:var(--accent); color:var(--accent);}
+.ms-dot.on{background:var(--accent); border-color:var(--accent); color:#fff; transform:scale(1.1);}
+.ms-hint{font-size:clamp(.72rem,1.12vw,.85rem); color:var(--muted); font-style:italic;}
+.ms-hint b{font-style:normal; font-family:'Merriweather',serif; color:var(--forest);
+  font-variant-numeric:tabular-nums;}
+@media (max-width:820px){
+  .ms-stage{min-height:34vh;}
+  .ms-foot{flex-wrap:wrap;}
+}
+
+
 /* opinion-spectrum (Agree ←→ Disagree) live slide */
 .slide.spectrum{background:linear-gradient(160deg,#f4f8f6,#e9f1ee);}
 .sp-root{position:absolute; inset:0; display:flex; flex-direction:column;
@@ -1162,6 +1200,97 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     <div class="an-att" data-at-bar hidden><button class="an-att-btn" type="button" data-at-open>Attendance</button><select class="an-att-sel" data-at-section aria-label="Class section"><option value="MWF0905">MWF 9:05 am</option><option value="MWF1220">MWF 12:20 pm</option><option value="TTH1200">TTh 12:00 pm</option></select><button class="an-att-btn go" type="button" data-at-finalize hidden>Submit Attendance</button><button class="an-att-cancel" type="button" data-at-cancel hidden>Cancel</button><button class="an-att-cancel" type="button" data-at-clear hidden>Clear last roll call</button><span class="an-att-status" data-at-status></span></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide" data-type="grid" style="--accent:#2D6A4F">
+  <div class="slide-inner col">
+    <div class="eyebrow">Announcements  ·  Getting Started</div>
+    <h2 class="heading">What Would You Do? Exercise 1</h2>
+    
+    <div class="grid cols-3"><div class="gcard"><div class="gcard-head">1 · Decide</div><div class="gcard-desc">Skim all the scenarios, pick one, and click through its Decision Points — weigh the tradeoffs using module concepts.</div></div><div class="gcard"><div class="gcard-head">2 · Record (2–3 min)</div><div class="gcard-desc">Video due Friday. ~1 min introducing the case, ~2 min justifying your choice. Embed the video in Harmonize — links or attachments earn no credit.</div></div><div class="gcard"><div class="gcard-head">3 · Discuss</div><div class="gcard-desc">All posts due Sunday. Comment on 2+ classmates' videos and reply to comments on yours (~100 words), using module concepts.</div></div></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide mediasteps" data-type="msteps" id="ms1" style="--accent:#2D6A4F">
+  <div class="ms-root">
+    <div class="ms-head">
+      <div class="eyebrow">Announcements  ·  Getting Started</div>
+      <h2 class="heading">Where to find What Would You Do? Exercise 1</h2>
+      
+    </div>
+    <div class="ms-stage"><figure class="ms-item" data-ms-item="0"><img class="ms-media" src="media/wwyd-step1.png" alt="Canvas Modules page for Module 2, with a blue arrow pointing to What is the What Would You Do Exercise, a red arrow pointing to What Would You Do? Exercise 1, and a green arrow pointing to What Would You Do? Decision-Making Activities"><figcaption class="ms-cap">In <strong>Canvas → Modules → Module 2</strong>, under <strong>Discussion</strong>: the <strong>instructions</strong> (blue), the <strong>assignment</strong> (red), and the <strong>Decision-Making Activities</strong> (green).</figcaption></figure><figure class="ms-item" data-ms-item="1" hidden><img class="ms-media" src="media/wwyd-step2.png" alt="The What Would You Do? Exercise 1 assignment page, with an arrow pointing to the button that loads it in a new window"><figcaption class="ms-cap">On <strong>Exercise 1</strong>, read <strong>Preparation</strong>, then press <strong>Load What Would You Do? Exercise 1 in a new window</strong> to open <strong>Harmonize</strong>.</figcaption></figure><figure class="ms-item" data-ms-item="2" hidden><img class="ms-media" src="media/wwyd-step3.png" alt="The Harmonize instructions listing the three scenarios, with arrows pointing to the scenario list and to Create new post"><figcaption class="ms-cap">Choose <strong>one</strong> of the three scenarios, read the <strong>Instructions</strong>, and post your video with <strong>+ Create new post</strong>.</figcaption></figure><figure class="ms-item" data-ms-item="3" hidden><img class="ms-media" src="media/wwyd-step4.png" alt="The What Would You Do? Decision-Making Activities page, with an arrow pointing to the button that loads it in a new window"><figcaption class="ms-cap">Back in Module 2, open <strong>Decision-Making Activities</strong> and press <strong>Load … in a new window</strong>.</figcaption></figure><figure class="ms-item" data-ms-item="4" hidden><img class="ms-media" src="media/wwyd-step5.png" alt="The W. W. Norton What Would You Do? Decision-Making Activities list, with arrows pointing to the Barrier Islands, Shark Conservation, and Beavers in Tierra del Fuego scenarios"><figcaption class="ms-cap">In <strong>Norton</strong>, open your scenario — <strong>Barrier Islands</strong>, <strong>Sharks off Florida</strong>, or <strong>Beavers in Tierra del Fuego</strong> — and make your <strong>Decision Points</strong>.</figcaption></figure></div>
+    <div class="ms-foot">
+      <div class="ms-dots"><button class="ms-dot on" type="button" data-ms-dot="0" aria-label="Step 1 of 5"><span>1</span></button><button class="ms-dot" type="button" data-ms-dot="1" aria-label="Step 2 of 5"><span>2</span></button><button class="ms-dot" type="button" data-ms-dot="2" aria-label="Step 3 of 5"><span>3</span></button><button class="ms-dot" type="button" data-ms-dot="3" aria-label="Step 4 of 5"><span>4</span></button><button class="ms-dot" type="button" data-ms-dot="4" aria-label="Step 5 of 5"><span>5</span></button></div>
+      <span class="ms-hint">Click to advance <b data-ms-count>1 / 5</b></span>
+    </div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+  <script>
+  (function(){
+    var sec = document.getElementById("ms1");
+    if(!sec) return;
+    var N = 5;
+    var items = sec.querySelectorAll("[data-ms-item]");
+    var dots  = sec.querySelectorAll("[data-ms-dot]");
+    var count = sec.querySelector("[data-ms-count]");
+    var step = 0, backwards = false;
+
+    var FWD  = ["ArrowRight","PageDown"," ","Spacebar"];
+    var BACK = ["ArrowLeft","PageUp"];
+
+    function show(i){
+      step = Math.max(0, Math.min(N-1, i));
+      for(var k=0;k<items.length;k++){
+        var on = (k===step);
+        items[k].hidden = !on;
+        dots[k].classList.toggle("on", on);
+        var v = items[k].querySelector("[data-ms-video]");
+        if(v){
+          if(on){ try{ v.currentTime = 0;
+            // play() rejects if the browser power-pauses or we pause straight
+            // after; harmless, but it litters the console if left unhandled
+            var pr = v.play(); if(pr && pr.catch) pr.catch(function(){});
+          }catch(e){} }
+          else  { try{ v.pause(); }catch(e){} }
+        }
+      }
+      count.textContent = (step+1) + " / " + N;
+    }
+    function pauseAll(){
+      sec.querySelectorAll("[data-ms-video]").forEach(function(v){ try{ v.pause(); }catch(e){} });
+    }
+
+    for(var d=0; d<dots.length; d++){
+      (function(i){ dots[i].addEventListener("click", function(){ show(i); }); })(d);
+    }
+    // tapping the picture also advances, for presenting without a clicker
+    sec.querySelector(".ms-stage").addEventListener("click", function(e){
+      if(e.target.closest("[data-ms-video]")) return;   // let video controls work
+      if(step < N-1) show(step+1);
+    });
+
+    // Capture phase on document: this runs BEFORE the deck's own bubble-phase key
+    // handler, so we can swallow the keypress while there are steps left and let
+    // it through to change slides once we run out.
+    document.addEventListener("keydown", function(e){
+      if(FWD.indexOf(e.key) > -1) backwards = false;
+      else if(BACK.indexOf(e.key) > -1) backwards = true;
+      if(!sec.classList.contains("active")) return;
+      if(FWD.indexOf(e.key) > -1 && step < N-1){
+        e.preventDefault(); e.stopPropagation(); show(step+1);
+      } else if(BACK.indexOf(e.key) > -1 && step > 0){
+        e.preventDefault(); e.stopPropagation(); show(step-1);
+      }
+    }, true);
+
+    // reset when the slide is shown; entering from the right lands on the last step
+    new MutationObserver(function(){
+      if(sec.classList.contains("active")) show(backwards ? N-1 : 0);
+      else pauseAll();
+    }).observe(sec, {attributes:true, attributeFilter:["class"]});
+
+    if(sec.classList.contains("active")) show(0);
+  })();
+  </script>
 </section>
 <section class="slide" data-type="content" style="--accent:#2D6A4F">
   <div class="bleed-grid">
@@ -2713,7 +2842,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 25</span>
+  <span class="counter" id="counter">1 / 27</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -2722,7 +2851,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 5 · Conservation &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Introduction</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>5.1 Four Drivers</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Pricing Nature</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Criticisms</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.3 Designation</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.3 National Parks</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.4 Protection Strategies</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.5 US Laws</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.7 Reintroduction</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>Key Concepts</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>▶ Review Game</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>WWYD 1 · Summary</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Where to find WWYD 1</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Introduction</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Q1 ▶ Spectrum</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>Q2 ▶ Spectrum</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>Q3 ▶ Spectrum</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>5.1 Four Drivers</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>5.2 Ecosystem Services</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>5.2 Value of Biodiversity</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>5.2 Pricing Nature</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>5.2 ▶ Air Valuation</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>5.2 Criticisms</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>5.2 ▶ Intrinsic Value $</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>5.3 Designation</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>5.3 National Parks</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>5.4 Islands &amp; Corridors</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>5.4 Protection Strategies</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>5.5 US Laws</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>5.6 Deforestation &amp; Farms</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>5.6 ▶ Forest Loss</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>5.6 Sustainable Forestry</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>5.7 Reintroduction</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>Key Concepts</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>▶ Review Game</button></div>
 </div>
 
 <script>

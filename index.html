@@ -1872,6 +1872,7 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
     for(var k in ps){ var p=ps[k]; if(p && p.g===g && (p.mode==='named'||p.mode==='anon')) n++; }
     return n>50 ? 10 : 5;
   }
+  function ordinal(n){ var s=['th','st','nd','rd'], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
   function board(){
     var g=gid(), ps=players(), arr=[];
     for(var k in ps){ if(ps[k] && ps[k].g===g && (ps[k].mode==='named'||ps[k].mode==='anon')) arr.push(k); }
@@ -2744,8 +2745,11 @@ button.gcard.img.nv-tile:hover .nv-badge{background:var(--accent); transform:tra
       var lb=board();
       var yours='';
       if(!HOST && scored()){
-        var rank=lb.indexOf(PK); rank = rank<0 ? lb.length : rank+1;
-        yours = '<div class="rg-yours">You finished with <strong>'+scoreOf(PK)+'</strong> point'+(scoreOf(PK)===1?'':'s')+' — rank <strong>'+rank+'</strong> of '+lb.length+'.</div>';
+        // a place is shown only to students who made the leaderboard; everyone else
+        // sees their score alone, with no rank and no class size
+        var at=lb.indexOf(PK), onBoard=(at>=0 && at<topN());
+        yours = '<div class="rg-yours">You finished with <strong>'+scoreOf(PK)+'</strong> point'+(scoreOf(PK)===1?'':'s')+'.'
+          + (onBoard ? ' <strong>'+ordinal(at+1)+'</strong> on the leaderboard!' : '')+'</div>';
       } else if(!HOST){
         yours = '<div class="rg-muted rg-center">Thanks for playing along!</div>';
       }
